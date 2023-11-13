@@ -4,6 +4,7 @@ class MoveableObject {
     height = 100;
     width = 200;
     img;
+    speed = 1;
 
 
     loadImage(path) {
@@ -13,12 +14,12 @@ class MoveableObject {
 
 
     moveRight() {
-        console.log('moveRight');
+        this.x += this.speed;
     }
 
     
     moveLeft() {
-        console.log('moveLeft');
+        this.x -= this.speed;
     }
 
 }
