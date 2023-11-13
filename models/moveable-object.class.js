@@ -8,6 +8,7 @@ class MoveableObject {
     speed = 1;
     currentImage = 0;
     intervalId;
+    otherDirection = false;
 
 
     loadImage(path) {
@@ -15,6 +16,7 @@ class MoveableObject {
         this.img.src = path;
     }
 
+    
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();

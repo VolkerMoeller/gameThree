@@ -3,6 +3,7 @@ class Character extends MoveableObject {
     y = 130;
     width = Math.floor(610 / 4);
     height = Math.floor(1200 / 4);
+    speed = 25;
     world;
 
     IMAGES_IDLE = [
@@ -85,6 +86,8 @@ class Character extends MoveableObject {
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
+            this.animateByChangingValue();
+            this.world.camera_x = -this.x;
         }, normalMs)
         this.intervalId = currentIntervalId;
     }
@@ -93,6 +96,19 @@ class Character extends MoveableObject {
     animateByChangingImg() {
         if (this.isWalking()) {
             this.changeImg(this.IMAGES_WALK);
+        }
+    }
+
+
+    animateByChangingValue() {
+        if (this.isWalkingLeft()) {
+            this.otherDirection = true;
+            this.moveLeft();
+        } else {
+            if (this.isWalkingRight()) {
+                this.otherDirection = false;
+                this.moveRight();
+            }
         }
     }
 
@@ -108,6 +124,15 @@ class Character extends MoveableObject {
     isWalking() {
         return this.world.keyboard.KEY_LEFT || this.world.keyboard.KEY_RIGHT;
     }
+
+    isWalkingLeft() {
+        return this.world.keyboard.KEY_LEFT;
+    }
+
+    isWalkingRight() {
+        return this.world.keyboard.KEY_RIGHT;
+    }
+
 
     jump() {
 
