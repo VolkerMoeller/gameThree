@@ -53,4 +53,8 @@ class World {
         });
     }
 
+    setCharacterWorld() {
+        this.character.world = this;
+    }
+
 }

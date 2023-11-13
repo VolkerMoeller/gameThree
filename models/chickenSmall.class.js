@@ -18,5 +18,25 @@ class ChickenSmall extends MoveableObject {
         this.loadImages(this.IMAGES_WALK);
         this.loadImages(this.IMAGES_DEAD);
         this.x = Math.floor(Math.random() * 550) + 150;
+        this.animate();
+    }
+
+    animate() {
+        setStopableInterval(() => {
+            this.animateByChangingImg();
+        }, slowMs)
+    }
+
+
+    animateByChangingImg() {
+        this.changeImg(this.IMAGES_WALK);
+    }
+    
+
+    changeImg(arrImg) {
+        let i = this.currentImage % arrImg.length;
+        let path = arrImg[i];
+        this.img = this.imgCache[path];
+        this.currentImage++;
     }
 }

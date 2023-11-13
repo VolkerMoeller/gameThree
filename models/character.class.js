@@ -3,6 +3,7 @@ class Character extends MoveableObject {
     y = 130;
     width = Math.floor(610 / 4);
     height = Math.floor(1200 / 4);
+    world;
 
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -77,9 +78,31 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_JUMP);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+        this.animate();
     }
 
+
+    animate() {
+        setStopableInterval(() => {
+            this.animateByChangingImg();
+        }, slowMs)
+        this.intervalId = currentIntervalId;
+    }
+
+
+    animateByChangingImg() {
+        this.changeImg(this.IMAGES_WALK);
+    }
     
+
+    changeImg(arrImg) {
+        let i = this.currentImage % arrImg.length;
+        let path = arrImg[i];
+        this.img = this.imgCache[path];
+        this.currentImage++;
+    }
+
+
     jump() {
 
 

@@ -6,6 +6,8 @@ class MoveableObject {
     img;
     imgCache = [];
     speed = 1;
+    currentImage = 0;
+    intervalId;
 
 
     loadImage(path) {

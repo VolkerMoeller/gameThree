@@ -6,7 +6,7 @@ class Chicken extends MoveableObject {
     IMAGES_WALK = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
-        'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
+        'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
     ];
 
     IMAGES_DEAD = [
@@ -19,5 +19,26 @@ class Chicken extends MoveableObject {
         this.loadImages(this.IMAGES_WALK);
         this.loadImages(this.IMAGES_DEAD);
         this.x = Math.floor(Math.random() * 550) + 150;
+        this.animate();
+    }
+
+
+    animate() {
+        setStopableInterval(() => {
+            this.animateByChangingImg();
+        }, slowMs)
+    }
+
+
+    animateByChangingImg() {
+        this.changeImg(this.IMAGES_WALK);
+    }
+    
+
+    changeImg(arrImg) {
+        let i = this.currentImage % arrImg.length;
+        let path = arrImg[i];
+        this.img = this.imgCache[path];
+        this.currentImage++;
     }
 }

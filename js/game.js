@@ -2,7 +2,9 @@ let canvas;
 let ctx;
 let world
 let standardMs = 20;
+let slowMs = 120;
 let intervalIds = []; 
+let currentIntervalId;
 
 
 function init() {
@@ -19,12 +21,14 @@ function showInformation(){
     console.log('My Clouds are: ', world.clouds);
     console.log('My Backgrounds are: ', world.backgrounds);
     console.log('intervalIds: ',intervalIds);
+    console.log('intervalId-Character ', world.character.intervalId);
 }
 
 
 function setStopableInterval(fn, ms){
     let intervalId = setInterval(fn, ms);
     intervalIds.push(intervalId);
+    currentIntervalId = intervalId;
 }
 
 
