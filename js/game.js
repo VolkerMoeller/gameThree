@@ -9,7 +9,8 @@ function init() {
 
 
     console.log('My Character is: ', world.character);
-    console.log('My Enemie is: ', world.enemies);
-    console.log('My Cloud is: ', world.clouds);
+    console.log('My Enemies are: ', world.enemies);
+    console.log('My Clouds are: ', world.clouds);
+    console.log('My Backgrounds are: ', world.backgrounds);
 
 }
