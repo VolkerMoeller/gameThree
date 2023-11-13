@@ -10,7 +10,7 @@ class Level {
     // coins;
     // amountBottles;
     // amountCoins;
-    // level_end_x = 2200;
+    
 
 
     constructor(enemies, clouds, air, layer3rd, layer2nd, layer1st) {

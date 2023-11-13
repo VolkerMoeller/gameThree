@@ -19,9 +19,8 @@ function init() {
 function showInformation(){
     console.log('My World is: ', world);
     console.log('My Character is: ', world.character);
-    console.log('My Enemies are: ', world.enemies);
-    console.log('My Clouds are: ', world.clouds);
-    console.log('My Backgrounds are: ', world.backgrounds);
+    console.log('My Enemies are: ', world.level.enemies);
+    console.log('My Clouds are: ', world.level.clouds);
     console.log('intervalIds: ',intervalIds);
     console.log('intervalId-Character ', world.character.intervalId);
     console.log('level ', world.level);

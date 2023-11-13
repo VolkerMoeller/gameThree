@@ -3,7 +3,7 @@ class Character extends MoveableObject {
     y = 130;
     width = Math.floor(610 / 4);
     height = Math.floor(1200 / 4);
-    speed = 25;
+    speed = 30;
     world;
 
     IMAGES_IDLE = [
@@ -88,7 +88,7 @@ class Character extends MoveableObject {
             this.animateByChangingImg();
             this.animateByChangingValue();
             this.shiftBackground();
-        }, normalMs)
+        }, slowMs)
         this.intervalId = currentIntervalId;
     }
 
@@ -96,6 +96,10 @@ class Character extends MoveableObject {
     animateByChangingImg() {
         if (this.isWalking()) {
             this.changeImg(this.IMAGES_WALK);
+        } else {
+            if (this.isIdle) {
+                this.changeImg(this.IMAGES_IDLE);
+            }
         }
     }
 
@@ -139,6 +143,10 @@ class Character extends MoveableObject {
 
     isWalkingRight() {
         return this.world.keyboard.KEY_RIGHT;
+    }
+
+    isIdle() {
+        return !this.isWalking;
     }
 
 

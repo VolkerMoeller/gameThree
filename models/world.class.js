@@ -8,6 +8,7 @@ class World {
     camera_bgLayer1 = 0;
     camera_bgLayer2 = 0;
     camera_bgLayer3 = 0;
+    level_end_x = 4000;
 
 
     constructor(canvas, keyboard) {
@@ -15,7 +16,8 @@ class World {
         this.canvas = canvas;
         this.draw();
         this.keyboard = keyboard;
-        this.setWorldTo(this.character);
+        this.setWorldTo();
+        // this.setWorldTo(this.level.enemies);
     }
 
 
@@ -32,7 +34,7 @@ class World {
             self.draw();
         });
     }
-    
+
 
     drawBackground() {
         this.addObjectsToMap(this.level.air);
@@ -74,8 +76,8 @@ class World {
     }
 
 
-    setWorldTo(obj) {
-        obj.world = this;
+    setWorldTo() {
+        this.character.world = this;
     }
 
 
