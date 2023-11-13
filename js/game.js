@@ -5,12 +5,13 @@ let standardMs = 20;
 let slowMs = 120;
 let intervalIds = []; 
 let currentIntervalId;
+let keyboard = new Keyboard();
 
 
 function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
-    world = new World(canvas); 
+    world = new World(canvas, keyboard); 
 }
 
 
@@ -42,4 +43,89 @@ function stopAnimation() {
 function resetGame() {
     stopAnimation();
     init();
+}
+
+
+// Tastenüberwachung mit onkeydown und onkeyup
+onkeydown = (e) => {
+    switch (e.code) {
+        case 'ArrowLeft':
+            keyboard.KEY_LEFT = true;
+            break;
+        case 'ArrowRight':
+            keyboard.KEY_RIGHT = true;
+            break;
+        case 'Space':
+            keyboard.KEY_SPACE = true;
+            break;
+        case 'ArrowUp':
+            keyboard.KEY_UP = true;
+            break;
+        case 'ArrowDown':
+            keyboard.KEY_DOWN = true;
+            break;
+        case 'KeyD':
+            keyboard.KEY_D = true;
+            break;
+        case 'KeyQ':
+            keyboard.KEY_Q = true;
+            break;
+        case 'KeyW':
+            keyboard.KEY_W = true;
+            break;
+        case 'KeyS':
+            keyboard.KEY_S = true;
+            break;
+        case 'KeyA':
+            keyboard.KEY_A = true;
+            break;
+        case 'KeyF':
+            keyboard.KEY_F = true;
+            break;
+        case 'Enter':
+            keyboard.KEY_ENTER = true;
+            break;
+    }
+}
+
+
+onkeyup = (event) => {
+    switch (event.code) {
+        case 'ArrowLeft':
+            keyboard.KEY_LEFT = false;
+            break;
+        case 'ArrowRight':
+            keyboard.KEY_RIGHT = false;
+            break;
+        case 'Space':
+            keyboard.KEY_SPACE = false;
+            break;
+        case 'ArrowUp':
+            keyboard.KEY_UP = false;
+            break;
+        case 'ArrowDown':
+            keyboard.KEY_DOWN = false;
+            break;
+        case 'KeyD':
+            keyboard.KEY_D = false;
+            break;
+        case 'KeyQ':
+            keyboard.KEY_Q = false;
+            break;
+        case 'KeyW':
+            keyboard.KEY_W = false;
+            break;
+        case 'KeyS':
+            keyboard.KEY_S = false;
+            break;
+        case 'KeyA':
+            keyboard.KEY_A = false;
+            break;
+        case 'KeyF':
+            keyboard.KEY_F = false;
+            break;
+        case 'Enter':
+            keyboard.KEY_ENTER = false;
+            break;
+    }
 }
