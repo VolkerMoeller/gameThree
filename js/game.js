@@ -19,6 +19,7 @@ function showInformation(){
     console.log('My Clouds are: ', world.clouds);
     console.log('My Backgrounds are: ', world.backgrounds);
     console.log('intervalIds: ',intervalIds);
+    console.log('imageCache-Character: ', world.character.imgCache);
 }
 
 
