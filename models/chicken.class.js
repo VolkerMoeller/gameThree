@@ -20,12 +20,14 @@ class Chicken extends MoveableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = Math.floor(Math.random() * 550) + 150;
         this.animate();
+        this.speed = 0.5 + Math.random();
     }
 
 
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
+            this.animateByChangingValue();
         }, slowMs)
     }
 
@@ -33,12 +35,16 @@ class Chicken extends MoveableObject {
     animateByChangingImg() {
         this.changeImg(this.IMAGES_WALK);
     }
-    
+
 
     changeImg(arrImg) {
         let i = this.currentImage % arrImg.length;
         let path = arrImg[i];
         this.img = this.imgCache[path];
         this.currentImage++;
+    }
+
+    animateByChangingValue() {
+        this.moveLeft();
     }
 }
