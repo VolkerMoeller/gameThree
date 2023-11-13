@@ -1,7 +1,8 @@
 let canvas;
 let ctx;
 let world
-let standardMs = 20;
+let fastMs = 20;
+let normalMs =  70;
 let slowMs = 120;
 let intervalIds = []; 
 let currentIntervalId;
@@ -46,7 +47,6 @@ function resetGame() {
 }
 
 
-// Tastenüberwachung mit onkeydown und onkeyup
 onkeydown = (e) => {
     switch (e.code) {
         case 'ArrowLeft':

@@ -85,15 +85,17 @@ class Character extends MoveableObject {
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
-        }, slowMs)
+        }, normalMs)
         this.intervalId = currentIntervalId;
     }
 
 
     animateByChangingImg() {
-        this.changeImg(this.IMAGES_WALK);
+        if (this.isWalking()) {
+            this.changeImg(this.IMAGES_WALK);
+        }
     }
-    
+
 
     changeImg(arrImg) {
         let i = this.currentImage % arrImg.length;
@@ -102,6 +104,10 @@ class Character extends MoveableObject {
         this.currentImage++;
     }
 
+
+    isWalking() {
+        return this.world.keyboard.KEY_LEFT || this.world.keyboard.KEY_RIGHT;
+    }
 
     jump() {
 
