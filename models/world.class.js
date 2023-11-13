@@ -22,12 +22,7 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
-        // this.addObjectsToMap(this.level.air);
-        // this.addObjectsToMap(this.level.clouds);
         this.drawBackground();
-        // this.addObjectsToMap(this.level.layer3rd);
-        // this.addObjectsToMap(this.level.layer2nd);
-        // this.addObjectsToMap(this.level.layer1st);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
 
@@ -38,6 +33,7 @@ class World {
         });
     }
     
+
     drawBackground() {
         this.addObjectsToMap(this.level.air);
         this.ctx.translate(-this.camera_x, 0);
@@ -45,6 +41,7 @@ class World {
         this.moveBackground()
         this.ctx.translate(this.camera_x, 0);
     }
+
 
     moveBackground() {
         this.ctx.translate(this.camera_bgLayer3, 0);
@@ -94,5 +91,4 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
-
 }
