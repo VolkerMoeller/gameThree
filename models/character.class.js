@@ -87,7 +87,8 @@ class Character extends MoveableObject {
         setStopableInterval(() => {
             this.animateByChangingImg();
             this.animateByChangingValue();
-            this.world.camera_x = -this.x;
+            this.shiftBackground();
+            // this.world.camera_x = -this.x;
         }, normalMs)
         this.intervalId = currentIntervalId;
     }
@@ -110,6 +111,14 @@ class Character extends MoveableObject {
                 this.moveRight();
             }
         }
+    }
+
+
+    shiftBackground() {
+        this.world.camera_x = -this.x;
+        this.world.camera_bgLayer3 = (-this.x * 0.1);
+        this.world.camera_bgLayer2 = (-this.x * 0.3);
+        this.world.camera_bgLayer1 = (-this.x * 0.6);
     }
 
 
