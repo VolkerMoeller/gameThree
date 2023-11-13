@@ -24,6 +24,7 @@ function showInformation(){
     console.log('My Backgrounds are: ', world.backgrounds);
     console.log('intervalIds: ',intervalIds);
     console.log('intervalId-Character ', world.character.intervalId);
+    console.log('level ', world.level);
 }
 
 
