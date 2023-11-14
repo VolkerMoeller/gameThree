@@ -5,6 +5,7 @@ class Level {
     layer3rd;
     layer2nd;
     layer1st;
+    level_end_x = 3500;
     // endboss;
     // bottles;
     // coins;

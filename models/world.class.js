@@ -8,7 +8,6 @@ class World {
     camera_bgLayer1 = 0;
     camera_bgLayer2 = 0;
     camera_bgLayer3 = 0;
-    stageWidth = 4000;
     requestId = 0;
 
 
@@ -36,7 +35,7 @@ class World {
     }
 
 
-    restart() {
+    restartLevel1() {
         cancelAnimationFrame(this.requestId);
         this.character.x = 10;
         this.level = [];

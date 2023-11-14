@@ -5,6 +5,10 @@ class Character extends MoveableObject {
     height = Math.floor(1200 / 4);
     speed = 40;
     world;
+    walking_sound = new Audio('audio/walking.mp3');
+    justIdle = false;
+    justLongIdle = false;
+    startIdle;
 
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -82,23 +86,35 @@ class Character extends MoveableObject {
         this.animate();
     }
 
-
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
             this.animateByChangingValue();
             this.shiftBackground();
-        }, slowMs)
+        }, normalMs)
         this.intervalId = currentIntervalId;
     }
 
 
     animateByChangingImg() {
+        this.pauseSounds();
         if (this.isWalking()) {
+            this.justIdle = false;
+            // this.justLongIdle = false;
             this.changeImg(this.IMAGES_WALK);
+            this.playSound(this.walking_sound, quietVolume);
         } else {
-            if (this.isIdle) {
+            if (this.isIdle && !this.justIdle) {
+                this.startIdle = Date.now();
+                this.justIdle = true;
                 this.changeImg(this.IMAGES_IDLE);
+            } else {
+                if (this.isIdle && this.justIdle) {
+                    if (this.isLongIdle()) {
+                        this.changeImg(this.IMAGES_LONG_IDLE);
+                        // this.justLongIdle = true;
+                    }
+                }
             }
         }
     }
@@ -118,10 +134,10 @@ class Character extends MoveableObject {
 
 
     shiftBackground() {
-        this.world.camera_x = -this.x;
-        this.world.camera_bgLayer3 = (-this.x * 0.1);
-        this.world.camera_bgLayer2 = (-this.x * 0.3);
-        this.world.camera_bgLayer1 = (-this.x * 0.6);
+        this.world.camera_x = -this.x + 70;
+        this.world.camera_bgLayer3 = (-this.x * 0.1) + 70;
+        this.world.camera_bgLayer2 = (-this.x * 0.3) + 70;
+        this.world.camera_bgLayer1 = (-this.x * 0.6) + 70;
     }
 
 
@@ -133,20 +149,39 @@ class Character extends MoveableObject {
     }
 
 
+    pauseSounds() {
+        this.walking_sound.pause();
+    }
+
+
+    playSound(obj, volume) {
+        obj.volume = volume;
+        obj.play();
+    }
+
+
     isWalking() {
         return this.world.keyboard.KEY_LEFT || this.world.keyboard.KEY_RIGHT;
     }
 
+
     isWalkingLeft() {
-        return this.world.keyboard.KEY_LEFT;
+        return this.world.keyboard.KEY_LEFT && this.x > 0;
     }
 
+
     isWalkingRight() {
-        return this.world.keyboard.KEY_RIGHT;
+        return this.world.keyboard.KEY_RIGHT && this.x < this.world.level.level_end_x;
     }
+
 
     isIdle() {
         return !this.isWalking;
+    }
+
+
+    isLongIdle() {
+        return Date.now() - this.startIdle > 3000;
     }
 
 
