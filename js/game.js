@@ -41,12 +41,6 @@ function stopAnimation() {
 }
 
 
-function resetGame() {
-    stopAnimation();
-    init();
-}
-
-
 onkeydown = (e) => {
     switch (e.code) {
         case 'ArrowLeft':
