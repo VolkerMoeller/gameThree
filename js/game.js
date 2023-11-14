@@ -4,7 +4,7 @@ let world
 let fastMs = 20;
 let normalMs =  70;
 let slowMs = 120;
-let quietVolume = 0.1;
+let quietVolume = 0.05;
 let intervalIds = []; 
 let currentIntervalId;
 let keyboard = new Keyboard();

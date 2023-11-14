@@ -2,6 +2,9 @@ class ChickenSmall extends MoveableObject {
     y = 375;
     width = Math.floor(236 / 5);
     height = Math.floor(210 / 5);
+    beep_sound = new Audio('audio/beep.mp3');
+    justBeep = false;
+    beep_ms = Math.floor(Math.random() * 1000 + 5000);
 
     IMAGES_WALK = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -26,13 +29,32 @@ class ChickenSmall extends MoveableObject {
         setStopableInterval(() => {
             this.animateByChangingImg();
             this.animateByChangingValue();
-
         }, slowMs)
     }
 
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_WALK);
+        this.beepSound();
+    }
+
+
+    beepSound() {
+        if (!this.justBeep) {
+            this.startBeep = Date.now();
+            this.beep_sound.play();
+            this.beep_sound.volume = quietVolume;
+            this.justBeep = true;
+        } else {
+            if (this.justBeep && this.waitMs(this.beep_ms)) {
+                this.justBeep = false;
+            }
+        }
+    }
+
+
+    waitMs(ms) {
+        return Date.now() - this.startBeep > ms;
     }
 
 
