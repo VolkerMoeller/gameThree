@@ -22,10 +22,10 @@ class Chicken extends MoveableObject {
         this.animate();
         this.speed = Math.floor((Math.random() * 4)) + 1;
         console.log('speed chicken: ', this.speed);
-
+        
     }
-
-
+    
+    
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();

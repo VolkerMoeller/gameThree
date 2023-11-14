@@ -8,7 +8,7 @@ class World {
     camera_bgLayer1 = 0;
     camera_bgLayer2 = 0;
     camera_bgLayer3 = 0;
-    level_end_x = 4000;
+    stageWidth = 4000;
 
 
     constructor(canvas, keyboard) {
@@ -17,7 +17,6 @@ class World {
         this.draw();
         this.keyboard = keyboard;
         this.setWorldTo();
-        console.log(this.level.enemies[0]);
     }
 
 
@@ -78,7 +77,6 @@ class World {
 
     setWorldTo() {
         this.character.world = this;
-        // this.level.enemies[0]
     }
 
 
