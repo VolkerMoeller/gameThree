@@ -3,7 +3,7 @@ class Character extends MoveableObject {
     y = 130;
     width = Math.floor(610 / 4);
     height = Math.floor(1200 / 4);
-    speed = 30;
+    speed = 40;
     world;
 
     IMAGES_IDLE = [

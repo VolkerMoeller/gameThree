@@ -17,7 +17,7 @@ class World {
         this.draw();
         this.keyboard = keyboard;
         this.setWorldTo();
-        // this.setWorldTo(this.level.enemies);
+        console.log(this.level.enemies[0]);
     }
 
 
@@ -78,6 +78,7 @@ class World {
 
     setWorldTo() {
         this.character.world = this;
+        // this.level.enemies[0]
     }
 
 
