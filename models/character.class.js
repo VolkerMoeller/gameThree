@@ -5,10 +5,10 @@ class Character extends MoveableObject {
     height = Math.floor(1200 / 4);
     speed = 40;
     world;
-    walking_sound = new Audio('audio/walking.mp3');
-    justIdle = false;
-    justLongIdle = false;
     startIdle;
+    justIdle = false;
+    walking_sound = new Audio('audio/walking.mp3');
+    snoring_sound = new Audio('audio/snoring.mp3');
 
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -100,7 +100,6 @@ class Character extends MoveableObject {
         this.pauseSounds();
         if (this.isWalking()) {
             this.justIdle = false;
-            // this.justLongIdle = false;
             this.changeImg(this.IMAGES_WALK);
             this.playSound(this.walking_sound, quietVolume);
         } else {
@@ -112,7 +111,7 @@ class Character extends MoveableObject {
                 if (this.isIdle && this.justIdle) {
                     if (this.isLongIdle()) {
                         this.changeImg(this.IMAGES_LONG_IDLE);
-                        // this.justLongIdle = true;
+                        this.playSound(this.snoring_sound, quietVolume);
                     }
                 }
             }
@@ -151,6 +150,7 @@ class Character extends MoveableObject {
 
     pauseSounds() {
         this.walking_sound.pause();
+        this.snoring_sound.pause();
     }
 
 
