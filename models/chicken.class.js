@@ -4,11 +4,11 @@ class Chicken extends MoveableObject {
     height = Math.floor(243 / 4);
     world;
     noise_sound = new Audio('audio/cackle.mp3');
-    
+
     random_x = Math.floor(Math.floor(Math.random() * (4000 - 100)) + 100);
     random_speed = Math.floor((Math.random() * 4)) + 1;
     random_noises = Math.floor(Math.random() * 1000 + 10000);
-    
+
     delay_noises = this.random_noises;
 
     IMAGES_WALK = [
@@ -29,7 +29,6 @@ class Chicken extends MoveableObject {
         this.x = this.random_x;
         this.speed = this.random_speed;
         this.animate();
-        console.log(this.world);
     }
 
 

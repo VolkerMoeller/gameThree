@@ -73,8 +73,8 @@ class Character extends MoveableObject {
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png'
     ]
-
-
+    
+    
     constructor() {
         super().loadImage('./img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_IDLE);
@@ -85,7 +85,7 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.animate();
     }
-
+    
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -110,8 +110,8 @@ class Character extends MoveableObject {
             }
         }
     }
-
-
+    
+    
     walk() {
         this.justIdle = false;
         this.changeImg(this.IMAGES_WALK);
@@ -126,8 +126,8 @@ class Character extends MoveableObject {
         this.justIdle = true;
         this.changeImg(this.IMAGES_IDLE);
     }
-
-
+    
+    
     longIdle() {
         if (this.isLongIdle()) {
             this.changeImg(this.IMAGES_LONG_IDLE);
@@ -149,8 +149,8 @@ class Character extends MoveableObject {
             }
         }
     }
-
-
+    
+    
     shiftBackground() {
         this.world.camera_x = -this.x + 70;
         this.world.camera_bgLayer3 = (-this.x * 0.1) + 70;
@@ -158,13 +158,13 @@ class Character extends MoveableObject {
         this.world.camera_bgLayer1 = (-this.x * 0.6) + 70;
     }
 
-
+    
     soundsPause() {
         this.walking_sound.pause();
         this.snoring_sound.pause();
     }
 
-
+    
     isWalking() {
         return this.world.keyboard.KEY_LEFT || this.world.keyboard.KEY_RIGHT;
     }

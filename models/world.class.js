@@ -27,11 +27,30 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
+        // this.testCanvas();
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         this.requestId = requestAnimationFrame(() => {
             self.draw();
         });
+    }
+
+    testCanvas() {
+        this.drawCircle();
+        this.drawText();
+    }
+
+    drawCircle() {
+        this.ctx.beginPath();
+        this.ctx.arc(95, 150, 40, 0, 2 * Math.PI);
+        this.ctx.stroke();
+    }
+
+    drawText() {
+        this.ctx.font = "30px Comic Sans MS";
+        this.ctx.fillStyle = "red";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText("Hello World", canvas.width / 2, canvas.height / 2);
     }
 
 
@@ -78,9 +97,8 @@ class World {
     setWorldTo() {
         this.character.world = this;
         for (let i = 0; i < this.level.enemies.length; i++) {
-            this.level.enemies[i].world = this;          
+            this.level.enemies[i].world = this;
         }
-        this.level.world = this;
     }
 
 

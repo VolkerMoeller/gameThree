@@ -24,4 +24,5 @@ class Level {
         // this.amountBottles = this.bottles.length;
         // this.amountCoins = this.coins.length;
     };
+
 }
