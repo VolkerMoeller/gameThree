@@ -106,11 +106,15 @@ class Character extends MoveableObject {
             if (this.isWalking()) {
                 this.animWalk();
             } else {
-                if (this.isIdle && !this.justIdle || this.y == 130) {
+                if (this.isIdle && !this.justIdle) {
                     this.animIdle();
                 } else {
-                    if (this.isIdle && this.justIdle) {
+                    if (this.isLongIdle && this.justIdle) {
                         this.animLongIdle();
+                    } else {
+                        // if (this.y == 130) {
+                        //     console.log('hier');
+                        // }
                     }
                 }
             }
@@ -119,8 +123,10 @@ class Character extends MoveableObject {
 
 
     animJump() {
+        this.justIdle = false;
         this.changeImg(this.IMAGES_JUMP);
     }
+
 
     animWalk() {
         this.justIdle = false;
@@ -160,7 +166,6 @@ class Character extends MoveableObject {
         if (this.isJumping()) {
             this.jump();
         }
-
     }
 
 
@@ -194,7 +199,8 @@ class Character extends MoveableObject {
 
 
     isIdle() {
-        return !this.isWalking;
+        return !this.isWalking &&
+            !this.isJumping;
     }
 
 
