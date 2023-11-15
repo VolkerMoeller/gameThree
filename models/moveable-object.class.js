@@ -1,6 +1,6 @@
 class MoveableObject {
     x = 100;
-    y = 100;
+    y = 0;
     height = 100;
     width = 200;
     img;
@@ -11,6 +11,8 @@ class MoveableObject {
     otherDirection = false;
     soundOn = false;
     just_noises = false;
+    speedY = 0;
+    acceleration = 5;
 
 
     loadImage(path) {
@@ -43,6 +45,11 @@ class MoveableObject {
     }
 
 
+    jump() {
+            this.speedY = 40;
+    }
+
+
     changeImg(arrImg) {
         let i = this.currentImage % arrImg.length;
         let path = arrImg[i];
@@ -56,7 +63,7 @@ class MoveableObject {
         obj.play();
     }
 
-    
+
     noises(wait_ms) {
         if (!this.just_noises) {
             this.startTime = Date.now();
@@ -69,4 +76,26 @@ class MoveableObject {
             }
         }
     }
+
+
+    applyGravity(ground_y) {
+        setStopableInterval(() => {
+            if (this.isAboveGround(ground_y) || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+            if (this.y > ground_y) {
+                this.y = ground_y;
+            }
+        }, normalMs);
+    }
+
+
+    isAboveGround(ground_y) {
+        return this.y < ground_y;
+    }
+
+
+
+
 }

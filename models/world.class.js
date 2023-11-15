@@ -23,10 +23,10 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.drawBackground();
-        this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
+        this.addToMap(this.character);
+        this.addObjectsToMap(this.level.enemies);
         // this.testCanvas();
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
@@ -35,16 +35,19 @@ class World {
         });
     }
 
+    
     testCanvas() {
         this.drawCircle();
         this.drawText();
     }
+ 
 
     drawCircle() {
         this.ctx.beginPath();
         this.ctx.arc(95, 150, 40, 0, 2 * Math.PI);
         this.ctx.stroke();
     }
+
 
     drawText() {
         this.ctx.font = "30px Comic Sans MS";
@@ -138,6 +141,7 @@ class World {
         cancelAnimationFrame(this.requestId);
         this.character.x = 10;
         this.character.justIdle = false;
+        this.character.otherDirection = false;
 
         this.level = [];
         this.level = new Level(
