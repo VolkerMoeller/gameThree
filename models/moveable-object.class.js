@@ -56,6 +56,7 @@ class MoveableObject {
         obj.play();
     }
 
+    
     noises(wait_ms) {
         if (!this.just_noises) {
             this.startTime = Date.now();

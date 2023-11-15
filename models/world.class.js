@@ -19,105 +19,13 @@ class World {
         this.setWorldTo();
     }
 
-
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.drawBackground();
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-
         this.ctx.translate(-this.camera_x, 0);
-        let self = this;
-        this.requestId = requestAnimationFrame(() => {
-            self.draw();
-        });
-    }
-
-
-    restartLevel1() {
-        cancelAnimationFrame(this.requestId);
-        this.character.x = 10;
-        this.character.justIdle = false;
-
-        this.level = [];
-        this.level = new Level(
-            [
-                new Chicken(),
-                new Chicken(),
-                new Chicken(),
-                new ChickenSmall(),
-                new ChickenSmall(),
-                new ChickenSmall()
-            ],
-            [
-                new Cloud('img/5_background/layers/4_clouds/1.png', 0),
-                new Cloud('img/5_background/layers/4_clouds/2.png', 719),
-                new Cloud('img/5_background/layers/4_clouds/1.png', 719 * 2),
-                new Cloud('img/5_background/layers/4_clouds/2.png', 719 * 3),
-                new Cloud('img/5_background/layers/4_clouds/1.png', 719 * 4),
-                new Cloud('img/5_background/layers/4_clouds/2.png', 719 * 5),
-            ],
-            [
-                new BackgroundObject('img/5_background/layers/air.png', -719),
-                new BackgroundObject('img/5_background/layers/air.png', 0),
-                new BackgroundObject('img/5_background/layers/air.png', 719),
-                new BackgroundObject('img/5_background/layers/air.png', 719 * 2),
-                new BackgroundObject('img/5_background/layers/air.png', 719 * 3),
-                new BackgroundObject('img/5_background/layers/air.png', 719 * 4),
-                new BackgroundObject('img/5_background/layers/air.png', 719 * 5)
-            ],
-            [
-                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
-                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0),
-                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719),
-                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 2),
-                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 3),
-                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 4),
-                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 5)
-            ],
-            [
-                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),
-                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 0),
-                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719),
-                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 2),
-                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 3),
-                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 4),
-                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 5)
-            ],
-            [
-                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', -719),
-                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0),
-                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719),
-                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 2),
-                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 3),
-                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 4),
-                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 5)
-            ]
-            // [
-            //     new Endboss()
-            // ],
-            // [
-            //     new SalsaBottleLeft(),
-            //     new SalsaBottleLeft(),
-            //     new SalsaBottleRight(),
-            //     new SalsaBottleRight(),
-            //     new SalsaBottleRight(),
-            //     new SalsaBottleLeft(),
-            //     new SalsaBottleLeft(),
-            //     new SalsaBottleRight(),
-            //     new SalsaBottleRight(),
-            //     new SalsaBottleRight()
-            // ],
-            // [
-            //     new Coin(),
-            //     new Coin(),
-            //     new Coin(),
-            //     new Coin(),
-            //     new Coin(),
-            // ]
-        );
-
         let self = this;
         this.requestId = requestAnimationFrame(() => {
             self.draw();
@@ -186,7 +94,7 @@ class World {
 
     onOffSounds(boolean) {
         for (let i = 0; i < this.level.enemies.length; i++) {
-            this.level.enemies[i].soundOn = boolean;            
+            this.level.enemies[i].soundOn = boolean;
         }
         this.character.soundOn = boolean;
     }
@@ -199,5 +107,93 @@ class World {
 
     soundsOff() {
         this.onOffSounds(false);
+    }
+
+    
+    reset() {
+        cancelAnimationFrame(this.requestId);
+        this.character.x = 10;
+        this.character.justIdle = false;
+
+        this.level = [];
+        this.level = new Level(
+            [
+                new Chicken(),
+                new Chicken(),
+                new Chicken(),
+                new ChickenSmall(),
+                new ChickenSmall(),
+                new ChickenSmall(),
+                new Endboss()
+            ],
+            [
+                new Cloud('img/5_background/layers/4_clouds/1.png', 0),
+                new Cloud('img/5_background/layers/4_clouds/2.png', 719),
+                new Cloud('img/5_background/layers/4_clouds/1.png', 719 * 2),
+                new Cloud('img/5_background/layers/4_clouds/2.png', 719 * 3),
+                new Cloud('img/5_background/layers/4_clouds/1.png', 719 * 4),
+                new Cloud('img/5_background/layers/4_clouds/2.png', 719 * 5),
+            ],
+            [
+                new BackgroundObject('img/5_background/layers/air.png', -719),
+                new BackgroundObject('img/5_background/layers/air.png', 0),
+                new BackgroundObject('img/5_background/layers/air.png', 719),
+                new BackgroundObject('img/5_background/layers/air.png', 719 * 2),
+                new BackgroundObject('img/5_background/layers/air.png', 719 * 3),
+                new BackgroundObject('img/5_background/layers/air.png', 719 * 4),
+                new BackgroundObject('img/5_background/layers/air.png', 719 * 5)
+            ],
+            [
+                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
+                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0),
+                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719),
+                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 2),
+                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 3),
+                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 4),
+                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 5)
+            ],
+            [
+                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),
+                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 0),
+                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719),
+                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 2),
+                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 3),
+                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 4),
+                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 5)
+            ],
+            [
+                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', -719),
+                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0),
+                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719),
+                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 2),
+                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 3),
+                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 4),
+                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 5)
+            ]
+            // [
+            //     new SalsaBottleLeft(),
+            //     new SalsaBottleLeft(),
+            //     new SalsaBottleRight(),
+            //     new SalsaBottleRight(),
+            //     new SalsaBottleRight(),
+            //     new SalsaBottleLeft(),
+            //     new SalsaBottleLeft(),
+            //     new SalsaBottleRight(),
+            //     new SalsaBottleRight(),
+            //     new SalsaBottleRight()
+            // ],
+            // [
+            //     new Coin(),
+            //     new Coin(),
+            //     new Coin(),
+            //     new Coin(),
+            //     new Coin(),
+            // ]
+        );
+
+        let self = this;
+        this.requestId = requestAnimationFrame(() => {
+            self.draw();
+        });
     }
 }

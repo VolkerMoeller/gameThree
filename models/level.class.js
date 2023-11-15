@@ -6,12 +6,11 @@ class Level {
     layer2nd;
     layer1st;
     level_end_x = 3500;
-    // endboss;
     // bottles;
     // coins;
     // amountBottles;
     // amountCoins;
-    
+
 
 
     constructor(enemies, clouds, air, layer3rd, layer2nd, layer1st) {
@@ -21,7 +20,6 @@ class Level {
         this.layer3rd = layer3rd;
         this.layer2nd = layer2nd;
         this.layer1st = layer1st;
-        // this.endboss = endboss;
         // this.bottles = bottles;
         // this.amountBottles = this.bottles.length;
         // this.coins = coins;
