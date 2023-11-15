@@ -52,18 +52,11 @@ const level1 = new Level(
         new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 4),
         new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 5)
     ],
-    // [
-    //     new SalsaBottleLeft(),
-    //     new SalsaBottleLeft(),
-    //     new SalsaBottleRight(),
-    //     new SalsaBottleRight(),
-    //     new SalsaBottleRight(),
-    //     new SalsaBottleLeft(),
-    //     new SalsaBottleLeft(),
-    //     new SalsaBottleRight(),
-    //     new SalsaBottleRight(),
-    //     new SalsaBottleRight()
-    // ],
+    [
+        new SalsaBottle(),
+        new SalsaBottle(),
+        new SalsaBottle()
+    ],
     // [
     //     new Coin(),
     //     new Coin(),
