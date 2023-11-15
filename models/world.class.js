@@ -38,6 +38,8 @@ class World {
     restartLevel1() {
         cancelAnimationFrame(this.requestId);
         this.character.x = 10;
+        this.character.justIdle = false;
+
         this.level = [];
         this.level = new Level(
             [
@@ -179,5 +181,23 @@ class World {
     reFlipImg(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+
+    onOffSounds(boolean) {
+        for (let i = 0; i < this.level.enemies.length; i++) {
+            this.level.enemies[i].soundOn = boolean;            
+        }
+        this.character.soundOn = boolean;
+    }
+
+
+    soundsOn() {
+        this.onOffSounds(true);
+    }
+
+
+    soundsOff() {
+        this.onOffSounds(false);
     }
 }

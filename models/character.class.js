@@ -97,23 +97,42 @@ class Character extends MoveableObject {
 
 
     animateByChangingImg() {
-        this.pauseSounds();
+        this.soundsPause();
         if (this.isWalking()) {
-            this.justIdle = false;
-            this.changeImg(this.IMAGES_WALK);
-            this.playSound(this.walking_sound, quietVolume);
+            this.walk();
         } else {
             if (this.isIdle && !this.justIdle) {
-                this.startIdle = Date.now();
-                this.justIdle = true;
-                this.changeImg(this.IMAGES_IDLE);
+                this.idle();
             } else {
                 if (this.isIdle && this.justIdle) {
-                    if (this.isLongIdle()) {
-                        this.changeImg(this.IMAGES_LONG_IDLE);
-                        this.playSound(this.snoring_sound, quietVolume);
-                    }
+                    this.longIdle();
                 }
+            }
+        }
+    }
+
+
+    walk() {
+        this.justIdle = false;
+        this.changeImg(this.IMAGES_WALK);
+        if (this.soundOn) {
+            this.playSound(this.walking_sound, quietVolume);
+        }
+    }
+
+
+    idle() {
+        this.startIdle = Date.now();
+        this.justIdle = true;
+        this.changeImg(this.IMAGES_IDLE);
+    }
+
+
+    longIdle() {
+        if (this.isLongIdle()) {
+            this.changeImg(this.IMAGES_LONG_IDLE);
+            if (this.soundOn) {
+                this.sound(this.snoring_sound, quietVolume);
             }
         }
     }
@@ -140,23 +159,9 @@ class Character extends MoveableObject {
     }
 
 
-    changeImg(arrImg) {
-        let i = this.currentImage % arrImg.length;
-        let path = arrImg[i];
-        this.img = this.imgCache[path];
-        this.currentImage++;
-    }
-
-
-    pauseSounds() {
+    soundsPause() {
         this.walking_sound.pause();
         this.snoring_sound.pause();
-    }
-
-
-    playSound(obj, volume) {
-        obj.volume = volume;
-        obj.play();
     }
 
 
@@ -181,7 +186,7 @@ class Character extends MoveableObject {
 
 
     isLongIdle() {
-        return Date.now() - this.startIdle > 3000;
+        return Date.now() - this.startIdle > 5000;
     }
 
 

@@ -2,10 +2,10 @@ let canvas;
 let ctx;
 let world
 let fastMs = 20;
-let normalMs =  70;
+let normalMs = 70;
 let slowMs = 120;
 let quietVolume = 0.05;
-let intervalIds = []; 
+let intervalIds = [];
 let currentIntervalId;
 let keyboard = new Keyboard();
 
@@ -13,22 +13,22 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
-    world = new World(canvas, keyboard); 
+    world = new World(canvas, keyboard);
 }
 
 
-function showInformation(){
+function showInformation() {
     console.log('My World is: ', world);
     console.log('My Character is: ', world.character);
     console.log('My Enemies are: ', world.level.enemies);
     console.log('My Clouds are: ', world.level.clouds);
-    console.log('intervalIds: ',intervalIds);
+    console.log('intervalIds: ', intervalIds);
     console.log('intervalId-Character ', world.character.intervalId);
     console.log('level ', world.level);
 }
 
 
-function setStopableInterval(fn, ms){
+function setStopableInterval(fn, ms) {
     let intervalId = setInterval(fn, ms);
     intervalIds.push(intervalId);
     currentIntervalId = intervalId;
@@ -36,7 +36,7 @@ function setStopableInterval(fn, ms){
 
 
 function stopAnimation() {
-    intervalIds.forEach((e)=>{
+    intervalIds.forEach((e) => {
         clearInterval(e);
     })
 }
