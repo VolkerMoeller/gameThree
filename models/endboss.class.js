@@ -4,6 +4,7 @@ class Endboss extends MoveableObject {
     height = Math.floor(1217 / 3);
     win_sound = new Audio('audio/win.mp3');
     attack_sound = new Audio('audio/endbossHit.mp3');
+    world;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',

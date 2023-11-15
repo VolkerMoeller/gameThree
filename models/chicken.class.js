@@ -2,6 +2,7 @@ class Chicken extends MoveableObject {
     y = 360;
     width = Math.floor(248 / 4);
     height = Math.floor(243 / 4);
+    world;
     noise_sound = new Audio('audio/cackle.mp3');
     
     random_x = Math.floor(Math.floor(Math.random() * (4000 - 100)) + 100);
@@ -28,6 +29,7 @@ class Chicken extends MoveableObject {
         this.x = this.random_x;
         this.speed = this.random_speed;
         this.animate();
+        console.log(this.world);
     }
 
 

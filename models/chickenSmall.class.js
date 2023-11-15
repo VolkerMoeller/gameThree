@@ -2,6 +2,7 @@ class ChickenSmall extends MoveableObject {
     y = 375;
     width = Math.floor(236 / 5);
     height = Math.floor(210 / 5);
+    world;
     noise_sound = new Audio('audio/beep.mp3');
 
     random_x = Math.floor(Math.random() * (4000 - 100)) + 100;
@@ -33,7 +34,7 @@ class ChickenSmall extends MoveableObject {
         setStopableInterval(() => {
             this.animateByChangingImg();
             this.animateByChangingValue();
-        }, slowMs)
+        }, slowMs);
     }
 
 

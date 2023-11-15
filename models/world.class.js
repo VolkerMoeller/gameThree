@@ -26,6 +26,7 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         this.requestId = requestAnimationFrame(() => {
@@ -76,6 +77,10 @@ class World {
 
     setWorldTo() {
         this.character.world = this;
+        for (let i = 0; i < this.level.enemies.length; i++) {
+            this.level.enemies[i].world = this;          
+        }
+        this.level.world = this;
     }
 
 
@@ -176,13 +181,13 @@ class World {
                 new SalsaBottle(),
                 new SalsaBottle()
             ],
-            // [
-            //     new Coin(),
-            //     new Coin(),
-            //     new Coin(),
-            //     new Coin(),
-            //     new Coin(),
-            // ]
+            [
+                new Coin(),
+                new Coin(),
+                new Coin(),
+                new Coin(),
+                new Coin()
+            ]
         );
 
         let self = this;

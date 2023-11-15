@@ -43,22 +43,21 @@ class SalsaBottle extends MoveableObject {
         this.animate();
     }
 
+
     rightSize(sequenz) {
         this.width = this.imageSizes[sequenz + '_width'];
         this.height = this.imageSizes[sequenz + '_height'];
     }
 
+
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
-            // this.animateByChangingValue();
-        }, slowMs)
+        }, slowerMs)
     }
 
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_ONGROUND);
-        // if (this.soundOn) {
-        // this.noises(this.delay_noises);
     }
 }

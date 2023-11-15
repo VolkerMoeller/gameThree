@@ -91,7 +91,7 @@ class Character extends MoveableObject {
             this.animateByChangingImg();
             this.animateByChangingValue();
             this.shiftBackground();
-        }, normalMs)
+        }, normalMs);
         this.intervalId = currentIntervalId;
     }
 

@@ -4,6 +4,7 @@ let world
 let fastMs = 20;
 let normalMs = 70;
 let slowMs = 120;
+let slowerMs = 500;
 let quietVolume = 0.05;
 let mediumVolume = 0.08;
 let intervalIds = [];
@@ -21,12 +22,6 @@ function init() {
 function showInformation() {
     console.log('My World is: ', world);
     console.log('My Character is: ', world.character);
-    console.log('My Enemies are: ', world.level.enemies);
-    console.log('My Clouds are: ', world.level.clouds);
-    console.log('intervalIds: ', intervalIds);
-    console.log('intervalId-Character ', world.character.intervalId);
-    console.log('level ', world.level);
-    console.log('endboss ', world.level.enboss);
 }
 
 
