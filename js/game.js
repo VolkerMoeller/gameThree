@@ -1,17 +1,21 @@
 let canvas;
 let ctx;
 let world
+
 let fastMs = 20;
 let normalMs = 70;
 let slowMs = 120;
 let slowerMs = 500;
+
 let veryQuietVolume = 0.02;
 let quietVolume = 0.04;
 let mediumVolume = 0.08;
 let loudVolume = 0.20;
 let veryLoudVolume = 1.0;
+
 let intervalIds = [];
 let currentIntervalId;
+
 let keyboard = new Keyboard();
 
 

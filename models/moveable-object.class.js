@@ -13,6 +13,10 @@ class MoveableObject {
     just_noises = false;
     speedY = 0;
     acceleration = 5;
+    offsetL = 0;
+    offsetR = 0;
+    offsetT = 0;
+    offsetB = 0;
 
 
     loadImage(path) {
@@ -95,9 +99,18 @@ class MoveableObject {
         return this.y < ground_y;
     }
 
+
     isNearby() {
         return this.world.character.x > this.x && this.world.character.x - this.x < 300 ||
         this.world.character.x < this.x && this.x - this.world.character.x < 300;
+    }
+
+    
+    isColliding(obj) {
+        return ((this.x + this.offsetL) + (this.width - this.offsetR)) >= (obj.x + obj.offsetL) &&
+            (this.x + this.offsetL) <= ((obj.x + obj.offsetL) + (obj.width - obj.offsetR)) &&
+            ((this.y + this.offsetT) + (this.height - this.offsetB)) >= (obj.y + obj.offsetT) &&
+            ((this.y + this.offsetT)) <= ((obj.y + obj.offsetT) + (obj.height - obj.offsetB));
     }
 
 

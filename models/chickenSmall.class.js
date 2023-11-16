@@ -12,6 +12,11 @@ class ChickenSmall extends MoveableObject {
     noise_volume = 0.2;
     delay_noises = this.random_noises;
 
+    offsetT = 6;
+    offsetB = 12;
+    offsetL = 6;
+    offsetR = 14;
+
     IMAGES_WALK = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',

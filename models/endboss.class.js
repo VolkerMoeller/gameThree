@@ -11,6 +11,11 @@ class Endboss extends MoveableObject {
     noise_volume = 0.40;
     delay_noises = 800;
 
+    offsetT = 75;
+    offsetB = 95;
+    offsetL = 75;
+    offsetR = 145;
+
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',

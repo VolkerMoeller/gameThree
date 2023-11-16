@@ -8,9 +8,16 @@ class Character extends MoveableObject {
     world;
     startIdle;
     justIdle = false;
+
     level_sound = new Audio('audio/el-pollo-loco.mp3')
     walking_sound = new Audio('audio/walking.mp3');
     snoring_sound = new Audio('audio/snoring.mp3');
+
+    offsetY = 100;
+    offsetT = 100;
+    offsetB = 110;
+    offsetL = 20;
+    offsetR = 60;
 
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',

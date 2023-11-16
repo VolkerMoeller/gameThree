@@ -16,6 +16,7 @@ class World {
         this.draw();
         this.keyboard = keyboard;
         this.setWorldTo();
+        this.run();
     }
 
     draw() {
@@ -34,12 +35,35 @@ class World {
         });
     }
 
-    
+    setWorldTo() {
+        this.character.world = this;
+        for (let i = 0; i < this.level.enemies.length; i++) {
+            this.level.enemies[i].world = this;
+        }
+    }
+
+
+    run() {
+        setInterval(() => {
+            this.checkCollisions();
+        }, slowMs);
+    }
+
+
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                console.log('colliding');
+            };
+        });
+    }
+
+
     testCanvas() {
         this.drawCircle();
         this.drawText();
     }
- 
+
 
     drawCircle() {
         this.ctx.beginPath();
@@ -82,7 +106,9 @@ class World {
         if (mo.otherDirection) {
             this.flipImg(mo);
         }
+
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        
         if (mo.otherDirection) {
             this.reFlipImg(mo);
         }
@@ -93,14 +119,6 @@ class World {
         obj.forEach((o) => {
             this.addToMap(o);
         });
-    }
-
-
-    setWorldTo() {
-        this.character.world = this;
-        for (let i = 0; i < this.level.enemies.length; i++) {
-            this.level.enemies[i].world = this;
-        }
     }
 
 
@@ -143,8 +161,8 @@ class World {
         this.character.otherDirection = false;
 
         this.level = [];
-        level1 = [];   
-        
+        level1 = [];
+
         this.level = new Level(
             [
                 new Chicken(),
