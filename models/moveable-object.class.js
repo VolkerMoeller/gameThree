@@ -64,11 +64,11 @@ class MoveableObject {
     }
 
 
-    noises(wait_ms) {
+    noises(wait_ms, vol) {
         if (!this.just_noises) {
             this.startTime = Date.now();
             this.noise_sound.play();
-            this.noise_sound.volume = quietVolume;
+            this.noise_sound.volume = vol;
             this.just_noises = true;
         } else {
             if (this.just_noises && this.wait(this.startTime, wait_ms)) {

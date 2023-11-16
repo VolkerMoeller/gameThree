@@ -18,11 +18,13 @@ class Coin extends MoveableObject {
         this.animate();
     }
 
+    
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
         }, slowerMs);
     }
+
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_COINSSPARKLE);

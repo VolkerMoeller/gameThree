@@ -10,7 +10,6 @@ class World {
     camera_bgLayer3 = 0;
     requestId = 0;
 
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -144,6 +143,8 @@ class World {
         this.character.otherDirection = false;
 
         this.level = [];
+        level1 = [];   
+        
         this.level = new Level(
             [
                 new Chicken(),

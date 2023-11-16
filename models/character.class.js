@@ -8,6 +8,7 @@ class Character extends MoveableObject {
     world;
     startIdle;
     justIdle = false;
+    level_sound = new Audio('audio/el-pollo-loco.mp3')
     walking_sound = new Audio('audio/walking.mp3');
     snoring_sound = new Audio('audio/snoring.mp3');
 
@@ -93,10 +94,19 @@ class Character extends MoveableObject {
             this.animateByChangingImg();
             this.animateByChangingValue();
             this.shiftBackground();
+            this.levelSound();
         }, normalMs);
         this.intervalId = currentIntervalId;
     }
-
+    
+    levelSound(){
+        if (this.soundOn && !this.isAlert()) {
+            this.sound(this.level_sound, quietVolume);
+        }
+        if (this.isAlert()) {
+            this.level_sound.pause();
+        }
+    }
 
     animateByChangingImg() {
         this.soundsPause();
@@ -109,12 +119,8 @@ class Character extends MoveableObject {
                 if (this.isIdle && !this.justIdle) {
                     this.animIdle();
                 } else {
-                    if (this.isLongIdle && this.justIdle) {
+                    if (this.isLongIdle && this.justIdle && !this.isAlert()) {
                         this.animLongIdle();
-                    } else {
-                        // if (this.y == 130) {
-                        //     console.log('hier');
-                        // }
                     }
                 }
             }
@@ -132,7 +138,7 @@ class Character extends MoveableObject {
         this.justIdle = false;
         this.changeImg(this.IMAGES_WALK);
         if (this.soundOn) {
-            this.sound(this.walking_sound, mediumVolume);
+            this.sound(this.walking_sound, veryLoudVolume);
         }
     }
 
@@ -148,7 +154,7 @@ class Character extends MoveableObject {
         if (this.isLongIdle()) {
             this.changeImg(this.IMAGES_LONG_IDLE);
             if (this.soundOn) {
-                this.sound(this.snoring_sound, quietVolume);
+                this.sound(this.snoring_sound, loudVolume);
             }
         }
     }
@@ -211,6 +217,10 @@ class Character extends MoveableObject {
 
     isJumping() {
         return this.world.keyboard.KEY_SPACE && !this.isAboveGround(this.ground_y);
+    }
+
+    isAlert() {
+        return this.world.level.enemies[0].isAlert();
     }
 
 

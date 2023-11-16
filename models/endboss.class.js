@@ -4,6 +4,9 @@ class Endboss extends MoveableObject {
     height = Math.floor(1217 / 3);
     win_sound = new Audio('audio/win.mp3');
     attack_sound = new Audio('audio/endbossHit.mp3');
+    noise_sound = new Audio('audio/endboss-cackle.mp3');
+    noise_volume = 0.40;
+    delay_noises = 800;
     world;
 
     IMAGES_WALKING = [
@@ -52,7 +55,7 @@ class Endboss extends MoveableObject {
     ]
 
     constructor() {
-        super().loadImage(this.IMAGES_ALERT[0]);
+        super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
@@ -72,7 +75,22 @@ class Endboss extends MoveableObject {
         this.intervalId = currentIntervalId;
     }
 
-    
+
     animateByChangingImg() {
-        this.changeImg(this.IMAGES_ALERT)};
+        if (this.isAlert()) {
+            this.changeImg(this.IMAGES_ALERT)
+            if (this.soundOn) {
+                this.noises(this.delay_noises, this.noise_volume);
+            }
+        }
+    };
+
+
+    isAlert() {
+        if (this.world) {
+            return this.world.character.x > 3000;
+        } else {
+            console.log('this.world not loaded jet');
+        }
+    }
 }

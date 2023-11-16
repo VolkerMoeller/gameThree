@@ -1,5 +1,5 @@
 class SalsaBottle extends MoveableObject {
-    y = 350;
+    y = 345;
     imageSizes = {
         'bottle_width': Math.floor(400 / 5),
         'bottle_height': Math.floor(400 / 5),
