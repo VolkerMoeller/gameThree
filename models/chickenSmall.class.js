@@ -6,7 +6,7 @@ class ChickenSmall extends MoveableObject {
     
     random_x = Math.floor(Math.random() * (4000 - 100)) + 100;
     random_speed = Math.floor((Math.random() * 4)) + 1;
-    random_noises = Math.floor(Math.random() * 1000 + 8000);
+    random_noises = Math.floor(Math.random() * 1000);
 
     noise_sound = new Audio('audio/beep.mp3');
     noise_volume = 0.2;
@@ -43,11 +43,15 @@ class ChickenSmall extends MoveableObject {
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_WALK);
-        if (this.soundOn && !this.world.level.enemies[0].isAlert()) {
+        if (this.soundOn && !this.world.level.enemies[0].isAlert() && this.isNearby()) {
             this.noises(this.delay_noises, this.noise_volume);
         }
     }
 
+    // isNearby() {
+    //     return this.world.character.x > this.x && this.world.character.x - this.x < 100 ||
+    //     this.world.character.x < this.x && this.x - this.world.character.x < 100;
+    // }
 
     animateByChangingValue() {
         this.moveLeft();

@@ -6,10 +6,10 @@ class Chicken extends MoveableObject {
     
     random_x = Math.floor(Math.floor(Math.random() * (4000 - 100)) + 100);
     random_speed = Math.floor((Math.random() * 4)) + 1;
-    random_noises = Math.floor(Math.random() * 1000 + 10000);
+    random_noises = Math.floor(Math.random() * 1000);
     
     noise_sound = new Audio('audio/cackle.mp3');
-    noise_volume = 0.02;
+    noise_volume = 0.1;
     delay_noises = this.random_noises;
 
     IMAGES_WALK = [
@@ -43,7 +43,7 @@ class Chicken extends MoveableObject {
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_WALK);
-        if (this.soundOn && !this.world.level.enemies[0].isAlert()) {
+        if (this.soundOn && !this.world.level.enemies[0].isAlert() && this.isNearby()) {
             this.noises(this.delay_noises, this.noise_volume);
         }
     }

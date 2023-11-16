@@ -95,6 +95,11 @@ class MoveableObject {
         return this.y < ground_y;
     }
 
+    isNearby() {
+        return this.world.character.x > this.x && this.world.character.x - this.x < 300 ||
+        this.world.character.x < this.x && this.x - this.world.character.x < 300;
+    }
+
 
 
 
