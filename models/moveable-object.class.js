@@ -13,10 +13,13 @@ class MoveableObject {
     just_noises = false;
     speedY = 0;
     acceleration = 5;
+
     offsetL = 0;
     offsetR = 0;
     offsetT = 0;
     offsetB = 0;
+
+    energy = 100;
 
 
     loadImage(path) {
@@ -112,8 +115,4 @@ class MoveableObject {
             ((this.y + this.offsetT) + (this.height - this.offsetB)) >= (obj.y + obj.offsetT) &&
             ((this.y + this.offsetT)) <= ((obj.y + obj.offsetT) + (obj.height - obj.offsetB));
     }
-
-
-
-
 }

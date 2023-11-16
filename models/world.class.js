@@ -9,6 +9,7 @@ class World {
     camera_bgLayer2 = 0;
     camera_bgLayer3 = 0;
     requestId = 0;
+    statusbar = new Statusbar();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -27,12 +28,22 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        // this.testCanvas();
+        this.drawStatusbar();
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         this.requestId = requestAnimationFrame(() => {
             self.draw();
         });
+    }
+
+    drawStatusbar() {
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusbar);
+        this.ctx.translate(this.camera_x, 0);
+        this.drawEnergy(this.character);
+        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.drawImage(this.statusbar.imgCache['img/7_statusbars/3_icons/icon_health.png'], 10, 35, Math.floor(157 / 4), Math.floor(158 / 4));
+        this.ctx.translate(this.camera_x, 0);
     }
 
 
@@ -47,7 +58,8 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-        }, slowMs);
+            this.checkIfDead();
+        }, normalMs);
     }
 
 
@@ -73,7 +85,7 @@ class World {
         }
 
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-        this.drawFrame(mo);
+        // this.drawFrame(mo);
 
         if (mo.otherDirection) {
             this.reFlipImg(mo);
@@ -84,9 +96,22 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                console.log('colliding');
+                this.characterLoseEnergy();
             };
         });
+    }
+
+
+    characterLoseEnergy() {
+        if (this.character.energy > 0) {
+            this.character.energy -= 1;
+        }
+    }
+
+    checkIfDead() {
+        if (this.character.energy == 0) {
+            console.log('dead');
+        }
     }
 
 
@@ -114,15 +139,10 @@ class World {
     drawFrame(mo) {
         if (
             mo instanceof Character ||
-            mo instanceof Chicken ||
-            mo instanceof ChickenSmall ||
-            mo instanceof SalsaBottle ||
-            mo instanceof Coin ||
-            mo instanceof Endboss
+            mo instanceof Chicken
         ) {
             this.rectangleRed(mo);
             this.rectangleBlue(mo);
-
         }
     }
 
@@ -169,27 +189,19 @@ class World {
     }
 
 
-    // ---------------------------
-    testCanvas() {
-        this.drawCircle();
-        this.drawText();
-    }
-
-
-    drawCircle() {
+    drawEnergy(mo) {
         this.ctx.beginPath();
-        this.ctx.arc(95, 150, 40, 0, 2 * Math.PI);
+        let grd = ctx.createLinearGradient(0, 35, 0, 75);
+        grd.addColorStop(0, "white");
+        grd.addColorStop(1, "#41B345");
+        this.ctx.strokeStyle = grd;
+        this.ctx.moveTo(mo.x - 40, mo.y - 70);
+        this.ctx.lineWidth = '10';
+        this.ctx.lineCap = "round";
+        this.ctx.lineTo(mo.x + mo.energy - 40, mo.y - 70);
         this.ctx.stroke();
     }
 
-
-    drawText() {
-        this.ctx.font = "30px Comic Sans MS";
-        this.ctx.fillStyle = "red";
-        this.ctx.textAlign = "center";
-        this.ctx.fillText("Hello World", canvas.width / 2, canvas.height / 2);
-    }
-    // ---------------------------
 
     reset() {
         cancelAnimationFrame(this.requestId);
