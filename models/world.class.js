@@ -35,6 +35,7 @@ class World {
         });
     }
 
+
     setWorldTo() {
         this.character.world = this;
         for (let i = 0; i < this.level.enemies.length; i++) {
@@ -108,7 +109,8 @@ class World {
         }
 
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-        
+        // this.drawFrame(mo);
+
         if (mo.otherDirection) {
             this.reFlipImg(mo);
         }
@@ -133,6 +135,40 @@ class World {
     reFlipImg(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+
+    drawFrame(mo) {
+        if (
+            mo instanceof Character ||
+            mo instanceof Chicken ||
+            mo instanceof ChickenSmall ||
+            mo instanceof SalsaBottle ||
+            mo instanceof Coin ||
+            mo instanceof Endboss
+        ) {
+            this.rectangleRed(mo);
+            this.rectangleBlue(mo);
+
+        }
+    }
+
+
+    rectangleRed(mo) {
+        this.ctx.beginPath();
+        this.ctx.lineWidth = '1';
+        this.ctx.strokeStyle = 'red';
+        this.ctx.rect(mo.x + mo.offsetL, mo.y + mo.offsetT, mo.width - mo.offsetR, mo.height - mo.offsetB);
+        this.ctx.stroke();
+    }
+
+
+    rectangleBlue(mo) {
+        this.ctx.beginPath();
+        this.ctx.lineWidth = '1';
+        this.ctx.strokeStyle = 'blue';
+        this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
+        this.ctx.stroke();
     }
 
 
