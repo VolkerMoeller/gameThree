@@ -3,14 +3,14 @@ class ChickenSmall extends MoveableObject {
     width = Math.floor(236 / 5);
     height = Math.floor(210 / 5);
     world;
-    noise_sound = new Audio('audio/beep.mp3');
-    noise_volume = 0.2;
-
+    
     random_x = Math.floor(Math.random() * (4000 - 100)) + 100;
     random_speed = Math.floor((Math.random() * 4)) + 1;
     random_noises = Math.floor(Math.random() * 1000 + 8000);
-    delay_noises = this.random_noises;
 
+    noise_sound = new Audio('audio/beep.mp3');
+    noise_volume = 0.2;
+    delay_noises = this.random_noises;
 
     IMAGES_WALK = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -22,6 +22,7 @@ class ChickenSmall extends MoveableObject {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
+    
     constructor() {
         super().loadImage('./img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALK);

@@ -2,12 +2,14 @@ class Endboss extends MoveableObject {
     y = 45;
     width = Math.floor(1045 / 3);
     height = Math.floor(1217 / 3);
+    world;
+
     win_sound = new Audio('audio/win.mp3');
     attack_sound = new Audio('audio/endbossHit.mp3');
     noise_sound = new Audio('audio/endboss-cackle.mp3');
+
     noise_volume = 0.40;
     delay_noises = 800;
-    world;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -54,6 +56,7 @@ class Endboss extends MoveableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ]
 
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -70,25 +73,36 @@ class Endboss extends MoveableObject {
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
-            // this.animateByChangingValue();
+            this.animateByChangingValue();
         }, slowMs)
         this.intervalId = currentIntervalId;
     }
 
 
     animateByChangingImg() {
-        if (this.isAlert()) {
-            this.changeImg(this.IMAGES_ALERT)
-            if (this.soundOn) {
-                this.noises(this.delay_noises, this.noise_volume);
+        if (!this.isAlert()) {
+            this.changeImg(this.IMAGES_WALKING);
+        } else {
+            if (this.isAlert()) {
+                this.changeImg(this.IMAGES_ALERT)
+                if (this.soundOn) {
+                    this.noises(this.delay_noises, this.noise_volume);
+                }
             }
         }
-    };
+    }
+
+    
+    animateByChangingValue() {
+        if (!this.isAlert()) {
+            this.moveLeft();
+        }
+    }
 
 
     isAlert() {
         if (this.world) {
-            return this.world.character.x > 3000;
+            return this.x - this.world.character.x < 400;
         } else {
             console.log('this.world not loaded jet');
         }
