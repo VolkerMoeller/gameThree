@@ -3,13 +3,13 @@ class Chicken extends MoveableObject {
     width = Math.floor(248 / 4);
     height = Math.floor(243 / 4);
     world;
-    noise_sound = new Audio('audio/cackle.mp3');
-    noise_volume = 0.02;
-
+    
     random_x = Math.floor(Math.floor(Math.random() * (4000 - 100)) + 100);
     random_speed = Math.floor((Math.random() * 4)) + 1;
     random_noises = Math.floor(Math.random() * 1000 + 10000);
-
+    
+    noise_sound = new Audio('audio/cackle.mp3');
+    noise_volume = 0.02;
     delay_noises = this.random_noises;
 
     IMAGES_WALK = [

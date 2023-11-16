@@ -98,15 +98,7 @@ class Character extends MoveableObject {
         }, normalMs);
         this.intervalId = currentIntervalId;
     }
-    
-    levelSound(){
-        if (this.soundOn && !this.isAlert()) {
-            this.sound(this.level_sound, quietVolume);
-        }
-        if (this.isAlert()) {
-            this.level_sound.pause();
-        }
-    }
+
 
     animateByChangingImg() {
         this.soundsPause();
@@ -128,6 +120,45 @@ class Character extends MoveableObject {
     }
 
 
+    animateByChangingValue() {
+        if (this.isWalkingLeft()) {
+            this.otherDirection = true;
+            this.moveLeft();
+        }
+        if (this.isWalkingRight()) {
+            this.otherDirection = false;
+            this.moveRight();
+        }
+        if (this.isJumping()) {
+            this.jump();
+        }
+    }
+
+
+    shiftBackground() {
+        this.world.camera_x = -this.x + 70;
+        this.world.camera_bgLayer3 = (-this.x * 0.1) + 70;
+        this.world.camera_bgLayer2 = (-this.x * 0.3) + 70;
+        this.world.camera_bgLayer1 = (-this.x * 0.6) + 70;
+    }
+
+
+    levelSound() {
+        if (this.soundOn && !this.isAlert()) {
+            this.sound(this.level_sound, quietVolume);
+        }
+        if (this.isAlert()) {
+            this.level_sound.pause();
+        }
+    }
+
+
+    soundsPause() {
+        this.walking_sound.pause();
+        this.snoring_sound.pause();
+    }
+
+    
     animJump() {
         this.justIdle = false;
         this.changeImg(this.IMAGES_JUMP);
@@ -160,34 +191,6 @@ class Character extends MoveableObject {
     }
 
 
-    animateByChangingValue() {
-        if (this.isWalkingLeft()) {
-            this.otherDirection = true;
-            this.moveLeft();
-        }
-        if (this.isWalkingRight()) {
-            this.otherDirection = false;
-            this.moveRight();
-        }
-        if (this.isJumping()) {
-            this.jump();
-        }
-    }
-
-
-    shiftBackground() {
-        this.world.camera_x = -this.x + 70;
-        this.world.camera_bgLayer3 = (-this.x * 0.1) + 70;
-        this.world.camera_bgLayer2 = (-this.x * 0.3) + 70;
-        this.world.camera_bgLayer1 = (-this.x * 0.6) + 70;
-    }
-
-
-    soundsPause() {
-        this.walking_sound.pause();
-        this.snoring_sound.pause();
-    }
-
 
     isWalking() {
         return this.world.keyboard.KEY_LEFT || this.world.keyboard.KEY_RIGHT;
@@ -205,8 +208,7 @@ class Character extends MoveableObject {
 
 
     isIdle() {
-        return !this.isWalking &&
-            !this.isJumping;
+        return !this.isWalking && !this.isJumping;
     }
 
 
