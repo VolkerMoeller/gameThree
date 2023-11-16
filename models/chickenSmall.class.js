@@ -43,7 +43,7 @@ class ChickenSmall extends MoveableObject {
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_WALK);
-        if (this.soundOn) {
+        if (this.soundOn && !this.world.level.enemies[0].isAlert()) {
             this.noises(this.delay_noises, this.noise_volume);
         }
     }

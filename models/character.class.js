@@ -108,7 +108,7 @@ class Character extends MoveableObject {
             if (this.isWalking()) {
                 this.animWalk();
             } else {
-                if (this.isIdle && !this.justIdle) {
+                if (this.isIdle && !this.justIdle || this.isAlert()) {
                     this.animIdle();
                 } else {
                     if (this.isLongIdle && this.justIdle && !this.isAlert()) {
