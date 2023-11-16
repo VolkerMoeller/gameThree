@@ -13,8 +13,8 @@ class World {
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
-        this.draw();
         this.keyboard = keyboard;
+        this.draw();
         this.setWorldTo();
         this.run();
     }
@@ -51,42 +51,42 @@ class World {
     }
 
 
-    checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                console.log('colliding');
-            };
-        });
-    }
-
-
-    testCanvas() {
-        this.drawCircle();
-        this.drawText();
-    }
-
-
-    drawCircle() {
-        this.ctx.beginPath();
-        this.ctx.arc(95, 150, 40, 0, 2 * Math.PI);
-        this.ctx.stroke();
-    }
-
-
-    drawText() {
-        this.ctx.font = "30px Comic Sans MS";
-        this.ctx.fillStyle = "red";
-        this.ctx.textAlign = "center";
-        this.ctx.fillText("Hello World", canvas.width / 2, canvas.height / 2);
-    }
-
-
     drawBackground() {
         this.addObjectsToMap(this.level.air);
         this.ctx.translate(-this.camera_x, 0);
         this.addObjectsToMap(this.level.clouds);
         this.moveBackground()
         this.ctx.translate(this.camera_x, 0);
+    }
+
+
+    addObjectsToMap(obj) {
+        obj.forEach((o) => {
+            this.addToMap(o);
+        });
+    }
+
+
+    addToMap(mo) {
+        if (mo.otherDirection) {
+            this.flipImg(mo);
+        }
+
+        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        this.drawFrame(mo);
+
+        if (mo.otherDirection) {
+            this.reFlipImg(mo);
+        }
+    }
+
+
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                console.log('colliding');
+            };
+        });
     }
 
 
@@ -103,38 +103,11 @@ class World {
     }
 
 
-    addToMap(mo) {
-        if (mo.otherDirection) {
-            this.flipImg(mo);
-        }
-
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-        // this.drawFrame(mo);
-
-        if (mo.otherDirection) {
-            this.reFlipImg(mo);
-        }
-    }
-
-
-    addObjectsToMap(obj) {
-        obj.forEach((o) => {
-            this.addToMap(o);
-        });
-    }
-
-
     flipImg(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
         this.ctx.scale(-1, 1);
         mo.x = mo.x * -1;
-    }
-
-
-    reFlipImg(mo) {
-        mo.x = mo.x * -1;
-        this.ctx.restore();
     }
 
 
@@ -151,6 +124,12 @@ class World {
             this.rectangleBlue(mo);
 
         }
+    }
+
+
+    reFlipImg(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
 
 
@@ -189,6 +168,28 @@ class World {
         this.onOffSounds(false);
     }
 
+
+    // ---------------------------
+    testCanvas() {
+        this.drawCircle();
+        this.drawText();
+    }
+
+
+    drawCircle() {
+        this.ctx.beginPath();
+        this.ctx.arc(95, 150, 40, 0, 2 * Math.PI);
+        this.ctx.stroke();
+    }
+
+
+    drawText() {
+        this.ctx.font = "30px Comic Sans MS";
+        this.ctx.fillStyle = "red";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText("Hello World", canvas.width / 2, canvas.height / 2);
+    }
+    // ---------------------------
 
     reset() {
         cancelAnimationFrame(this.requestId);
