@@ -11,6 +11,7 @@ class World {
     requestId = 0;
     statusbar = new Statusbar();
 
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -19,6 +20,7 @@ class World {
         this.setWorldTo();
         this.run();
     }
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -35,6 +37,7 @@ class World {
             self.draw();
         });
     }
+
 
     drawStatusbar() {
         this.ctx.translate(-this.camera_x, 0);
@@ -58,7 +61,6 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkIfDead();
         }, normalMs);
     }
 
@@ -105,12 +107,7 @@ class World {
     characterLoseEnergy() {
         if (this.character.energy > 0) {
             this.character.energy -= 1;
-        }
-    }
-
-    checkIfDead() {
-        if (this.character.energy == 0) {
-            console.log('dead');
+            this.character.justHurt = true;
         }
     }
 
@@ -191,14 +188,14 @@ class World {
 
     drawEnergy(mo) {
         this.ctx.beginPath();
-        let grd = ctx.createLinearGradient(0, 35, 0, 75);
+        let grd = ctx.createLinearGradient(mo.x + 10, 55, mo.x + 10, 75);
         grd.addColorStop(0, "white");
-        grd.addColorStop(1, "#41B345");
+        grd.addColorStop(0.6, "#41B345");
         this.ctx.strokeStyle = grd;
-        this.ctx.moveTo(mo.x - 40, mo.y - 70);
-        this.ctx.lineWidth = '10';
+        this.ctx.moveTo(mo.x - 39, 60);
+        this.ctx.lineWidth = '11';
         this.ctx.lineCap = "round";
-        this.ctx.lineTo(mo.x + mo.energy - 40, mo.y - 70);
+        this.ctx.lineTo(mo.x + mo.energy - 39, 60);
         this.ctx.stroke();
     }
 

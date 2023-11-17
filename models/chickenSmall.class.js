@@ -29,7 +29,7 @@ class ChickenSmall extends MoveableObject {
 
     
     constructor() {
-        super().loadImage('./img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
+        super().loadImage(this.IMAGES_WALK[0]);
         this.loadImages(this.IMAGES_WALK);
         this.loadImages(this.IMAGES_DEAD);
         this.x = this.random_x;
@@ -53,10 +53,6 @@ class ChickenSmall extends MoveableObject {
         }
     }
 
-    // isNearby() {
-    //     return this.world.character.x > this.x && this.world.character.x - this.x < 100 ||
-    //     this.world.character.x < this.x && this.x - this.world.character.x < 100;
-    // }
 
     animateByChangingValue() {
         this.moveLeft();

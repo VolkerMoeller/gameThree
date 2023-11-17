@@ -8,6 +8,10 @@ class Character extends MoveableObject {
     world;
     startIdle;
     justIdle = false;
+    justHurt = false;
+    justDead = false;
+    gameOver = false;
+    startDead;
 
     level_sound = new Audio('audio/el-pollo-loco.mp3')
     walking_sound = new Audio('audio/walking.mp3');
@@ -85,7 +89,7 @@ class Character extends MoveableObject {
 
 
     constructor() {
-        super().loadImage('./img/2_character_pepe/2_walk/W-21.png');
+        super().loadImage(this.IMAGES_IDLE[0]);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_WALK);
@@ -109,21 +113,46 @@ class Character extends MoveableObject {
 
     animateByChangingImg() {
         this.soundsPause();
-        if (this.isAboveGround(this.ground_y)) {
-            this.animJump();
+        if (this.isDead() && !this.justDead) {
+            this.startDead = Date.now()
+            this.animDead();
+            // console.log('idDead');
         } else {
-            if (this.isWalking()) {
-                this.animWalk();
+            if (this.isDead() && this.gameOver) {
+                this.stopGame();
+                // console.log('isDeadForTwoSeconds')
             } else {
-                if (this.isIdle && !this.justIdle || this.isAlert()) {
-                    this.animIdle();
+                if (this.isHurt() && !this.isDead()) {
+                    this.animHurt();
+                    // console.log('isHurt');
                 } else {
-                    if (this.isLongIdle && this.justIdle && !this.isAlert()) {
-                        this.animLongIdle();
+                    if (this.isAboveGround(this.ground_y)) {
+                        this.animJump();
+                        // console.log('isJumping');
+                    } else {
+                        if (this.isWalking() && !this.isDead()) {
+                            this.animWalk();
+                            // console.log('isWalking');
+                        } else {
+                            if (this.isIdle && !this.justIdle && !this.isDead()) {
+                                this.animIdle();
+                                // console.log('isIdle');
+                            } else {
+                                if (this.isLongIdle && this.justIdle && !this.isDead()) {
+                                    this.animLongIdle();
+                                    // console.log('isLongIdel');
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
+    }
+
+
+    stopGame() {
+        stopAnimation();
     }
 
 
@@ -165,7 +194,7 @@ class Character extends MoveableObject {
         this.snoring_sound.pause();
     }
 
-    
+
     animJump() {
         this.justIdle = false;
         this.changeImg(this.IMAGES_JUMP);
@@ -198,6 +227,23 @@ class Character extends MoveableObject {
     }
 
 
+    animHurt() {
+        this.changeImg(this.IMAGES_HURT);
+        this.justHurt = false;
+    }
+
+
+    animDead() {
+        this.changeImg(this.IMAGES_DEAD);
+        if (this.shownImg == 'img/2_character_pepe/5_dead/D-56.png') {
+            this.gameOver = true;
+            this.justDead = true;
+        }
+        // if (this.soundOn) {
+        //     this.sound(this.snoring_sound, loudVolume);
+        // }
+    }
+
 
     isWalking() {
         return this.world.keyboard.KEY_LEFT || this.world.keyboard.KEY_RIGHT;
@@ -215,7 +261,12 @@ class Character extends MoveableObject {
 
 
     isIdle() {
-        return !this.isWalking && !this.isJumping;
+        return this.nothingElse();
+    }
+
+
+    nothingElse() {
+        return !this.isJumping && !this.isAlert() && !this.isHurt && !this.isDead;
     }
 
 
@@ -228,10 +279,16 @@ class Character extends MoveableObject {
         return this.world.keyboard.KEY_SPACE && !this.isAboveGround(this.ground_y);
     }
 
+
     isAlert() {
         return this.world.level.enemies[0].isAlert();
     }
 
+    isHurt() {
+        return this.justHurt;
+    }
 
-
+    isDead() {
+        return this.energy == 0;
+    }
 }

@@ -21,6 +21,8 @@ class MoveableObject {
 
     energy = 100;
 
+    shownImg;
+
 
     loadImage(path) {
         this.img = new Image();
@@ -60,6 +62,7 @@ class MoveableObject {
     changeImg(arrImg) {
         let i = this.currentImage % arrImg.length;
         let path = arrImg[i];
+        this.shownImg = arrImg[i];
         this.img = this.imgCache[path];
         this.currentImage++;
     }

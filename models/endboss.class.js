@@ -1,4 +1,5 @@
 class Endboss extends MoveableObject {
+    x = 3800;
     y = 45;
     width = Math.floor(1045 / 3);
     height = Math.floor(1217 / 3);
@@ -8,7 +9,7 @@ class Endboss extends MoveableObject {
     attack_sound = new Audio('audio/endbossHit.mp3');
     noise_sound = new Audio('audio/endboss-cackle.mp3');
 
-    noise_volume = 0.40;
+    noise_volume = 0.20;
     delay_noises = 800;
 
     offsetT = 75;
@@ -57,11 +58,6 @@ class Endboss extends MoveableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ]
 
-    IMAGES_END = [
-        'img/4_enemie_boss_chicken/5_dead/G26.png'
-    ]
-
-
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -69,8 +65,6 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.loadImages(this.IMAGES_END);
-        this.x = 3800;
         this.animate();
     }
 
