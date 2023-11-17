@@ -10,6 +10,7 @@ class Character extends MoveableObject {
     justIdle = false;
     justHurt = false;
     justDead = false;
+    justJump = false;
     gameOver = false;
     startDead;
 
@@ -17,6 +18,8 @@ class Character extends MoveableObject {
     lost_sound = new Audio('audio/lost.mp3')
     walking_sound = new Audio('audio/walking.mp3');
     snoring_sound = new Audio('audio/snoring.mp3');
+    hurt_sound = new Audio('audio/hurt.mp3');
+    hop_sound = new Audio('audio/hop.mp3');
 
     offsetY = 100;
     offsetT = 100;
@@ -121,7 +124,7 @@ class Character extends MoveableObject {
         } else {
             if (this.isDead() && this.gameOver) {
                 this.stopGame();
-                // console.log('isDeadForTwoSeconds')
+                // console.log('gameOver')
             } else {
                 if (this.isHurt() && !this.isDead()) {
                     this.animHurt();
@@ -139,7 +142,7 @@ class Character extends MoveableObject {
                                 this.animIdle();
                                 // console.log('isIdle');
                             } else {
-                                if (this.isLongIdle && this.justIdle && !this.isDead()) {
+                                if (this.isLongIdle && this.justIdle && !this.isDead() && !this.isAlert()) {
                                     this.animLongIdle();
                                     // console.log('isLongIdel');
                                 }
@@ -182,7 +185,7 @@ class Character extends MoveableObject {
 
     levelSound() {
         if (this.soundOn && !this.isAlert() && !this.isDead()) {
-            this.sound(this.level_sound, quietVolume);
+            this.sound(this.level_sound, veryQuietVolume);
         }
         if (this.isAlert() || this.isDead()) {
             this.level_sound.pause();
@@ -199,6 +202,10 @@ class Character extends MoveableObject {
     animJump() {
         this.justIdle = false;
         this.changeImg(this.IMAGES_JUMP);
+        if (this.soundOn && !this.justJump) {
+            this.sound(this.hop_sound, mediumVolume);
+            this.justJump = true;
+        }
     }
 
 
@@ -214,6 +221,7 @@ class Character extends MoveableObject {
     animIdle() {
         this.startIdle = Date.now();
         this.justIdle = true;
+        this.justJump = false;
         this.changeImg(this.IMAGES_IDLE);
     }
 
@@ -230,7 +238,11 @@ class Character extends MoveableObject {
 
     animHurt() {
         this.changeImg(this.IMAGES_HURT);
+        this.justIdle = false;
         this.justHurt = false;
+        if (this.soundOn) {
+            this.sound(this.hurt_sound, mediumVolume);
+        }
     }
 
 
@@ -241,7 +253,7 @@ class Character extends MoveableObject {
             this.justDead = true;
         }
         if (this.soundOn) {
-            this.sound(this.lost_sound, mediumVolume);
+            this.sound(this.lost_sound, quietVolume);
         }
     }
 
@@ -285,9 +297,11 @@ class Character extends MoveableObject {
         return this.world.level.enemies[0].isAlert();
     }
 
+
     isHurt() {
         return this.justHurt;
     }
+
 
     isDead() {
         return this.energy == 0;

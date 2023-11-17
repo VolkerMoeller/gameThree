@@ -91,7 +91,7 @@ class Endboss extends MoveableObject {
         }
     }
 
-    
+
     animateByChangingValue() {
         if (!this.isAlert()) {
             this.moveLeft();
