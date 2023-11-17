@@ -102,8 +102,6 @@ class Endboss extends MoveableObject {
     isAlert() {
         if (this.world) {
             return this.x - this.world.character.x < 400;
-        } else {
-            console.log('this.world not loaded jet');
         }
     }
 }

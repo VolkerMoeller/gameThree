@@ -14,6 +14,7 @@ class Character extends MoveableObject {
     startDead;
 
     level_sound = new Audio('audio/el-pollo-loco.mp3')
+    lost_sound = new Audio('audio/lost.mp3')
     walking_sound = new Audio('audio/walking.mp3');
     snoring_sound = new Audio('audio/snoring.mp3');
 
@@ -180,10 +181,10 @@ class Character extends MoveableObject {
 
 
     levelSound() {
-        if (this.soundOn && !this.isAlert()) {
+        if (this.soundOn && !this.isAlert() && !this.isDead()) {
             this.sound(this.level_sound, quietVolume);
         }
-        if (this.isAlert()) {
+        if (this.isAlert() || this.isDead()) {
             this.level_sound.pause();
         }
     }
@@ -205,7 +206,7 @@ class Character extends MoveableObject {
         this.justIdle = false;
         this.changeImg(this.IMAGES_WALK);
         if (this.soundOn) {
-            this.sound(this.walking_sound, veryLoudVolume);
+            this.sound(this.walking_sound, mediumVolume);
         }
     }
 
@@ -239,9 +240,9 @@ class Character extends MoveableObject {
             this.gameOver = true;
             this.justDead = true;
         }
-        // if (this.soundOn) {
-        //     this.sound(this.snoring_sound, loudVolume);
-        // }
+        if (this.soundOn) {
+            this.sound(this.lost_sound, mediumVolume);
+        }
     }
 
 

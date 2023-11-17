@@ -3,7 +3,7 @@ class ChickenSmall extends MoveableObject {
     width = Math.floor(236 / 5);
     height = Math.floor(210 / 5);
     world;
-    
+
     random_x = Math.floor(Math.random() * (4000 - 100)) + 100;
     random_speed = Math.floor((Math.random() * 4)) + 1;
     random_noises = Math.floor(Math.random() * 1000);
@@ -27,7 +27,7 @@ class ChickenSmall extends MoveableObject {
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
-    
+
     constructor() {
         super().loadImage(this.IMAGES_WALK[0]);
         this.loadImages(this.IMAGES_WALK);
@@ -48,8 +48,18 @@ class ChickenSmall extends MoveableObject {
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_WALK);
-        if (this.soundOn && !this.world.level.enemies[0].isAlert() && this.isNearby()) {
+        this.sound();
+    }
+
+
+    sound() {
+        if (this.soundOn && this.isNearby()) {
             this.noises(this.delay_noises, this.noise_volume);
+        }
+        if (this.world) {
+            if (this.world.character.isDead()) {
+                this.noise_sound.pause();
+            }
         }
     }
 
