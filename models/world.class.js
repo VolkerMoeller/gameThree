@@ -11,6 +11,7 @@ class World {
     requestId = 0;
     barHealth = new Statusbar(20, 40);
     barBottle = new Statusbar(20, 90);
+    barCoin = new Statusbar(20, 140);
 
 
     constructor(canvas, keyboard) {
@@ -33,6 +34,7 @@ class World {
         this.addToMap(this.character);
         this.drawHealthbar();
         this.drawBottlebar();
+        this.drawCoinbar();
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         this.requestId = requestAnimationFrame(() => {
@@ -59,6 +61,17 @@ class World {
         this.drawBar(this.character, 110, this.character.nrCollectedBottles * 100 / this.level.amountBottles);
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.barBottle.imgCache['img/7_statusbars/3_icons/icon_salsa_bottle.png'], 5, 80, Math.floor(157 / 3), Math.floor(158 / 3));
+        this.ctx.translate(this.camera_x, 0);
+    }
+
+
+    drawCoinbar() {
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.barCoin);
+        this.ctx.translate(this.camera_x, 0);
+        this.drawBar(this.character, 160, this.character.nrCollectedCoins * 100 / this.level.amountCoins);
+        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.drawImage(this.barCoin.imgCache['img/7_statusbars/3_icons/icon_coin.png'], 8, 135, Math.floor(157 / 3.5), Math.floor(158 / 3.5));
         this.ctx.translate(this.camera_x, 0);
     }
 
@@ -169,6 +182,7 @@ class World {
             console.log('alle Flaschen gesammelt');
         }
     }
+
 
     countCollectedCoins() {
         this.character.nrCollectedCoins++;
