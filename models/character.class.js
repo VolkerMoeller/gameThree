@@ -295,9 +295,7 @@ class Character extends MoveableObject {
 
 
     isAlert() {
-        if (this.world.level.enemies[0].isAlert()) {
             return this.world.level.enemies[0].isAlert();
-        }
     }
 
 
