@@ -7,11 +7,13 @@ class Character extends MoveableObject {
     speed = 40;
     world;
     intervalId;
+
     startIdle;
     justIdle = false;
     justHurt = false;
     justDead = false;
-    justJump = false;
+    // justPickedBottle = false;
+    just = false;
     gameOver = false;
     startDead;
     

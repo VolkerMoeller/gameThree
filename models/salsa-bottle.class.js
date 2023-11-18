@@ -1,10 +1,12 @@
 class SalsaBottle extends MoveableObject {
     y = 345;
-
     offsetT = 12;
     offsetB = 17;
     offsetL = 33;
     offsetR = 57;
+
+    random_x = Math.floor(Math.random() * 3000) + 200;
+    intervalId;
     
     imageSizes = {
         'bottle_width': Math.floor(400 / 5),
@@ -44,12 +46,13 @@ class SalsaBottle extends MoveableObject {
         this.loadImages(this.IMAGES_ROTATION);
         this.loadImages(this.IMAGES_SPLASH);
         this.loadImages(this.IMAGES_ONGROUND);
+        // this.x =  Math.random() * 3000 + 200;
+        this.x = this.random_x;
         this.rightSize('bottle');
-        this.x = Math.random() * 3400 + 100;
         this.animate();
     }
-
-
+    
+    
     rightSize(sequenz) {
         this.width = this.imageSizes[sequenz + '_width'];
         this.height = this.imageSizes[sequenz + '_height'];
@@ -59,7 +62,8 @@ class SalsaBottle extends MoveableObject {
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
-        }, slowerMs)
+        }, slowerMs);
+        this.intervalId = currentIntervalId;
     }
 
 

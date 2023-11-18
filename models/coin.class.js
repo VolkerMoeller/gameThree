@@ -4,6 +4,8 @@ class Coin extends MoveableObject {
     random_x = Math.random() * 2000 + 100;
     random_y = Math.random() * 200 + 100;
 
+    intervalId;
+
     offsetT = 25;
     offsetB = 50;
     offsetL = 25;
@@ -28,6 +30,7 @@ class Coin extends MoveableObject {
         setStopableInterval(() => {
             this.animateByChangingImg();
         }, slowerMs);
+        this.intervalId = currentIntervalId;
     }
 
 

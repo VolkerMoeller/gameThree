@@ -114,26 +114,27 @@ class World {
         this.collisionBottles();
         this.collisionCoins();
     }
-    
+
 
     collisionEnenmies() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.characterLoseEnergy();
             };
-        });  
+        });
     }
-    
+
 
     collisionBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
+                this.characterCollectedBottles();
                 this.spliceObj(bottle, this.level.bottles);
             };
         });
     }
 
-    
+
     collisionCoins() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -150,11 +151,16 @@ class World {
             };
         });
     }
-
-
+    
+    
     spliceObj(obj, arr) {
         let position = this.findPosition(obj, arr);
         arr.splice(position, 1);
+        if (obj instanceof SalsaBottle) {
+            this.character.nrCollectedBottles++;
+            console.log(this.character.nrCollectedBottles);
+
+        }
     }
 
 
@@ -173,6 +179,12 @@ class World {
         if (this.character.energy > 0) {
             this.character.energy -= 1;
             this.character.justHurt = true;
+        }
+    }
+    
+    characterCollectedBottles() {
+        if (!this.character.justPickedBottle) {
+            // this.character.nrCollectedBottles++;
         }
     }
 
