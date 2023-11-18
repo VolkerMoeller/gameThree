@@ -53,10 +53,11 @@ class World {
 
 
     drawBottlebar() {
+        // let collectedBottles = 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barBottle);
         this.ctx.translate(this.camera_x, 0);
-        this.drawBar(this.character, 110, this.character.nrCollectedBottles);
+        this.drawBar(this.character, 110, this.character.nrCollectedBottles * 100 / this.level.amountBottles);
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.barBottle.imgCache['img/7_statusbars/3_icons/icon_salsa_bottle.png'], 5, 80, Math.floor(157 / 3), Math.floor(158 / 3));
         this.ctx.translate(this.camera_x, 0);
@@ -159,7 +160,6 @@ class World {
         if (obj instanceof SalsaBottle) {
             this.character.nrCollectedBottles++;
             console.log(this.character.nrCollectedBottles);
-
         }
     }
 

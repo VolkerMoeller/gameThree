@@ -12,7 +12,6 @@ class Character extends MoveableObject {
     justIdle = false;
     justHurt = false;
     justDead = false;
-    // justPickedBottle = false;
     just = false;
     gameOver = false;
     startDead;
