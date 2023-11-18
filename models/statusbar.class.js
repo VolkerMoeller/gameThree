@@ -13,8 +13,10 @@ class Statusbar extends MoveableObject {
         'img/7_statusbars/3_icons/icon_salsa_bottle.png'
     ]
 
-    constructor() {
+    constructor(posX, posY) {
         super().loadImage(this.IMAGE_EMPTY);
-        this.loadImages(this.IMAGES_ICONS);  
+        this.loadImages(this.IMAGES_ICONS); 
+        this.x = posX; 
+        this.y = posY; 
     }
 }

@@ -5,7 +5,7 @@ class ChickenSmall extends MoveableObject {
     world;
     intervalId;
 
-    random_x = Math.floor(Math.random() * (4000 - 100)) + 100;
+    random_x = Math.floor(Math.random() * (4000 - 100)) + 200;
     random_speed = Math.floor((Math.random() * 4)) + 1;
     random_noises = Math.floor(Math.random() * 1000);
 

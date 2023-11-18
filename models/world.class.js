@@ -9,7 +9,8 @@ class World {
     camera_bgLayer2 = 0;
     camera_bgLayer3 = 0;
     requestId = 0;
-    statusbar = new Statusbar();
+    barHealth = new Statusbar(20, 40);
+    barBottle = new Statusbar(20, 90);
 
 
     constructor(canvas, keyboard) {
@@ -30,7 +31,8 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
-        this.drawStatusbar();
+        this.drawHealthbar();
+        this.drawBottlebar();
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         this.requestId = requestAnimationFrame(() => {
@@ -39,13 +41,24 @@ class World {
     }
 
 
-    drawStatusbar() {
+    drawHealthbar() {
         this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusbar);
+        this.addToMap(this.barHealth);
         this.ctx.translate(this.camera_x, 0);
-        this.drawEnergy(this.character);
+        this.drawBar(this.character, 60, this.character.energy);
         this.ctx.translate(-this.camera_x, 0);
-        this.ctx.drawImage(this.statusbar.imgCache['img/7_statusbars/3_icons/icon_health.png'], 10, 35, Math.floor(157 / 4), Math.floor(158 / 4));
+        this.ctx.drawImage(this.barHealth.imgCache['img/7_statusbars/3_icons/icon_health.png'], 5, 25, Math.floor(157 / 3), Math.floor(158 / 3));
+        this.ctx.translate(this.camera_x, 0);
+    }
+
+
+    drawBottlebar() {
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.barBottle);
+        this.ctx.translate(this.camera_x, 0);
+        this.drawBar(this.character, 110, this.character.nrCollectedBottles);
+        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.drawImage(this.barBottle.imgCache['img/7_statusbars/3_icons/icon_salsa_bottle.png'], 5, 80, Math.floor(157 / 3), Math.floor(158 / 3));
         this.ctx.translate(this.camera_x, 0);
     }
 
@@ -102,25 +115,26 @@ class World {
                 this.characterLoseEnergy();
             };
         });
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle)) {
+                this.spliceObj(bottle, this.level.bottles);
+            };
+        });
     }
 
 
     checkOutOfStage() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.isOutOfStage(enemy)) {
-                console.log(enemy);
-                console.log(enemy.intervalId);
-                this.spliceEnemy(enemy);
-
+                this.spliceObj(enemy, this.level.enemies);
             };
         });
     }
 
 
-    spliceEnemy(enemy) {
-        let position = this.findPosition(enemy, this.level.enemies);
-        console.log(position)
-        this.level.enemies.splice(position, 1);
+    spliceObj(obj, arr) {
+        let position = this.findPosition(obj, arr);
+        arr.splice(position, 1);
     }
 
 
@@ -217,16 +231,17 @@ class World {
     }
 
 
-    drawEnergy(mo) {
+    drawBar(mo, posY, diff) {
+        let posX = mo.x + 10;
         this.ctx.beginPath();
-        let grd = ctx.createLinearGradient(mo.x + 10, 55, mo.x + 10, 75);
+        let grd = ctx.createLinearGradient(posX, (posY - 5), posX, (posY + 15));
         grd.addColorStop(0, "white");
         grd.addColorStop(0.6, "#41B345");
         this.ctx.strokeStyle = grd;
-        this.ctx.moveTo(mo.x - 39, 60);
+        this.ctx.moveTo((posX - 49), posY);
         this.ctx.lineWidth = '11';
         this.ctx.lineCap = "round";
-        this.ctx.lineTo(mo.x + mo.energy - 39, 60);
+        this.ctx.lineTo((posX - 49) + diff, posY);
         this.ctx.stroke();
     }
 
@@ -238,7 +253,7 @@ class World {
         this.character.otherDirection = false;
 
         this.level = [];
-        // level1 = [];
+        level1 = [];
 
         this.level = new Level(
             [
