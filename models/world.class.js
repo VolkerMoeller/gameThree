@@ -53,7 +53,6 @@ class World {
 
 
     drawBottlebar() {
-        // let collectedBottles = 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barBottle);
         this.ctx.translate(this.camera_x, 0);
@@ -102,7 +101,6 @@ class World {
         }
 
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-        // this.drawFrame(mo);
 
         if (mo.otherDirection) {
             this.reFlipImg(mo);
@@ -129,7 +127,6 @@ class World {
     collisionBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
-                this.characterCollectedBottles();
                 this.spliceObj(bottle, this.level.bottles);
             };
         });
@@ -152,14 +149,21 @@ class World {
             };
         });
     }
-    
-    
+
+
     spliceObj(obj, arr) {
         let position = this.findPosition(obj, arr);
         arr.splice(position, 1);
+        this.countCollectedBottles(obj);
+    }
+
+
+    countCollectedBottles(obj) {
         if (obj instanceof SalsaBottle) {
             this.character.nrCollectedBottles++;
-            console.log(this.character.nrCollectedBottles);
+        }
+        if (this.character.nrCollectedBottles == this.level.amountBottles) {
+            console.log('alle Flaschen gesammelt');
         }
     }
 
@@ -179,12 +183,6 @@ class World {
         if (this.character.energy > 0) {
             this.character.energy -= 1;
             this.character.justHurt = true;
-        }
-    }
-    
-    characterCollectedBottles() {
-        if (!this.character.justPickedBottle) {
-            // this.character.nrCollectedBottles++;
         }
     }
 
