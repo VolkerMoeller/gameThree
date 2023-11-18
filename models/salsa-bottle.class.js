@@ -6,6 +6,7 @@ class SalsaBottle extends MoveableObject {
     offsetR = 57;
 
     random_x = Math.floor(Math.random() * 3000) + 200;
+    
     intervalId;
     
     imageSizes = {

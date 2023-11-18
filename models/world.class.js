@@ -154,16 +154,27 @@ class World {
     spliceObj(obj, arr) {
         let position = this.findPosition(obj, arr);
         arr.splice(position, 1);
-        this.countCollectedBottles(obj);
+        if (obj instanceof SalsaBottle) {
+            this.countCollectedBottles();
+        }
+        if (obj instanceof Coin) {
+            this.countCollectedCoins();
+        }
     }
 
 
-    countCollectedBottles(obj) {
-        if (obj instanceof SalsaBottle) {
-            this.character.nrCollectedBottles++;
-        }
+    countCollectedBottles() {
+        this.character.nrCollectedBottles++;
         if (this.character.nrCollectedBottles == this.level.amountBottles) {
             console.log('alle Flaschen gesammelt');
+        }
+    }
+
+    countCollectedCoins() {
+        this.character.nrCollectedCoins++;
+        if (this.character.nrCollectedCoins == this.level.amountCoins) {
+            console.log('alle Münzen gesammelt');
+            this.character.energy = 100;
         }
     }
 
