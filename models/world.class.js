@@ -189,6 +189,7 @@ class World {
         if (this.character.nrCollectedCoins == this.level.amountCoins) {
             console.log('alle Münzen gesammelt');
             this.character.energy = 100;
+            this.character.nrCollectedCoins = 0;
         }
     }
 
