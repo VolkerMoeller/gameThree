@@ -7,7 +7,7 @@ class MoveableObject {
     imgCache = [];
     speed = 1;
     currentImage = 0;
-    intervalId;
+    // intervalId;
     otherDirection = false;
     soundOn = false;
     just_noises = false;
@@ -55,7 +55,7 @@ class MoveableObject {
 
 
     jump() {
-            this.speedY = 40;
+        this.speedY = 40;
     }
 
 
@@ -108,14 +108,18 @@ class MoveableObject {
 
     isNearby() {
         return this.world.character.x > this.x && this.world.character.x - this.x < 300 ||
-        this.world.character.x < this.x && this.x - this.world.character.x < 300;
+            this.world.character.x < this.x && this.x - this.world.character.x < 300;
     }
 
-    
+
     isColliding(obj) {
         return ((this.x + this.offsetL) + (this.width - this.offsetR)) >= (obj.x + obj.offsetL) &&
             (this.x + this.offsetL) <= ((obj.x + obj.offsetL) + (obj.width - obj.offsetR)) &&
             ((this.y + this.offsetT) + (this.height - this.offsetB)) >= (obj.y + obj.offsetT) &&
             ((this.y + this.offsetT)) <= ((obj.y + obj.offsetT) + (obj.height - obj.offsetB));
+    }
+
+    isOutOfStage(obj) {
+        return obj.x < 600;
     }
 }

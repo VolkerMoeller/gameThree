@@ -3,6 +3,7 @@ class Chicken extends MoveableObject {
     width = Math.floor(248 / 4);
     height = Math.floor(243 / 4);
     world;
+    intervalId;
 
     random_x = Math.floor(Math.floor(Math.random() * (4000 - 100)) + 100);
     random_speed = Math.floor((Math.random() * 4)) + 1;
@@ -43,6 +44,7 @@ class Chicken extends MoveableObject {
             this.animateByChangingImg();
             this.animateByChangingValue();
         }, slowMs)
+        this.intervalId = currentIntervalId;
     }
 
 

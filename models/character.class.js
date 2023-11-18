@@ -6,6 +6,7 @@ class Character extends MoveableObject {
     height = Math.floor(1200 / 4);
     speed = 40;
     world;
+    intervalId;
     startIdle;
     justIdle = false;
     justHurt = false;

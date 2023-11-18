@@ -61,6 +61,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.checkOutOfStage();
         }, normalMs);
     }
 
@@ -99,6 +100,15 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.characterLoseEnergy();
+            };
+        });
+    }
+
+    checkOutOfStage() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.isOutOfStage(enemy)) {
+                console.log(enemy);
+                console.log(enemy.intervalId);
             };
         });
     }

@@ -4,6 +4,7 @@ class Endboss extends MoveableObject {
     width = Math.floor(1045 / 3);
     height = Math.floor(1217 / 3);
     world;
+    intervalId;
 
     win_sound = new Audio('audio/win.mp3');
     attack_sound = new Audio('audio/endbossHit.mp3');
