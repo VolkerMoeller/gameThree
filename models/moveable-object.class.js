@@ -119,7 +119,8 @@ class MoveableObject {
             ((this.y + this.offsetT)) <= ((obj.y + obj.offsetT) + (obj.height - obj.offsetB));
     }
 
+
     isOutOfStage(obj) {
-        return obj.x < 600;
+        return obj.x < -100 || obj.x > 5000 || obj.y > 1000 || obj.y < -1000;
     }
 }

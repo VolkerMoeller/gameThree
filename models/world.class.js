@@ -104,13 +104,34 @@ class World {
         });
     }
 
+
     checkOutOfStage() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.isOutOfStage(enemy)) {
                 console.log(enemy);
                 console.log(enemy.intervalId);
+                this.spliceEnemy(enemy);
+
             };
         });
+    }
+
+
+    spliceEnemy(enemy) {
+        let position = this.findPosition(enemy, this.level.enemies);
+        console.log(position)
+        this.level.enemies.splice(position, 1);
+    }
+
+
+    findPosition(obj, array) {
+        for (let i = 0; i < array.length; i++) {
+            let searchedId = obj.intervalId;
+            let arrayId = array[i].intervalId;
+            if (searchedId == arrayId) {
+                return i;
+            }
+        }
     }
 
 
@@ -217,17 +238,17 @@ class World {
         this.character.otherDirection = false;
 
         this.level = [];
-        level1 = [];
+        // level1 = [];
 
         this.level = new Level(
             [
+                new Endboss(),
                 new Chicken(),
                 new Chicken(),
                 new Chicken(),
                 new ChickenSmall(),
                 new ChickenSmall(),
-                new ChickenSmall(),
-                new Endboss()
+                new ChickenSmall()
             ],
             [
                 new Cloud('img/5_background/layers/4_clouds/1.png', 0),
