@@ -110,14 +110,34 @@ class World {
 
 
     checkCollisions() {
+        this.collisionEnenmies();
+        this.collisionBottles();
+        this.collisionCoins();
+    }
+    
+
+    collisionEnenmies() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.characterLoseEnergy();
             };
-        });
+        });  
+    }
+    
+
+    collisionBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.spliceObj(bottle, this.level.bottles);
+            };
+        });
+    }
+
+    
+    collisionCoins() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.spliceObj(coin, this.level.coins);
             };
         });
     }
