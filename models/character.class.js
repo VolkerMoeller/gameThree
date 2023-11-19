@@ -29,7 +29,7 @@ class Character extends MoveableObject {
 
     offsetY = 100;
     offsetT = 100;
-    offsetB = 110;
+    offsetB = 80;
     offsetL = 20;
     offsetR = 60;
 
@@ -255,8 +255,8 @@ class Character extends MoveableObject {
     animDead() {
         this.changeImg(this.IMAGES_DEAD);
         if (this.shownImg == 'img/2_character_pepe/5_dead/D-56.png') {
-            this.gameOver = true;
             this.justDead = true;
+            this.gameOver = true;
         }
         if (this.soundOn) {
             this.sound(this.lost_sound, quietVolume);
@@ -289,6 +289,7 @@ class Character extends MoveableObject {
     }
 
 
+
     isLongIdle() {
         return Date.now() - this.startIdle > 5000;
     }
@@ -312,4 +313,6 @@ class Character extends MoveableObject {
     isDead() {
         return this.energy == 0;
     }
+
+go
 }

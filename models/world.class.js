@@ -28,19 +28,29 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.drawBackground();
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.enemies);
+        this.drawObjects();
         this.addToMap(this.character);
-        this.drawHealthbar();
-        this.drawBottlebar();
-        this.drawCoinbar();
-        this.drawTxt(this.character, 'Aua!');
+        this.drawBars();
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         this.requestId = requestAnimationFrame(() => {
             self.draw();
         });
+    }
+
+
+    drawBars() {
+        this.drawHealthbar();
+        this.drawBottlebar();
+        this.drawCoinbar();
+
+    }
+
+
+    drawObjects() {
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.enemies);
     }
 
 
@@ -115,6 +125,7 @@ class World {
         }
 
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        // this.drawFrame(mo);
 
         if (mo.otherDirection) {
             this.reFlipImg(mo);
@@ -132,17 +143,37 @@ class World {
     collisionEnenmies() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.characterLoseEnergy();
-            };
+                this.collidingChickens(enemy);
+                this.collidingEndboss(enemy);
+            }
         });
     }
 
 
+    collidingChickens(enemy) {
+        if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+            if (this.character.isFalling(this.character.ground_y)) {
+                this.character.jump();
+                this.chickenDead(enemy);
+            }
+        }
+        if (enemy instanceof Endboss) {
+            this.characterLoseEnergy();
+        }
+    }
 
-    drawTxt(obj, txt) {
-        if (this.character.justHurt) {
-            this.ctx.font = "30px Arial";
-            this.ctx.fillText(txt, obj.x + 50, obj.y + 100);
+
+    chickenDead(enemy) {
+        enemy.justDead = true;
+        setTimeout(() => {
+            this.spliceObj(enemy, this.level.enemies)
+        }, 225);
+    }
+
+
+    collidingEndboss(enemy) {
+        if (enemy instanceof Endboss) {
+            this.characterLoseEnergy();
         }
     }
 
@@ -175,7 +206,7 @@ class World {
 
 
     spliceObj(obj, arr) {
-        let position = this.findPosition(obj, arr);
+        let position = this.findIndex(obj, arr);
         arr.splice(position, 1);
         if (obj instanceof SalsaBottle) {
             this.countCollectedBottles();
@@ -189,7 +220,6 @@ class World {
     countCollectedBottles() {
         this.character.nrCollectedBottles++;
         if (this.character.nrCollectedBottles == this.level.amountBottles) {
-            console.log('alle Flaschen gesammelt');
         }
     }
 
@@ -197,14 +227,13 @@ class World {
     countCollectedCoins() {
         this.character.nrCollectedCoins++;
         if (this.character.nrCollectedCoins == this.level.amountCoins) {
-            console.log('alle Münzen gesammelt');
             this.character.energy = 100;
             this.character.nrCollectedCoins = 0;
         }
     }
 
 
-    findPosition(obj, array) {
+    findIndex(obj, array) {
         for (let i = 0; i < array.length; i++) {
             let searchedId = obj.intervalId;
             let arrayId = array[i].intervalId;
@@ -247,7 +276,8 @@ class World {
     drawFrame(mo) {
         if (
             mo instanceof Character ||
-            mo instanceof Chicken
+            mo instanceof Chicken ||
+            mo instanceof ChickenSmall
         ) {
             this.rectangleRed(mo);
             this.rectangleBlue(mo);

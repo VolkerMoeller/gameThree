@@ -18,6 +18,8 @@ class ChickenSmall extends MoveableObject {
     offsetL = 6;
     offsetR = 14;
 
+    justDead = false;
+
     IMAGES_WALK = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
@@ -49,8 +51,23 @@ class ChickenSmall extends MoveableObject {
 
 
     animateByChangingImg() {
+        if (!this.isDead()) {
+            this.animWalk();
+        }
+        else {
+            this.animDead();
+        }
+    }
+
+
+    animWalk() {
         this.changeImg(this.IMAGES_WALK);
         this.sound();
+    }
+
+
+    animDead() {
+        this.changeImg(this.IMAGES_DEAD);
     }
 
 
@@ -68,5 +85,10 @@ class ChickenSmall extends MoveableObject {
 
     animateByChangingValue() {
         this.moveLeft();
+    }
+
+
+    isDead() {
+        return this.justDead == true;
     }
 }

@@ -106,6 +106,10 @@ class MoveableObject {
     }
 
 
+    isFalling(ground_y) {
+        return this.speedY < 0 && this.isAboveGround(ground_y);
+    }
+
     isNearby() {
         return this.world.character.x > this.x && this.world.character.x - this.x < 300 ||
             this.world.character.x < this.x && this.x - this.world.character.x < 300;

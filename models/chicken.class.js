@@ -18,6 +18,8 @@ class Chicken extends MoveableObject {
     offsetL = 2;
     offsetR = 8;
 
+    justDead = false;
+
     IMAGES_WALK = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
@@ -49,10 +51,24 @@ class Chicken extends MoveableObject {
 
 
     animateByChangingImg() {
+        if (!this.isDead()) {
+            this.animWalk();
+        }
+        else {
+            this.animDead();
+        }
+    }
+
+    
+    animWalk() {
         this.changeImg(this.IMAGES_WALK);
         this.sound();
     }
 
+
+    animDead() {
+        this.changeImg(this.IMAGES_DEAD);
+    }
 
     sound() {
         if (this.soundOn && this.isNearby()) {
@@ -70,4 +86,8 @@ class Chicken extends MoveableObject {
         this.moveLeft();
     }
 
+
+    isDead() {
+        return this.justDead == true;
+    }
 }
