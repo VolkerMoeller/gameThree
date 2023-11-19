@@ -35,6 +35,7 @@ class World {
         this.drawHealthbar();
         this.drawBottlebar();
         this.drawCoinbar();
+        this.drawTxt(this.character, 'Aua!');
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         this.requestId = requestAnimationFrame(() => {
@@ -134,6 +135,15 @@ class World {
                 this.characterLoseEnergy();
             };
         });
+    }
+
+
+
+    drawTxt(obj, txt) {
+        if (this.character.justHurt) {
+            this.ctx.font = "30px Arial";
+            this.ctx.fillText(txt, obj.x + 50, obj.y + 100);
+        }
     }
 
 
