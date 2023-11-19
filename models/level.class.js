@@ -7,7 +7,7 @@ class Level {
     layer1st;
     bottles;
     coins;
-    level_end_x = 3500;
+    level_end_x = 3650;
     amountBottles;
     amountCoins;
 
