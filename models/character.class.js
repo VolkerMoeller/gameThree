@@ -291,14 +291,15 @@ class Character extends MoveableObject {
     }
 
 
-
     isLongIdle() {
         return Date.now() - this.startIdle > 5000;
     }
 
+
     isTakingOff() {
         return this.speedY > 0;
     }
+
 
     isJumping() {
         return this.world.keyboard.KEY_SPACE && !this.isAboveGround(this.ground_y);
@@ -318,6 +319,4 @@ class Character extends MoveableObject {
     isDead() {
         return this.energy == 0;
     }
-
-    go
 }

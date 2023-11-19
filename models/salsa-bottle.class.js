@@ -5,10 +5,14 @@ class SalsaBottle extends MoveableObject {
     offsetL = 33;
     offsetR = 57;
 
+    collect_sound = new Audio('audio/collected.mp3');
+
     random_x = Math.floor(Math.random() * 3000) + 200;
-    
+
     intervalId;
-    
+
+    justCollected = false;
+
     imageSizes = {
         'bottle_width': Math.floor(400 / 5),
         'bottle_height': Math.floor(400 / 5),
@@ -47,13 +51,12 @@ class SalsaBottle extends MoveableObject {
         this.loadImages(this.IMAGES_ROTATION);
         this.loadImages(this.IMAGES_SPLASH);
         this.loadImages(this.IMAGES_ONGROUND);
-        // this.x =  Math.random() * 3000 + 200;
         this.x = this.random_x;
         this.rightSize('bottle');
         this.animate();
     }
-    
-    
+
+
     rightSize(sequenz) {
         this.width = this.imageSizes[sequenz + '_width'];
         this.height = this.imageSizes[sequenz + '_height'];
@@ -70,5 +73,13 @@ class SalsaBottle extends MoveableObject {
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_ONGROUND);
+    }
+
+
+    soundCollect() {
+        if (this.soundOn && !this.justCollected) {
+            this.sound(this.collect_sound, mediumVolume);
+            this.justCollected = true;
+        }
     }
 }

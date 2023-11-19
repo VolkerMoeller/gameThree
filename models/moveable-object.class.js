@@ -7,7 +7,6 @@ class MoveableObject {
     imgCache = [];
     speed = 1;
     currentImage = 0;
-    // intervalId;
     otherDirection = false;
     soundOn = false;
     just_noises = false;

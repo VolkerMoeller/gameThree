@@ -5,12 +5,13 @@ class Coin extends MoveableObject {
     random_y = Math.random() * 200 + 100;
 
     intervalId;
-
+    
     offsetT = 25;
     offsetB = 50;
     offsetL = 25;
     offsetR = 50;
-
+    
+    collect_sound = new Audio('audio/collected.mp3');
 
     IMAGES_COINSSPARKLE = [
         'img/8_coin/coin_1.png',
@@ -37,5 +38,13 @@ class Coin extends MoveableObject {
 
     animateByChangingImg() {
         this.changeImg(this.IMAGES_COINSSPARKLE);
+    }
+
+
+    soundCollect() {
+        if (this.soundOn && !this.justCollected) {
+            this.sound(this.collect_sound, mediumVolume);
+            this.justCollected = true;
+        }
     }
 }

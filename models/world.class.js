@@ -220,13 +220,15 @@ class World {
 
     spliceObj(obj, arr) {
         let position = this.findIndex(obj, arr);
-        arr.splice(position, 1);
         if (obj instanceof SalsaBottle) {
             this.countCollectedBottles();
+            obj.soundCollect();
         }
         if (obj instanceof Coin) {
             this.countCollectedCoins();
+            obj.soundCollect();
         }
+        arr.splice(position, 1);
     }
 
 
@@ -328,6 +330,12 @@ class World {
             this.level.enemies[i].soundOn = boolean;
         }
         this.character.soundOn = boolean;
+        for (let i = 0; i < this.level.bottles.length; i++) {
+            this.level.bottles[i].soundOn = boolean;
+        }
+        for (let i = 0; i < this.level.coins.length; i++) {
+            this.level.coins[i].soundOn = boolean;
+        }
     }
 
 

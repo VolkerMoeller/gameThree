@@ -9,6 +9,7 @@ class ChickenSmall extends MoveableObject {
     random_speed = Math.floor((Math.random() * 4)) + 1;
     random_noises = Math.floor(Math.random() * 1000);
 
+    boing_sound = new Audio('audio/boing.mp3');
     noise_sound = new Audio('audio/beep.mp3');
     noise_volume = 0.2;
     delay_noises = this.random_noises;
@@ -19,6 +20,7 @@ class ChickenSmall extends MoveableObject {
     offsetR = 14;
 
     justDead = false;
+    justBoing = false;
 
     IMAGES_WALK = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -62,16 +64,20 @@ class ChickenSmall extends MoveableObject {
 
     animWalk() {
         this.changeImg(this.IMAGES_WALK);
-        this.sound();
+        this.soundNoise();
     }
 
 
     animDead() {
         this.changeImg(this.IMAGES_DEAD);
+        if (this.soundOn && !this.justBoing) {
+            this.sound(this.boing_sound, mediumVolume);
+            this.justBoing = true;
+        }
     }
 
 
-    sound() {
+    soundNoise() {
         if (this.soundOn && this.isNearby()) {
             this.noises(this.delay_noises, this.noise_volume);
         }
