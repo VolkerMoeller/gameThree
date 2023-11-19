@@ -16,7 +16,7 @@ class Character extends MoveableObject {
     justDead = false;
     just = false;
     gameOver = false;
-    
+
     nrCollectedBottles = 0;
     nrCollectedCoins = 0;
     nrEnbossHits = 6;
@@ -248,7 +248,7 @@ class Character extends MoveableObject {
         this.changeImg(this.IMAGES_HURT);
         this.justIdle = false;
         this.justHurt = false;
-        if (this.soundOn) {
+        if (this.soundOn && !this.isTakingOff()) {
             this.sound(this.hurt_sound, mediumVolume);
         }
     }
@@ -296,6 +296,9 @@ class Character extends MoveableObject {
         return Date.now() - this.startIdle > 5000;
     }
 
+    isTakingOff() {
+        return this.speedY > 0;
+    }
 
     isJumping() {
         return this.world.keyboard.KEY_SPACE && !this.isAboveGround(this.ground_y);
@@ -303,7 +306,7 @@ class Character extends MoveableObject {
 
 
     isAlert() {
-            return this.world.level.enemies[0].isAlert();
+        return this.world.level.enemies[0].isAlert();
     }
 
 
@@ -316,5 +319,5 @@ class Character extends MoveableObject {
         return this.energy == 0;
     }
 
-go
+    go
 }
