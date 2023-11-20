@@ -277,7 +277,7 @@ class Character extends MoveableObject {
 
 
     isWalkingRight() {
-        return this.world.keyboard.KEY_RIGHT && this.x < this.world.level.level_end_x;
+        return this.world.keyboard.KEY_RIGHT && this.x < this.world.level.level_end_x && this.x < this.world.level.enemies[0].x + 100;
     }
 
 

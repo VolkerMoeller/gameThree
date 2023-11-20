@@ -21,10 +21,14 @@ class Endboss extends MoveableObject {
     offsetR = 145;
 
     startAlert;
+    startLongAlert;
     justTimeSet = false;
     justWalk = true;
     justAlert = false;
     justLongAlert = false;
+
+    setBeginLeap = false;
+    beginLeap;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -99,10 +103,24 @@ class Endboss extends MoveableObject {
                     this.animAlert();
                 } else {
                     if (this.isLongAlert()) {
+                        this.setStartLongAlert();
                         this.animLongAlert();
+                        this.leap();
                     }
                 }
             }
+        }
+    }
+
+
+    leap() {
+        if (!this.setBeginLeap) {
+            this.beginLeap = Date.now();
+            this.setBeginLeap = true;
+        }
+        if (Date.now() - this.begin > 225) {
+            this.x -= 50;
+            this.setBeginLeap = false;
         }
     }
 
@@ -118,6 +136,10 @@ class Endboss extends MoveableObject {
         this.startAlert = Date.now();
     }
 
+    setStartLongAlert() {
+        this.startLongAlert = Date.now();
+    }
+
 
     animAlert() {
         this.changeImg(this.IMAGES_ALERT)
@@ -125,8 +147,8 @@ class Endboss extends MoveableObject {
             this.noises(this.delay_noises, this.noise_volume);
         }
     }
-    
-    
+
+
     animLongAlert() {
         this.changeImg(this.IMAGES_ATTACK);
         if (this.soundOn) {
@@ -150,6 +172,6 @@ class Endboss extends MoveableObject {
 
 
     isLongAlert() {
-        return Date.now() - this.startAlert > 3000;
+        return this.wait(this.startAlert, 3000);
     }
 }
