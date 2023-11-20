@@ -228,6 +228,9 @@ class World {
             this.countCollectedCoins();
             obj.soundCollect();
         }
+        if (obj instanceof Endboss) {
+            stopAnimation();
+        }
         arr.splice(position, 1);
     }
 

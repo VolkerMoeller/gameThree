@@ -1,10 +1,9 @@
-class MoveableObject {
+class MoveableObject extends DrawableObject{
     x = 100;
     y = 0;
     height = 100;
     width = 200;
-    img;
-    imgCache = [];
+
     speed = 1;
     currentImage = 0;
     otherDirection = false;
@@ -23,19 +22,7 @@ class MoveableObject {
     shownImg;
 
 
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
 
-
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imgCache[path] = img;
-        });
-    }
 
 
     moveRight() {

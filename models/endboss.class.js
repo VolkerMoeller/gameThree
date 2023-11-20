@@ -118,8 +118,8 @@ class Endboss extends MoveableObject {
             this.beginLeap = Date.now();
             this.setBeginLeap = true;
         }
-        if (Date.now() - this.begin > 225) {
-            this.x -= 50;
+        if (Date.now() - this.beginLeap > 225) {
+            this.x -= 25;
             this.setBeginLeap = false;
         }
     }
