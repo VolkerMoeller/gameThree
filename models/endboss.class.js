@@ -5,6 +5,7 @@ class Endboss extends MoveableObject {
     height = Math.floor(1217 / 3);
     world;
     intervalId;
+    speed = 5;
 
     win_sound = new Audio('audio/win.mp3');
     attack_sound = new Audio('audio/endbossHit.mp3');
@@ -12,11 +13,18 @@ class Endboss extends MoveableObject {
 
     noise_volume = 0.20;
     delay_noises = 800;
+    delay_noises_short = 500;
 
     offsetT = 75;
     offsetB = 95;
     offsetL = 0;
     offsetR = 145;
+
+    startAlert;
+    justTimeSet = false;
+    justWalk = true;
+    justAlert = false;
+    justLongAlert = false;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -81,14 +89,48 @@ class Endboss extends MoveableObject {
 
     animateByChangingImg() {
         if (!this.isAlert()) {
-            this.changeImg(this.IMAGES_WALKING);
+            this.animWalk();
         } else {
             if (this.isAlert()) {
-                this.changeImg(this.IMAGES_ALERT)
-                if (this.soundOn) {
-                    this.noises(this.delay_noises, this.noise_volume);
+                if (!this.justTimeSet) {
+                    this.setStartAlert();
+                }
+                if (!this.isLongAlert()) {
+                    this.animAlert();
+                } else {
+                    if (this.isLongAlert()) {
+                        this.animLongAlert();
+                    }
                 }
             }
+        }
+    }
+
+
+    animWalk() {
+        this.justTimeSet = false;
+        this.changeImg(this.IMAGES_WALKING);
+    }
+
+
+    setStartAlert() {
+        this.justTimeSet = true;
+        this.startAlert = Date.now();
+    }
+
+
+    animAlert() {
+        this.changeImg(this.IMAGES_ALERT)
+        if (this.soundOn) {
+            this.noises(this.delay_noises, this.noise_volume);
+        }
+    }
+    
+    
+    animLongAlert() {
+        this.changeImg(this.IMAGES_ATTACK);
+        if (this.soundOn) {
+            this.noises(this.delay_noises_short, this.noise_volume);
         }
     }
 
@@ -104,5 +146,10 @@ class Endboss extends MoveableObject {
         if (this.world) {
             return this.x - this.world.character.x < 400;
         }
+    }
+
+
+    isLongAlert() {
+        return Date.now() - this.startAlert > 3000;
     }
 }

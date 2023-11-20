@@ -31,7 +31,7 @@ class Character extends MoveableObject {
 
     offsetY = 100;
     offsetT = 100;
-    offsetB = 80;
+    offsetB = 90;
     offsetL = 20;
     offsetR = 60;
 
