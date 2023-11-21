@@ -109,8 +109,6 @@ class World {
     }
 
 
-
-
     drawCoinBar() {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barCoin);
@@ -166,15 +164,25 @@ class World {
         }
     }
 
+    
     checkThrownObjects() {
         this.thrownObjects.forEach((thrownBottle) => {
             if (thrownBottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png') {
                 thrownBottle.justSplashed = true;
+                this.smashSoundImmediatly();
                 setTimeout(() => {
                 this.spliceObj(thrownBottle, this.thrownObjects);
                 }, 225);
             }
         })
+    }
+
+    
+    smashSoundImmediatly() {
+        if (this.character.soundOn) {
+            thrownBottle.soundOn = true;
+            thrownBottle.soundSmashed();
+        }
     }
 
 

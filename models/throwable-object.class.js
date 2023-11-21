@@ -12,6 +12,8 @@ class ThrowableObject extends MoveableObject {
     speedY = 30;
     justSplashed = false;
 
+    smashed_sound = new Audio('audio/smash-bottle.mp3');
+
     imageSizes = {
         'rotate_width': Math.floor(400 / 5),
         'rotate_height': Math.floor(400 / 5),
@@ -86,5 +88,11 @@ class ThrowableObject extends MoveableObject {
     rightSize(sequenz) {
         this.width = this.imageSizes[sequenz + '_width'];
         this.height = this.imageSizes[sequenz + '_height'];
+    }
+
+    soundSmashed() {
+        if (this.soundOn) {
+            this.sound(this.smashed_sound, mediumVolume);
+        }
     }
 }
