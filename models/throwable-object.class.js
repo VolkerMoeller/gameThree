@@ -6,7 +6,11 @@ class ThrowableObject extends MoveableObject {
     offsetL = 33;
     offsetR = 57;
     intervalId;
-    ground_y = 346;
+    ground_y = 370;
+    speed = 40;
+    acceleration = 8;
+    speedY = 30;
+    justSplashed = false;
 
     imageSizes = {
         'rotate_width': Math.floor(400 / 5),
@@ -38,7 +42,7 @@ class ThrowableObject extends MoveableObject {
         this.applyGravity(this.ground_y);
         this.x = x;
         this.y = y;
-        // this.animate();
+        this.animate();
     }
 
 
@@ -49,18 +53,36 @@ class ThrowableObject extends MoveableObject {
         }, normalMs);
         this.intervalId = currentIntervalId;
     }
-    
-    animateByChangingValue() {
-        console.log('hier');
-    }
-    animateByChangingImg(){
-        console.log('da');
 
+
+    animateByChangingImg() {
+        if (this.isAboveGround(this.ground_y)) {
+            this.animFly();
+        } else {
+            if (!this.isAboveGround(this.ground_y) && !this.justSplashed) {
+                this.animSplash();
+            }
+        }
     }
 
-    rightSize(sequenz) {
-        this.width = this.imageSizes[sequenz + '_width'];
-        this.height = this.imageSizes[sequenz + '_height'];
+
+    animFly() {
+        this.changeImg(this.IMAGES_ROTATION);
     }
+
+    animSplash() {
+        this.changeImg(this.IMAGES_SPLASH);
+        // setTimeout(() => { this.justSplashed = true; }, 1000);
+}
+
+
+animateByChangingValue() {
+    this.moveRight();
+}
+
+rightSize(sequenz) {
+    this.width = this.imageSizes[sequenz + '_width'];
+    this.height = this.imageSizes[sequenz + '_height'];
+}
 
 }

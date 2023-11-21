@@ -102,11 +102,13 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barBottle);
         this.ctx.translate(this.camera_x, 0);
-        this.drawBar(this.character.x + 10, 110, this.character.nrCollectedBottles * 100 / this.level.amountBottles, '#41B345');
+        this.drawBar(this.character.x + 10, 110, this.character.bottleBarLength, '#41B345');
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.barBottle.imgCache['img/7_statusbars/3_icons/icon_salsa_bottle.png'], 5, 80, Math.floor(157 / 3), Math.floor(158 / 3));
         this.ctx.translate(this.camera_x, 0);
     }
+
+
 
 
     drawCoinBar() {
@@ -144,21 +146,34 @@ class World {
             this.checkCollisions();
             this.checkOutOfStage();
             this.checkThrowObjects();
+            this.checkThrownObjects();
         }, normalMs);
     }
 
 
     checkThrowObjects() {
-        if (this.keyboard.KEY_D && this.character.nrCollectedBottles > 0 && !this.justPressed) {
+        if (this.keyboard.KEY_D &&
+            this.character.nrCollectedBottles > this.character.nrThrownBottles &&
+            !this.justPressed &&
+            !this.character.otherDirection) {
             this.justPressed = true;
             let thrownBottle = new ThrowableObject(this.character.x + 70, this.character.y + 100);
             this.thrownObjects.push(thrownBottle);
-            this.character.nrThrownBottles++ ;
-            // this.character.nrCollectedBottles--;
+            this.character.nrThrownBottles++;
         }
         if (!this.keyboard.KEY_D) {
             this.justPressed = false;
         }
+    }
+
+    checkThrownObjects() {
+        this.thrownObjects.forEach((thrownBottle) => {
+            if (thrownBottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png') {
+                setTimeout(() => {
+                    this.spliceObj(thrownBottle, this.thrownObjects);
+                }, 125);
+            }
+        })
     }
 
 
@@ -183,7 +198,6 @@ class World {
             this.flipImg(mo);
         }
 
-        // this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
         mo.drawThisImg(this.ctx);
         // this.drawFrame(mo);
         // mo.drawFrame(this.ctx);
@@ -285,8 +299,6 @@ class World {
 
     countCollectedBottles() {
         this.character.nrCollectedBottles++;
-        if (this.character.nrCollectedBottles == this.level.amountBottles) {
-        }
     }
 
 
@@ -339,7 +351,7 @@ class World {
     }
 
 
-    
+
     drawFrame(mo) {
         if (
             mo instanceof Character ||

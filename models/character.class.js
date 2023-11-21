@@ -19,6 +19,7 @@ class Character extends MoveableObject {
 
     nrCollectedBottles = 0;
     nrThrownBottles = 0;
+    bottleBarLength = 0;
     nrCollectedCoins = 0;
     nrEnbossHits = 0;
     amountHits = 6;
@@ -118,11 +119,20 @@ class Character extends MoveableObject {
             this.animateByChangingImg();
             this.animateByChangingValue();
             this.shiftBackground();
+            this.calculateBottleBarLength();
             this.levelSound();
         }, normalMs);
         this.intervalId = currentIntervalId;
     }
 
+    calculateBottleBarLength() {
+        if (this.world) {
+            this.bottleBarLength = (this.nrCollectedBottles - this.nrThrownBottles) / this.world.level.amountBottles * 100;
+            if (this.bottleBarLength < 0) {
+                this.bottleBarLength = 0;
+            }
+        }
+    }
 
     animateByChangingImg() {
         this.soundsPause();
