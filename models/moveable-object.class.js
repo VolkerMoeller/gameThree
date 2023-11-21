@@ -16,10 +16,6 @@ class MoveableObject extends DrawableObject {
 
     shownImg;
 
-
-
-
-
     moveRight() {
         this.x += this.speed;
     }

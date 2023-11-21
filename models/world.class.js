@@ -169,9 +169,10 @@ class World {
     checkThrownObjects() {
         this.thrownObjects.forEach((thrownBottle) => {
             if (thrownBottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png') {
+                thrownBottle.justSplashed = true;
                 setTimeout(() => {
-                    this.spliceObj(thrownBottle, this.thrownObjects);
-                }, 125);
+                this.spliceObj(thrownBottle, this.thrownObjects);
+                }, 225);
             }
         })
     }

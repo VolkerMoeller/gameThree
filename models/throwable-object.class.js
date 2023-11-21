@@ -59,9 +59,16 @@ class ThrowableObject extends MoveableObject {
         if (this.isAboveGround(this.ground_y)) {
             this.animFly();
         } else {
-            if (!this.isAboveGround(this.ground_y) && !this.justSplashed) {
+            if (!this.isAboveGround(this.ground_y)) {
                 this.animSplash();
             }
+        }
+    }
+
+
+    animateByChangingValue() {
+        if (!this.justSplashed) {
+            this.moveRight();
         }
     }
 
@@ -70,19 +77,14 @@ class ThrowableObject extends MoveableObject {
         this.changeImg(this.IMAGES_ROTATION);
     }
 
+
     animSplash() {
         this.changeImg(this.IMAGES_SPLASH);
-        // setTimeout(() => { this.justSplashed = true; }, 1000);
-}
+    }
 
 
-animateByChangingValue() {
-    this.moveRight();
-}
-
-rightSize(sequenz) {
-    this.width = this.imageSizes[sequenz + '_width'];
-    this.height = this.imageSizes[sequenz + '_height'];
-}
-
+    rightSize(sequenz) {
+        this.width = this.imageSizes[sequenz + '_width'];
+        this.height = this.imageSizes[sequenz + '_height'];
+    }
 }
