@@ -118,8 +118,11 @@ class Endboss extends MoveableObject {
             this.beginLeap = Date.now();
             this.setBeginLeap = true;
         }
-        if (Date.now() - this.beginLeap > 225) {
-            this.x -= 25;
+        if (Date.now() - this.beginLeap > 550) {
+            if (this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G17.png' ||
+                this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G18.png') {
+                this.x -= 50;
+            }
             this.setBeginLeap = false;
         }
     }

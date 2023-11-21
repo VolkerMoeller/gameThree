@@ -1,11 +1,6 @@
-class MoveableObject extends DrawableObject{
-    x = 100;
-    y = 0;
-    height = 100;
-    width = 200;
-
+class MoveableObject extends DrawableObject {
     speed = 1;
-    currentImage = 0;
+
     otherDirection = false;
     soundOn = false;
     just_noises = false;

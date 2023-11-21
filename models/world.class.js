@@ -32,6 +32,8 @@ class World {
         this.drawObjects();
         this.addToMap(this.character);
         this.drawBars();
+        // this.drawTest2(this.character);
+        // this.drawTest(this.character);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         this.requestId = requestAnimationFrame(() => {
@@ -39,6 +41,30 @@ class World {
         });
     }
 
+
+    drawTest(obj) {
+        if (obj instanceof Character) {
+            if (obj.justHurt) {
+                this.ctx.save();
+                this.ctx.translate(obj.x + 10, obj.y + 50);
+                this.ctx.rotate(-10 * Math.PI / 180);
+                this.ctx.translate(-obj.x + 10, -obj.y + 50);
+                this.ctx.txtAlign = 'center';
+                this.ctx.font = '20px Georgia';
+                this.ctx.fillStyle = 'red';
+                this.ctx.fillText("Autsch!", obj.x, obj.y);
+                this.ctx.restore()
+            }
+        }
+    }
+
+    drawTest2(obj) {
+        if (obj.justHurt) {
+            this.ctx.fillStyle = 'white';
+            this.ctx.roundRect(obj.x + 20, obj.y + 65, 80, 40, [10]);
+            this.ctx.fill();
+        }
+    }
 
     drawBars() {
         this.drawHealthBar();
@@ -137,8 +163,10 @@ class World {
             this.flipImg(mo);
         }
 
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        // this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        mo.drawThisImg(this.ctx);
         // this.drawFrame(mo);
+        // mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.reFlipImg(mo);
@@ -291,6 +319,7 @@ class World {
     }
 
 
+    
     drawFrame(mo) {
         if (
             mo instanceof Character ||
