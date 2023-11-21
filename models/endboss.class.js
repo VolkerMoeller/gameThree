@@ -115,15 +115,16 @@ class Endboss extends MoveableObject {
 
     leap() {
         if (!this.setBeginLeap) {
-            this.beginLeap = Date.now();
-            this.setBeginLeap = true;
-        }
-        if (Date.now() - this.beginLeap > 550) {
-            if (this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G17.png' ||
-                this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G18.png') {
-                this.x -= 50;
+            if (this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G13.png') {
+                this.beginLeap = true;
+                this.setBeginLeap = true;
             }
-            this.setBeginLeap = false;
+            if (this.beginLeap) {
+                if (this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G16.png') {
+                    this.x -= 30;
+                }
+                this.setBeginLeap = false;
+            }
         }
     }
 
@@ -175,6 +176,6 @@ class Endboss extends MoveableObject {
 
 
     isLongAlert() {
-        return this.wait(this.startAlert, 3000);
+        return this.wait(this.startAlert, 2000);
     }
 }
