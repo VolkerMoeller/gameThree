@@ -1,13 +1,12 @@
 class ThrowableObject extends MoveableObject {
+    width = Math.floor(400 / 5);
+    height = Math.floor(400 / 5);
     offsetT = 12;
     offsetB = 17;
     offsetL = 33;
     offsetR = 57;
-
     intervalId;
-
-    ground_y = 300;
-    // ??
+    ground_y = 346;
 
     imageSizes = {
         'rotate_width': Math.floor(400 / 5),
@@ -32,13 +31,13 @@ class ThrowableObject extends MoveableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ]
 
-    constructor() {
+    constructor(x, y) {
         super().loadImage(this.IMAGES_ROTATION[0]);
-        this.rightSize('rotate');
         this.loadImages(this.IMAGES_ROTATION);
-        this.rightSize('splash');
         this.loadImages(this.IMAGES_SPLASH);
         this.applyGravity(this.ground_y);
+        this.x = x;
+        this.y = y;
         // this.animate();
     }
 

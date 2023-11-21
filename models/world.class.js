@@ -13,6 +13,9 @@ class World {
     barBottle = new Statusbar(20, 90);
     barCoin = new Statusbar(20, 140);
     barEndboss = new Statusbar(575, 40);
+    thrownObjects = [];
+
+    justPressed = false;
 
 
     constructor(canvas, keyboard) {
@@ -66,6 +69,7 @@ class World {
         }
     }
 
+
     drawBars() {
         this.drawHealthBar();
         this.drawBottleBar();
@@ -79,6 +83,7 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.thrownObjects);
     }
 
 
@@ -138,7 +143,22 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkOutOfStage();
+            this.checkThrowObjects();
         }, normalMs);
+    }
+
+
+    checkThrowObjects() {
+        if (this.keyboard.KEY_D && this.character.nrCollectedBottles > 0 && !this.justPressed) {
+            this.justPressed = true;
+            let thrownBottle = new ThrowableObject(this.character.x + 70, this.character.y + 100);
+            this.thrownObjects.push(thrownBottle);
+            this.character.nrThrownBottles++ ;
+            // this.character.nrCollectedBottles--;
+        }
+        if (!this.keyboard.KEY_D) {
+            this.justPressed = false;
+        }
     }
 
 

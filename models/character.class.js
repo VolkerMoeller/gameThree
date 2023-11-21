@@ -18,8 +18,9 @@ class Character extends MoveableObject {
     gameOver = false;
 
     nrCollectedBottles = 0;
+    nrThrownBottles = 0;
     nrCollectedCoins = 0;
-    nrEnbossHits = 6;
+    nrEnbossHits = 0;
     amountHits = 6;
 
     level_sound = new Audio('audio/el-pollo-loco.mp3')
