@@ -22,7 +22,7 @@ class Character extends MoveableObject {
     bottleBarLength = 0;
     nrCollectedCoins = 0;
     nrEnbossHits = -1;
-    amountHits = 3;
+    amountHits = 4;
 
     level_sound = new Audio('audio/el-pollo-loco.mp3')
     lost_sound = new Audio('audio/lost.mp3')
@@ -90,7 +90,7 @@ class Character extends MoveableObject {
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png',
     ]
-
+    
     IMAGES_DEAD = [
         'img/2_character_pepe/5_dead/D-51.png',
         'img/2_character_pepe/5_dead/D-52.png',
@@ -125,6 +125,7 @@ class Character extends MoveableObject {
         this.intervalId = currentIntervalId;
     }
 
+
     calculateBottleBarLength() {
         if (this.world) {
             this.bottleBarLength = (this.nrCollectedBottles - this.nrThrownBottles) / this.world.level.amountBottles * 100;
@@ -133,6 +134,7 @@ class Character extends MoveableObject {
             }
         }
     }
+    
 
     animateByChangingImg() {
         this.soundsPause();

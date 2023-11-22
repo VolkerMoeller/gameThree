@@ -31,6 +31,8 @@ class Endboss extends MoveableObject {
     setBeginLeap = false;
     beginLeap;
 
+    endbossBarLength = 0;
+
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -87,13 +89,23 @@ class Endboss extends MoveableObject {
         setStopableInterval(() => {
             this.animateByChangingImg();
             this.animateByChangingValue();
+            this.calculateEnbossBarLength();
         }, slowMs)
         this.intervalId = currentIntervalId;
     }
 
+    calculateEnbossBarLength() {
+        if (this.world) {
+            this.endbossBarLength = this.world.character.nrEnbossHits * 100 / this.world.character.amountHits;
+            if (this.endbossBarLength < 0) {
+                this.endbossBarLength = 0;
+            }
+            console.log(this.endbossBarLength);
+        }
+    }
+
 
     animateByChangingImg() {
-        console.log(this.justDead);
         if (this.justDead) {
             console.log(this.justDead);
             this.animDead();
@@ -168,7 +180,7 @@ class Endboss extends MoveableObject {
             this.noises(this.delay_noises_short, this.noise_volume);
         }
     }
-    
+
     animDead() {
         this.changeImg(this.IMAGES_DEAD);
         if (this.soundOn) {

@@ -123,11 +123,20 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barEndboss);
         this.ctx.translate(this.camera_x, 0);
-        this.drawBar(this.character.x + 565, 60, this.character.nrEnbossHits * 100 / this.character.amountHits, '#FF4E00');
+        this.drawBar(this.character.x + 565, 60, this.level.enemies[0].endbossBarLength, '#FF4E00');
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.barEndboss.imgCache['img/7_statusbars/3_icons/icon_health_endboss.png'], 550, 35, Math.floor(157 / 3), Math.floor(158 / 3));
         this.ctx.translate(this.camera_x, 0);
     }
+    // drawEndbossBar() {
+    //     this.ctx.translate(-this.camera_x, 0);
+    //     this.addToMap(this.barEndboss);
+    //     this.ctx.translate(this.camera_x, 0);
+    //     this.drawBar(this.character.x + 565, 60, this.character.nrEnbossHits * 100 / this.character.amountHits, '#FF4E00');
+    //     this.ctx.translate(-this.camera_x, 0);
+    //     this.ctx.drawImage(this.barEndboss.imgCache['img/7_statusbars/3_icons/icon_health_endboss.png'], 550, 35, Math.floor(157 / 3), Math.floor(158 / 3));
+    //     this.ctx.translate(this.camera_x, 0);
+    // }
 
 
     setWorldTo() {
@@ -164,6 +173,8 @@ class World {
     }
 
 
+
+
     checkThrownObjects() {
         this.thrownObjects.forEach((thrownBottle) => {
             if (thrownBottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png') {
@@ -182,13 +193,15 @@ class World {
     }
 
 
+
+
     checkNrEndbossHits() {
         if (!this.justHitChecked) {
             this.justHitChecked = true;
+            console.log(this.character.nrEnbossHits);
             if (this.character.nrEnbossHits == this.character.amountHits - 1) {
                 this.character.nrEnbossHits = this.character.amountHits;
                 this.level.enemies[0].justDead = true;
-                console.log(this.level.enemies[0].justDead);
             } else {
                 this.character.nrEnbossHits++;
             }
