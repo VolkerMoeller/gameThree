@@ -10,10 +10,21 @@ class DrawableObject {
 
     soundOn = false;
 
-    
-    drawThisImg(ctx){
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height); 
+    startAnim;
+    justStartAnim = false;
+    startChangeImg;
+    timePast;
+
+
+    timePastMs(startTime, endTime) {
+        this.timePast = endTime - startTime;
     }
+
+
+    drawThisImg(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
 
     drawFrame(mo) {
         if (

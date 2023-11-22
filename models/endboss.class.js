@@ -17,7 +17,7 @@ class Endboss extends MoveableObject {
 
     offsetT = 75;
     offsetB = 95;
-    offsetL = 15;
+    offsetL = 75;
     offsetR = 145;
 
     startAlert;
@@ -26,12 +26,15 @@ class Endboss extends MoveableObject {
     justWalk = true;
     justAlert = false;
     justLongAlert = false;
+    justHurt = false;
     justDead = false;
+    allHits = false;
 
     setBeginLeap = false;
     beginLeap;
 
     endbossBarLength = 0;
+
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -94,37 +97,33 @@ class Endboss extends MoveableObject {
         this.intervalId = currentIntervalId;
     }
 
+
     calculateEnbossBarLength() {
         if (this.world) {
             this.endbossBarLength = this.world.character.nrEnbossHits * 100 / this.world.character.amountHits;
             if (this.endbossBarLength < 0) {
                 this.endbossBarLength = 0;
             }
-            console.log(this.endbossBarLength);
         }
     }
 
 
     animateByChangingImg() {
-        if (this.justDead) {
-            console.log(this.justDead);
+        if (this.allHits && !this.justDead) {
             this.animDead();
+            // console.log('isDead');
         } else {
-            if (!this.isAlert()) {
-                this.animWalk();
+            if (this.isHurt() && !this.justDead) {
+                this.animHurt();
+                // console.log('isHurt');
             } else {
-                if (this.isAlert()) {
-                    if (!this.justTimeSet) {
-                        this.setStartAlert();
-                    }
-                    if (!this.isLongAlert()) {
-                        this.animAlert();
-                    } else {
-                        if (this.isLongAlert()) {
-                            this.setStartLongAlert();
-                            this.animLongAlert();
-                            this.leap();
-                        }
+                if (!this.isAlert() && !this.justDead) {
+                    this.animWalk();
+                    // console.log('isWalk');
+                } else {
+                    if (this.isAlert() && !this.justDead) {
+                        this.animIsAlert();
+                        // console.log('isAlert');
                     }
                 }
             }
@@ -132,6 +131,40 @@ class Endboss extends MoveableObject {
     }
 
 
+    isHurt() {
+        return this.justHurt;
+    }
+
+    animHurt() {
+        if (!this.justStartAnim) {
+            this.startAnim = Date.now();
+            this.justStartAnim = true;
+        }
+        this.changeImg(this.IMAGES_HURT);
+        this.startChangeImg = Date.now();
+        this.timePastMs(this.startAnim, this.startChangeImg,);
+        if (this.timePast > 225 &&
+            this.shownImg == 'img/4_enemie_boss_chicken/4_hurt/G23.png') {            
+            this.justStartAnim = false;
+            this.justHurt = false;
+        }
+    }
+
+
+    animIsAlert() {
+        if (!this.justTimeSet) {
+            this.setStartAlert();
+        }
+        if (!this.isLongAlert()) {
+            this.animAlert();
+        } else {
+            if (this.isLongAlert() && !this.justDead) {
+                this.setStartLongAlert();
+                this.animLongAlert();
+                this.leap();
+            }
+        }
+    }
 
 
     leap() {
@@ -181,16 +214,31 @@ class Endboss extends MoveableObject {
         }
     }
 
+
     animDead() {
+        if (!this.justStartAnim) {
+            this.startAnim = Date.now();
+            this.justStartAnim = true;
+        }
         this.changeImg(this.IMAGES_DEAD);
-        if (this.soundOn) {
-            this.noises(this.delay_noises_short, this.noise_volume);
+        this.startChangeImg = Date.now();
+        this.timePastMs(this.startAnim, this.startChangeImg,);
+        if (this.timePast > 225 &&
+            this.shownImg == 'img/4_enemie_boss_chicken/5_dead/G26.png') {
+            this.justDead = true;
         }
     }
 
+
     animateByChangingValue() {
-        if (!this.isAlert()) {
+        if (!this.isAlert() && !this.justDead) {
             this.moveLeft();
+        }
+        if (this.justDead) {
+            this.y += 20;
+        }
+        if (this.y >= 450) {
+            stopAnimation();
         }
     }
 

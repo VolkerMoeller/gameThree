@@ -187,22 +187,23 @@ class World {
                 this.checkNrEndbossHits();
                 thrownBottle.hitsEndboss = true;
                 thrownBottle.justSplashed = true;
+                thrownBottle.ground_y = thrownBottle.y;
                 this.smashSoundImmediatly(thrownBottle);
             }
         })
     }
 
+    
 
-
-
+    
     checkNrEndbossHits() {
         if (!this.justHitChecked) {
             this.justHitChecked = true;
-            console.log(this.character.nrEnbossHits);
             if (this.character.nrEnbossHits == this.character.amountHits - 1) {
                 this.character.nrEnbossHits = this.character.amountHits;
-                this.level.enemies[0].justDead = true;
+                this.level.enemies[0].allHits = true;
             } else {
+                this.level.enemies[0].justHurt = true;
                 this.character.nrEnbossHits++;
             }
         }
@@ -247,7 +248,6 @@ class World {
 
         mo.drawThisImg(this.ctx);
         // this.drawFrame(mo);
-        // mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.reFlipImg(mo);
@@ -538,6 +538,9 @@ class World {
                 new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 5)
             ],
             [
+                new SalsaBottle(),
+                new SalsaBottle(),
+                new SalsaBottle(),
                 new SalsaBottle(),
                 new SalsaBottle(),
                 new SalsaBottle()
