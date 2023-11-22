@@ -8,6 +8,8 @@ class DrawableObject {
     imgCache = [];
     currentImage = 0;
 
+    soundOn = false;
+
     
     drawThisImg(ctx){
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height); 

@@ -11,6 +11,7 @@ class ThrowableObject extends MoveableObject {
     acceleration = 8;
     speedY = 30;
     justSplashed = false;
+    hitsEndboss = false;
 
     smashed_sound = new Audio('audio/smash-bottle.mp3');
 
@@ -61,7 +62,7 @@ class ThrowableObject extends MoveableObject {
         if (this.isAboveGround(this.ground_y)) {
             this.animFly();
         } else {
-            if (!this.isAboveGround(this.ground_y)) {
+            if (!this.isAboveGround(this.ground_y) || this.hitsEndboss) {
                 this.animSplash();
             }
         }

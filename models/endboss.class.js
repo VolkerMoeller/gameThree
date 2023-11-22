@@ -17,7 +17,7 @@ class Endboss extends MoveableObject {
 
     offsetT = 75;
     offsetB = 95;
-    offsetL = 0;
+    offsetL = 15;
     offsetR = 145;
 
     startAlert;
@@ -26,6 +26,7 @@ class Endboss extends MoveableObject {
     justWalk = true;
     justAlert = false;
     justLongAlert = false;
+    justDead = false;
 
     setBeginLeap = false;
     beginLeap;
@@ -92,25 +93,33 @@ class Endboss extends MoveableObject {
 
 
     animateByChangingImg() {
-        if (!this.isAlert()) {
-            this.animWalk();
+        console.log(this.justDead);
+        if (this.justDead) {
+            console.log(this.justDead);
+            this.animDead();
         } else {
-            if (this.isAlert()) {
-                if (!this.justTimeSet) {
-                    this.setStartAlert();
-                }
-                if (!this.isLongAlert()) {
-                    this.animAlert();
-                } else {
-                    if (this.isLongAlert()) {
-                        this.setStartLongAlert();
-                        this.animLongAlert();
-                        this.leap();
+            if (!this.isAlert()) {
+                this.animWalk();
+            } else {
+                if (this.isAlert()) {
+                    if (!this.justTimeSet) {
+                        this.setStartAlert();
+                    }
+                    if (!this.isLongAlert()) {
+                        this.animAlert();
+                    } else {
+                        if (this.isLongAlert()) {
+                            this.setStartLongAlert();
+                            this.animLongAlert();
+                            this.leap();
+                        }
                     }
                 }
             }
         }
     }
+
+
 
 
     leap() {
@@ -159,7 +168,13 @@ class Endboss extends MoveableObject {
             this.noises(this.delay_noises_short, this.noise_volume);
         }
     }
-
+    
+    animDead() {
+        this.changeImg(this.IMAGES_DEAD);
+        if (this.soundOn) {
+            this.noises(this.delay_noises_short, this.noise_volume);
+        }
+    }
 
     animateByChangingValue() {
         if (!this.isAlert()) {

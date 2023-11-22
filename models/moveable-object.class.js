@@ -2,7 +2,7 @@ class MoveableObject extends DrawableObject {
     speed = 1;
 
     otherDirection = false;
-    soundOn = false;
+
     just_noises = false;
     speedY = 0;
     acceleration = 5;
