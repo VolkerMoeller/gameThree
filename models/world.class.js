@@ -496,10 +496,12 @@ class World {
         this.character.x = 10;
         this.character.justIdle = false;
         this.character.otherDirection = false;
-
+        
+        this.camera_x = 0;
+        
         this.level = [];
         level1 = [];
-
+        
         this.level = new Level(
             [
                 new Endboss(),

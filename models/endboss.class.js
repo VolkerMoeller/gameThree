@@ -33,8 +33,6 @@ class Endboss extends MoveableObject {
     setBeginLeap = false;
     beginLeap;
 
- 
-
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -92,38 +90,23 @@ class Endboss extends MoveableObject {
         setStopableInterval(() => {
             this.animateByChangingImg();
             this.animateByChangingValue();
-            // this.calcEnbossBarLength();
         }, slowMs)
         this.intervalId = currentIntervalId;
     }
 
 
-    // calcEnbossBarLength() {
-    //     if (this.world) {
-    //         this.endbossBarLength = this.world.character.nrEnbossHits * 100 / this.world.character.amountHits;
-    //         if (this.endbossBarLength < 0) {
-    //             this.endbossBarLength = 0;
-    //         }
-    //     }
-    // }
-
-
     animateByChangingImg() {
         if (this.allHits && !this.justDead) {
             this.animDead();
-            // console.log('isDead');
         } else {
             if (this.isHurt() && !this.justDead) {
                 this.animHurt();
-                // console.log('isHurt');
             } else {
                 if (!this.isAlert() && !this.justDead) {
                     this.animWalk();
-                    // console.log('isWalk');
                 } else {
                     if (this.isAlert() && !this.justDead) {
                         this.animIsAlert();
-                        // console.log('isAlert');
                     }
                 }
             }
@@ -137,14 +120,11 @@ class Endboss extends MoveableObject {
 
     animHurt() {
         if (!this.justStartAnim) {
-            this.startAnim = Date.now();
-            this.justStartAnim = true;
+            this.setStartAnim();
         }
         this.changeImg(this.IMAGES_HURT);
-        this.startChangeImg = Date.now();
-        this.timePastMs(this.startAnim, this.startChangeImg,);
-        if (this.timePast > 225 &&
-            this.shownImg == 'img/4_enemie_boss_chicken/4_hurt/G23.png') {            
+        this.timePastMs(this.startAnim, Date.now());
+        if (this.animFinished(225, 'img/4_enemie_boss_chicken/4_hurt/G23.png')) {
             this.justStartAnim = false;
             this.justHurt = false;
         }
@@ -152,8 +132,8 @@ class Endboss extends MoveableObject {
 
 
     animIsAlert() {
-        if (!this.justTimeSet) {
-            this.setStartAlert();
+        if (!this.justStartAnim) {
+            this.setStartAnim();
         }
         if (!this.isLongAlert()) {
             this.animAlert();
@@ -189,10 +169,7 @@ class Endboss extends MoveableObject {
     }
 
 
-    setStartAlert() {
-        this.justTimeSet = true;
-        this.startAlert = Date.now();
-    }
+
 
     setStartLongAlert() {
         this.startLongAlert = Date.now();
@@ -213,19 +190,20 @@ class Endboss extends MoveableObject {
             this.noises(this.delay_noises_short, this.noise_volume);
         }
     }
-
-
+    
+    
     animDead() {
         if (!this.justStartAnim) {
-            this.startAnim = Date.now();
-            this.justStartAnim = true;
+            this.setStartAnim();
         }
         this.changeImg(this.IMAGES_DEAD);
-        this.startChangeImg = Date.now();
-        this.timePastMs(this.startAnim, this.startChangeImg,);
-        if (this.timePast > 225 &&
-            this.shownImg == 'img/4_enemie_boss_chicken/5_dead/G26.png') {
+        this.timePastMs(this.startAnim, Date.now());
+        if (this.animFinished(225, 'img/4_enemie_boss_chicken/5_dead/G26.png')) {
             this.justDead = true;
+            if (this.soundOn) {
+                this.sound(this.win_sound, mediumVolume);
+            }
+            gameWon();
         }
     }
 
@@ -251,6 +229,6 @@ class Endboss extends MoveableObject {
 
 
     isLongAlert() {
-        return this.wait(this.startAlert, 2000);
+        return this.wait(this.startAnim, 2000);
     }
 }

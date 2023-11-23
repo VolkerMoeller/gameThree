@@ -28,6 +28,7 @@ function init() {
 
 function resetLevel() {
     world.reset();
+    addClassToElement('outroWin', 'display-none');
 }
 
 
@@ -48,6 +49,11 @@ function stopAnimation() {
     intervalIds.forEach((e) => {
         clearInterval(e);
     })
+}
+
+
+function gameWon() {
+    removeClassFromElement('outroWin', 'display-none');
 }
 
 

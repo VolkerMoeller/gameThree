@@ -16,11 +16,23 @@ class DrawableObject {
     timePast;
 
 
+    setStartAnim(){
+        this.startAnim = Date.now();
+        this.justStartAnim = true;
+    };
+
+
     timePastMs(startTime, endTime) {
         this.timePast = endTime - startTime;
     }
 
 
+    animFinished(time, img) {
+        return this.timePast > time &&
+            this.shownImg == img;
+    }
+
+    
     drawThisImg(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
