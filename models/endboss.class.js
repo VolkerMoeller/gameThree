@@ -33,7 +33,7 @@ class Endboss extends MoveableObject {
     setBeginLeap = false;
     beginLeap;
 
-    endbossBarLength = 0;
+ 
 
 
     IMAGES_WALKING = [
@@ -92,20 +92,20 @@ class Endboss extends MoveableObject {
         setStopableInterval(() => {
             this.animateByChangingImg();
             this.animateByChangingValue();
-            this.calculateEnbossBarLength();
+            // this.calcEnbossBarLength();
         }, slowMs)
         this.intervalId = currentIntervalId;
     }
 
 
-    calculateEnbossBarLength() {
-        if (this.world) {
-            this.endbossBarLength = this.world.character.nrEnbossHits * 100 / this.world.character.amountHits;
-            if (this.endbossBarLength < 0) {
-                this.endbossBarLength = 0;
-            }
-        }
-    }
+    // calcEnbossBarLength() {
+    //     if (this.world) {
+    //         this.endbossBarLength = this.world.character.nrEnbossHits * 100 / this.world.character.amountHits;
+    //         if (this.endbossBarLength < 0) {
+    //             this.endbossBarLength = 0;
+    //         }
+    //     }
+    // }
 
 
     animateByChangingImg() {

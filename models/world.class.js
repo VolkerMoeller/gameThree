@@ -13,11 +13,11 @@ class World {
     barBottle = new Statusbar(20, 90);
     barCoin = new Statusbar(20, 140);
     barEndboss = new Statusbar(575, 40);
+    endbossBarLength = 100;
     thrownObjects = [];
-
-
     justKEYPressed = false;
     justHitChecked = false;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -74,7 +74,6 @@ class World {
         this.drawBottleBar();
         this.drawCoinBar();
         this.drawEndbossBar();
-
     }
 
 
@@ -90,7 +89,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barHealth);
         this.ctx.translate(this.camera_x, 0);
-        this.drawBar(this.character.x + 10, 60, this.character.energy, '#41B345');
+        this.drawProgress(this.character.x + 10, 60, this.character.energy, '#41B345');
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.barHealth.imgCache['img/7_statusbars/3_icons/icon_health.png'], 5, 25, Math.floor(157 / 3), Math.floor(158 / 3));
         this.ctx.translate(this.camera_x, 0);
@@ -101,7 +100,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barBottle);
         this.ctx.translate(this.camera_x, 0);
-        this.drawBar(this.character.x + 10, 110, this.character.bottleBarLength, '#41B345');
+        this.drawProgress(this.character.x + 10, 110, this.character.bottleBarLength, '#41B345');
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.barBottle.imgCache['img/7_statusbars/3_icons/icon_salsa_bottle.png'], 5, 80, Math.floor(157 / 3), Math.floor(158 / 3));
         this.ctx.translate(this.camera_x, 0);
@@ -112,7 +111,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barCoin);
         this.ctx.translate(this.camera_x, 0);
-        this.drawBar(this.character.x + 10, 160, this.character.nrCollectedCoins * 100 / this.level.amountCoins, '#41B345');
+        this.drawProgress(this.character.x + 10, 160, this.character.nrCollectedCoins * 100 / this.level.amountCoins, '#41B345');
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.barCoin.imgCache['img/7_statusbars/3_icons/icon_coin.png'], 8, 135, Math.floor(157 / 3.5), Math.floor(158 / 3.5));
         this.ctx.translate(this.camera_x, 0);
@@ -120,23 +119,23 @@ class World {
 
 
     drawEndbossBar() {
+        this.calcEndbossBarLength();
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.barEndboss);
         this.ctx.translate(this.camera_x, 0);
-        this.drawBar(this.character.x + 565, 60, this.level.enemies[0].endbossBarLength, '#FF4E00');
+        this.drawProgress(this.character.x + 565, 60, this.endbossBarLength, '#FF4E00');
         this.ctx.translate(-this.camera_x, 0);
         this.ctx.drawImage(this.barEndboss.imgCache['img/7_statusbars/3_icons/icon_health_endboss.png'], 550, 35, Math.floor(157 / 3), Math.floor(158 / 3));
         this.ctx.translate(this.camera_x, 0);
     }
-    // drawEndbossBar() {
-    //     this.ctx.translate(-this.camera_x, 0);
-    //     this.addToMap(this.barEndboss);
-    //     this.ctx.translate(this.camera_x, 0);
-    //     this.drawBar(this.character.x + 565, 60, this.character.nrEnbossHits * 100 / this.character.amountHits, '#FF4E00');
-    //     this.ctx.translate(-this.camera_x, 0);
-    //     this.ctx.drawImage(this.barEndboss.imgCache['img/7_statusbars/3_icons/icon_health_endboss.png'], 550, 35, Math.floor(157 / 3), Math.floor(158 / 3));
-    //     this.ctx.translate(this.camera_x, 0);
-    // }
+
+
+    calcEndbossBarLength() {
+        this.endbossBarLength = 100 - (this.character.nrEndbossHits * 100 / this.character.amountHits);
+        if (this.endbossBarLength < 0) {
+            this.endbossBarLength = 0;
+        }
+    }
 
 
     setWorldTo() {
@@ -173,46 +172,64 @@ class World {
     }
 
 
-
-
     checkThrownObjects() {
-        this.thrownObjects.forEach((thrownBottle) => {
-            if (thrownBottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png') {
-                thrownBottle.justSplashed = true;
-                this.smashSoundImmediatly(thrownBottle);
-                this.spliceSplash(thrownBottle);
-                this.justHitChecked = false;
+        this.thrownObjects.forEach((bottle) => {
+            if (this.smashedOnTheFloor(bottle)) {
+                this.treatSmachedOnTheFloor(bottle);
             }
-            if (thrownBottle.isColliding(this.level.enemies[0])) {
-                this.checkNrEndbossHits();
-                thrownBottle.hitsEndboss = true;
-                thrownBottle.justSplashed = true;
-                thrownBottle.ground_y = thrownBottle.y;
-                this.smashSoundImmediatly(thrownBottle);
+            if (this.smashedByTheEndBoss(bottle)) {
+                this.treatSmashedByTheEndBoss(bottle);
             }
         })
     }
-
+    
+    
+    treatSmashedByTheEndBoss(bottle){
+        this.justHitChecked = false;
+        this.checkNrEndbossHits();
+        this.smashSoundImmediatly(bottle);
+        bottle.hitsEndboss = true;
+        bottle.justSplashed = true;
+        bottle.ground_y = bottle.y;
+    }
     
 
-    
+    treatSmachedOnTheFloor(bottle) {
+        this.smashSoundImmediatly(bottle);
+        this.spliceSlightlyLater(bottle);
+        bottle.justSplashed = true;
+    }
+
+
+    smashedOnTheFloor(bottle) {
+        return !bottle.isAboveGround(bottle.ground_y) &&
+            bottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png'
+    }
+
+
+    smashedByTheEndBoss(bottle) {
+        return bottle.isAboveGround(bottle.ground_y) &&
+            bottle.isColliding(this.level.enemies[0]);
+    }
+
+
     checkNrEndbossHits() {
         if (!this.justHitChecked) {
             this.justHitChecked = true;
-            if (this.character.nrEnbossHits == this.character.amountHits - 1) {
-                this.character.nrEnbossHits = this.character.amountHits;
+            if (this.character.nrEndbossHits == this.character.amountHits - 1) {
+                this.character.nrEndbossHits = this.character.amountHits;
                 this.level.enemies[0].allHits = true;
             } else {
                 this.level.enemies[0].justHurt = true;
-                this.character.nrEnbossHits++;
+                this.character.nrEndbossHits++;
             }
         }
     }
 
 
-    spliceSplash(thrownBottle) {
+    spliceSlightlyLater(bottle) {
         setTimeout(() => {
-            this.spliceObj(thrownBottle, this.thrownObjects);
+            this.spliceObj(bottle, this.thrownObjects);
         }, 225);
     }
 
@@ -437,10 +454,10 @@ class World {
 
 
     onOffSounds(boolean) {
+        this.character.soundOn = boolean;
         for (let i = 0; i < this.level.enemies.length; i++) {
             this.level.enemies[i].soundOn = boolean;
         }
-        this.character.soundOn = boolean;
         for (let i = 0; i < this.level.bottles.length; i++) {
             this.level.bottles[i].soundOn = boolean;
         }
@@ -460,7 +477,7 @@ class World {
     }
 
 
-    drawBar(posX, posY, diff, col) {
+    drawProgress(posX, posY, diff, col) {
         this.ctx.beginPath();
         let grd = ctx.createLinearGradient(posX, (posY - 5), posX, (posY + 15));
         grd.addColorStop(0, 'white');
