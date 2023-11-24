@@ -15,7 +15,7 @@ class Character extends MoveableObject {
     justHurt = false;
     justDead = false;
     just = false;
-    gameOver = false;
+    // gameOver = false;
 
     nrCollectedBottles = 0;
     nrThrownBottles = 0;
@@ -150,41 +150,32 @@ class Character extends MoveableObject {
             this.animDead();
             // console.log('idDead');
         } else {
-            if (this.isDead() && this.gameOver) {
-                this.stopGame();
-                // console.log('gameOver')
+            if (this.isHurt() && !this.isDead()) {
+                this.animHurt();
+                // console.log('isHurt');
             } else {
-                if (this.isHurt() && !this.isDead()) {
-                    this.animHurt();
-                    // console.log('isHurt');
+                if (this.isAboveGround(this.ground_y)) {
+                    this.animJump();
+                    // console.log('isJumping');
                 } else {
-                    if (this.isAboveGround(this.ground_y)) {
-                        this.animJump();
-                        // console.log('isJumping');
+                    if (this.isWalking() && !this.isDead()) {
+                        this.animWalk();
+                        // console.log('isWalking');
                     } else {
-                        if (this.isWalking() && !this.isDead()) {
-                            this.animWalk();
-                            // console.log('isWalking');
+                        if (this.isIdle && !this.justIdle && !this.isDead()) {
+                            this.animIdle();
+                            // console.log('isIdle');
                         } else {
-                            if (this.isIdle && !this.justIdle && !this.isDead()) {
-                                this.animIdle();
-                                // console.log('isIdle');
-                            } else {
-                                if (this.isLongIdle && this.justIdle && !this.isDead() && !this.isAlert()) {
-                                    this.animLongIdle();
-                                    // console.log('isLongIdel');
-                                }
+                            if (this.isLongIdle && this.justIdle && !this.isDead() && !this.isAlert()) {
+                                this.animLongIdle();
+                                // console.log('isLongIdel');
                             }
                         }
                     }
                 }
+
             }
         }
-    }
-
-
-    stopGame() {
-        cancelAnimationFrame(this.world.requestId);
     }
 
 
@@ -278,7 +269,7 @@ class Character extends MoveableObject {
         this.changeImg(this.IMAGES_DEAD);
         if (this.shownImg == 'img/2_character_pepe/5_dead/D-56.png') {
             this.justDead = true;
-            this.gameOver = true;
+            stopAnimation();
         }
         if (this.soundOn) {
             this.sound(this.lost_sound, quietVolume);

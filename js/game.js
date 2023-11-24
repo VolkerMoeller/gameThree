@@ -46,7 +46,6 @@ function stopAnimation() {
 }
 
 
-
 function gameWon() {
     removeClassFromElement('outroWin', 'display-none');
 }

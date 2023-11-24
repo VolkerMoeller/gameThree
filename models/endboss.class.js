@@ -169,8 +169,6 @@ class Endboss extends MoveableObject {
     }
 
 
-
-
     setStartLongAlert() {
         this.startLongAlert = Date.now();
     }
@@ -218,7 +216,7 @@ class Endboss extends MoveableObject {
         if (this.y >= 450) {
             stopAnimation();
         }
-    }
+        }
 
 
     isAlert() {
