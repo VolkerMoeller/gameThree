@@ -21,9 +21,8 @@ class Character extends MoveableObject {
     nrThrownBottles = 0;
     bottleBarLength = 0;
     nrCollectedCoins = 0;
-    // nrEnbossHits = -1;
     nrEndbossHits = 0;
-    amountHits = 6;
+    amountHits = 3;
 
     level_sound = new Audio('audio/el-pollo-loco.mp3')
     lost_sound = new Audio('audio/lost.mp3')
@@ -114,14 +113,14 @@ class Character extends MoveableObject {
         this.applyGravity(this.ground_y);
         this.animate();
     }
-    
-    
+
+
     setAmountHits() {
         if (this.world) {
             this.amountHits = this.world.level.amountBottles;
         }
     }
-    
+
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -185,7 +184,7 @@ class Character extends MoveableObject {
 
 
     stopGame() {
-        stopAnimation();
+        cancelAnimationFrame(this.world.requestId);
     }
 
 

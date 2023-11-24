@@ -44,31 +44,6 @@ class World {
     }
 
 
-    // drawTest(obj) {
-    //     if (obj instanceof Character) {
-    //         if (obj.justHurt) {
-    //             this.ctx.save();
-    //             this.ctx.translate(obj.x + 10, obj.y + 50);
-    //             this.ctx.rotate(-10 * Math.PI / 180);
-    //             this.ctx.translate(-obj.x + 10, -obj.y + 50);
-    //             this.ctx.txtAlign = 'center';
-    //             this.ctx.font = '20px Georgia';
-    //             this.ctx.fillStyle = 'red';
-    //             this.ctx.fillText("Autsch!", obj.x, obj.y);
-    //             this.ctx.restore()
-    //         }
-    //     }
-    // }
-
-    // drawTest2(obj) {
-    //     if (obj.justHurt) {
-    //         this.ctx.fillStyle = 'white';
-    //         this.ctx.roundRect(obj.x + 20, obj.y + 65, 80, 40, [10]);
-    //         this.ctx.fill();
-    //     }
-    // }
-
-
     drawBars() {
         this.drawHealthBar();
         this.drawBottleBar();
@@ -182,9 +157,9 @@ class World {
             }
         })
     }
-    
-    
-    treatSmashedByTheEndBoss(bottle){
+
+
+    treatSmashedByTheEndBoss(bottle) {
         this.justHitChecked = false;
         this.checkNrEndbossHits();
         this.smashSoundImmediatly(bottle);
@@ -192,7 +167,7 @@ class World {
         bottle.justSplashed = true;
         bottle.ground_y = bottle.y;
     }
-    
+
 
     treatSmachedOnTheFloor(bottle) {
         this.smashSoundImmediatly(bottle);
@@ -488,94 +463,5 @@ class World {
         this.ctx.lineCap = "round";
         this.ctx.lineTo((posX - 49) + diff, posY);
         this.ctx.stroke();
-    }
-
-
-    reset() {
-        cancelAnimationFrame(this.requestId);
-        this.character.x = 10;
-        this.character.justIdle = false;
-        this.character.otherDirection = false;
-        
-        this.camera_x = 0;
-        
-        this.level = [];
-        level1 = [];
-        
-        this.level = new Level(
-            [
-                new Endboss(),
-                new Chicken(),
-                new Chicken(),
-                new Chicken(),
-                new ChickenSmall(),
-                new ChickenSmall(),
-                new ChickenSmall()
-            ],
-            [
-                new Cloud('img/5_background/layers/4_clouds/1.png', 0),
-                new Cloud('img/5_background/layers/4_clouds/2.png', 719),
-                new Cloud('img/5_background/layers/4_clouds/1.png', 719 * 2),
-                new Cloud('img/5_background/layers/4_clouds/2.png', 719 * 3),
-                new Cloud('img/5_background/layers/4_clouds/1.png', 719 * 4),
-                new Cloud('img/5_background/layers/4_clouds/2.png', 719 * 5),
-            ],
-            [
-                new BackgroundObject('img/5_background/layers/air.png', -719),
-                new BackgroundObject('img/5_background/layers/air.png', 0),
-                new BackgroundObject('img/5_background/layers/air.png', 719),
-                new BackgroundObject('img/5_background/layers/air.png', 719 * 2),
-                new BackgroundObject('img/5_background/layers/air.png', 719 * 3),
-                new BackgroundObject('img/5_background/layers/air.png', 719 * 4),
-                new BackgroundObject('img/5_background/layers/air.png', 719 * 5)
-            ],
-            [
-                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
-                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0),
-                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719),
-                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 2),
-                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 3),
-                new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 4),
-                new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 5)
-            ],
-            [
-                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),
-                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 0),
-                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719),
-                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 2),
-                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 3),
-                new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 4),
-                new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 5)
-            ],
-            [
-                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', -719),
-                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0),
-                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719),
-                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 2),
-                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 3),
-                new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 4),
-                new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 5)
-            ],
-            [
-                new SalsaBottle(),
-                new SalsaBottle(),
-                new SalsaBottle(),
-                new SalsaBottle(),
-                new SalsaBottle(),
-                new SalsaBottle()
-            ],
-            [
-                new Coin(),
-                new Coin(),
-                new Coin(),
-                new Coin(),
-                new Coin()
-            ]
-        );
-
-        let self = this;
-        this.requestId = requestAnimationFrame(() => {
-            self.draw();
-        });
     }
 }

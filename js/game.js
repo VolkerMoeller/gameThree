@@ -26,12 +26,6 @@ function init() {
 }
 
 
-function resetLevel() {
-    world.reset();
-    addClassToElement('outroWin', 'display-none');
-}
-
-
 function showInformation() {
     console.log('My World is: ', world);
     console.log('My Character is: ', world.character);
@@ -50,6 +44,7 @@ function stopAnimation() {
         clearInterval(e);
     })
 }
+
 
 
 function gameWon() {
