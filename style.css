@@ -50,8 +50,8 @@ canvas {
 }
 
 .overlay {
-    width: 100%;
-    height: 100%;
+    width: 720px;
+    height: 480px;
     position: absolute;
     display: flex;
     flex-direction: center;
@@ -59,9 +59,68 @@ canvas {
     align-items: center;
 }
 
+
+
 .panel {
+    position: relative;
+    width: 720px;
+    height: 480px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+}
+
+.panel button {
+    margin: 16px;
+    padding: 15px 32px;   
+    font-family: 'Zabars';
+    font-size: 48px;
+    letter-spacing: 2px;;
+    color:#821B08;
+    text-shadow: 1px 2px 4px #FFDB00;
+    box-shadow: 1px 2px 4px #FFDB00;
+    background-color: #FF9247;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 50px;
+    border: 5px solid #821B08;
+}
+
+.panel span {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 16px;
+    padding: 15px;   
+    font-family: 'Zabars';
+    font-size: 72px;
+    letter-spacing: 2px;
+    text-align: center;
+    color:#821B08;
+    text-shadow: 1px 2px 4px #FFDB00;
+    /* box-shadow: 1px 2px 4px #FFDB00; */
+    background-color: #FF9247;
+    /* border-radius: 50px; */
+    border: 5px solid #821B08;
+    
+}
+
+
+.empty {
+    width: 50px;
+    height: 50px;
+}
+
+
+#introStart {
+    background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+#outroLost {
+    background-image: url('img/9_intro_outro_screens/game_over/oh no you lost!.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }

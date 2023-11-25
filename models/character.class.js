@@ -14,15 +14,14 @@ class Character extends MoveableObject {
     justIdle = false;
     justHurt = false;
     justDead = false;
-    just = false;
-    // gameOver = false;
+    // just = false;
 
     nrCollectedBottles = 0;
     nrThrownBottles = 0;
     bottleBarLength = 0;
     nrCollectedCoins = 0;
     nrEndbossHits = 0;
-    amountHits = 3;
+    amountHits = 4;
 
     level_sound = new Audio('audio/el-pollo-loco.mp3')
     lost_sound = new Audio('audio/lost.mp3')
@@ -269,6 +268,7 @@ class Character extends MoveableObject {
         this.changeImg(this.IMAGES_DEAD);
         if (this.shownImg == 'img/2_character_pepe/5_dead/D-56.png') {
             this.justDead = true;
+            gameLost();
             stopAnimation();
         }
         if (this.soundOn) {

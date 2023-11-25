@@ -50,6 +50,10 @@ function gameWon() {
     removeClassFromElement('outroWin', 'display-none');
 }
 
+function gameLost() {
+    removeClassFromElement('outroLost', 'display-none');
+}
+
 
 onkeydown = (e) => {
     switch (e.code) {

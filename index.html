@@ -34,18 +34,20 @@
         <div class="game">
             <canvas id="canvas" width="720" height="480"></canvas>
             <div id="introStart" class="overlay display-none">
-                <img src="img/9_intro_outro_screens/start/startscreen_1.png" width="720" height="480">
-                <button id="restart" onclick=""><span>Start</span></button>
+                <button onclick="">Start</button>
             </div>
             <div id="outroWin" class="overlay display-none">
                 <div class="panel">
-                    <span>GEWONNEN</span>
-                    <button id="restart" onclick=""><span>Reset</span></button>
+                    <div class="empty"></div>
+                    <span>Oh yeah, you win!</span>
+                    <button onclick="restart()">Play again</button>
                 </div>
             </div>
             <div id="outroLost" class="overlay display-none">
-                <img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" width="720" height="480">
-                <button id="restart" onclick=""><span>Reset</span></button>
+                <div class="panel">
+                    <div class="empty"></div>
+                    <button onclick="restart()">Try it again</button>
+                </div>
             </div>
         </div>
     </div>
