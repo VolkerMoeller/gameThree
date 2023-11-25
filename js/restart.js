@@ -1,6 +1,6 @@
-let nrChickens = 8;
-let nrChickenSmalls = 14;
-let nrSalsaBottles = 6;
+let nrChickens = 3;
+let nrChickenSmalls = 3;
+let nrSalsaBottles = 10;
 let nrCoins = 6;
 
 function restart() {

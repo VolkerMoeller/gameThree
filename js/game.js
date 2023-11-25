@@ -22,14 +22,24 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
-    world = new World(canvas, keyboard);
 }
 
 
+function start() {
+    loadLevel1();
+    setTimeout(() => {
+        addClassToElement('introStart', 'display-none')
+        addClassToElement('headline', 'visibility-none')
+    }, 1000);
+    world = new World(canvas, keyboard);
+}
+
+// 
 function showInformation() {
     console.log('My World is: ', world);
     console.log('My Character is: ', world.character);
 }
+// 
 
 
 function setStopableInterval(fn, ms) {

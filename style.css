@@ -26,6 +26,10 @@ body {
     display: none !important;
 }
 
+.visibility-none {
+    visibility: hidden;
+}
+
 h1 {
     color: #821B08;
     text-shadow: 1px 2px 4px #FFDB00;
@@ -98,29 +102,26 @@ canvas {
     text-align: center;
     color:#821B08;
     text-shadow: 1px 2px 4px #FFDB00;
-    /* box-shadow: 1px 2px 4px #FFDB00; */
     background-color: #FF9247;
-    /* border-radius: 50px; */
-    border: 5px solid #821B08;
+    border: 5px, 0px, 5px, 0px solid #821B08;
     
 }
-
 
 .empty {
     width: 50px;
     height: 50px;
 }
 
-
 #introStart {
     background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
-    background-size: contain;
+    background-size: 720px, 480px;
     background-repeat: no-repeat;
+    background-color: #994409;
 }
 
 
 #outroLost {
     background-image: url('img/9_intro_outro_screens/game_over/oh no you lost!.png');
-    background-size: contain;
+    background-size: 720px, 480px;
     background-repeat: no-repeat;
 }

@@ -30,11 +30,14 @@
 
 <body onload="init()">
     <div id="stage" class="stage">
-        <h1>El Pollo Loco</h1>
+        <h1 id="headline">El Pollo Loco</h1>
         <div class="game">
             <canvas id="canvas" width="720" height="480"></canvas>
-            <div id="introStart" class="overlay display-none">
-                <button onclick="">Start</button>
+            <div id="introStart" class="overlay">
+                <div class="panel">
+                    <div class="empty"></div>
+                    <button onclick="start()">Start</button>
+                </div>
             </div>
             <div id="outroWin" class="overlay display-none">
                 <div class="panel">

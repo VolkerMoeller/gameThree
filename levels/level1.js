@@ -1,4 +1,7 @@
-let level1 = new Level(
+let level1 = [];
+
+function loadLevel1() {
+    level1 = new Level(
         [
             new Endboss(),
             new Chicken(),
@@ -57,7 +60,11 @@ let level1 = new Level(
             new SalsaBottle(),
             new SalsaBottle(),
             new SalsaBottle(),
-            new SalsaBottle(),       
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
+            new SalsaBottle(),
             new SalsaBottle()
         ],
         [
@@ -68,3 +75,4 @@ let level1 = new Level(
             new Coin()
         ]
     );
+}

@@ -14,14 +14,13 @@ class Character extends MoveableObject {
     justIdle = false;
     justHurt = false;
     justDead = false;
-    // just = false;
 
     nrCollectedBottles = 0;
     nrThrownBottles = 0;
     bottleBarLength = 0;
     nrCollectedCoins = 0;
     nrEndbossHits = 0;
-    amountHits = 4;
+    amountHits = 6;
 
     level_sound = new Audio('audio/el-pollo-loco.mp3')
     lost_sound = new Audio('audio/lost.mp3')
