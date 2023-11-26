@@ -6,6 +6,7 @@ let nrCoins = 6;
 function restart() {
     addClassToElement('outroWin', 'display-none');
     addClassToElement('outroLost', 'display-none');
+    removeClassFromElement('instruc', 'display-none');
     cancelAnimationFrame(world.requestId);
     stopAnimation();
     setPlayFigures();

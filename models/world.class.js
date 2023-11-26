@@ -15,7 +15,9 @@ class World {
     barEndboss = new Statusbar(575, 40);
     endbossBarLength = 100;
     thrownObjects = [];
-    justKEYPressed = false;
+    justDPressed = false;
+    justQPressed = false;
+    justWPressed = false;
     justHitChecked = false;
 
 
@@ -123,6 +125,7 @@ class World {
 
     run() {
         setInterval(() => {
+            this.checkSound();
             this.checkCollisions();
             this.checkOutOfStage();
             this.checkThrowObjects();
@@ -130,20 +133,43 @@ class World {
         }, normalMs);
     }
 
+    checkSound() {
+        if (this.keyboard.KEY_Q && !this.justQPressed) {
+            this.justQPressed = true;
+            this.soundsOn();
+        }
+        if (!this.keyboard.KEY_Q) {
+            this.justQPressed = false;
+        }
+        if (this.keyboard.KEY_W && !this.justQPressed) {
+            this.justWPressed = true;
+            this.soundsOff();
+        }
+        if (!this.keyboard.KEY_W) {
+            this.justWPressed = false;
+        }
+    }
+
 
     checkThrowObjects() {
-        if (this.keyboard.KEY_D &&
-            this.character.nrCollectedBottles > this.character.nrThrownBottles &&
-            !this.justKEYPressed &&
-            !this.character.otherDirection) {
-            this.justKEYPressed = true;
+        if (this.isThrowing()) {
             let thrownBottle = new ThrowableObject(this.character.x + 70, this.character.y + 100);
             this.thrownObjects.push(thrownBottle);
             this.character.nrThrownBottles++;
+            this.justDPressed = true;
         }
         if (!this.keyboard.KEY_D) {
-            this.justKEYPressed = false;
+            this.justDPressed = false;
         }
+    }
+
+
+    isThrowing() {
+        return this.keyboard.KEY_D &&
+            this.character.nrCollectedBottles > this.character.nrThrownBottles &&
+            !this.justDPressed &&
+            !this.character.otherDirection &&
+            !this.character.justHurt;
     }
 
 
@@ -165,7 +191,7 @@ class World {
         this.smashSoundImmediatly(bottle);
         bottle.hitsEndboss = true;
         bottle.justSplashed = true;
-        bottle.ground_y = bottle.y -720;
+        bottle.ground_y = bottle.y - 720;
     }
 
 
