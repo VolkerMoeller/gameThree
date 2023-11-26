@@ -30,6 +30,7 @@ function start() {
     setTimeout(() => {
         addClassToElement('introStart', 'display-none')
         addClassToElement('headline', 'visibility-none')
+        removeClassFromElement('instruc', 'display-none')
     }, 1000);
     world = new World(canvas, keyboard);
 }
@@ -58,10 +59,12 @@ function stopAnimation() {
 
 function gameWon() {
     removeClassFromElement('outroWin', 'display-none');
+    addClassToElement('instruc', 'display-none')
 }
 
 function gameLost() {
     removeClassFromElement('outroLost', 'display-none');
+    addClassToElement('instruc', 'display-none')
 }
 
 

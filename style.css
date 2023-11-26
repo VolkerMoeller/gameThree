@@ -57,13 +57,7 @@ canvas {
     width: 720px;
     height: 480px;
     position: absolute;
-    display: flex;
-    flex-direction: center;
-    justify-content: center;
-    align-items: center;
 }
-
-
 
 .panel {
     position: relative;
@@ -77,11 +71,12 @@ canvas {
 
 .panel button {
     margin: 16px;
-    padding: 15px 32px;   
+    padding: 15px 32px;
     font-family: 'Zabars';
     font-size: 48px;
-    letter-spacing: 2px;;
-    color:#821B08;
+    letter-spacing: 2px;
+    ;
+    color: #821B08;
     text-shadow: 1px 2px 4px #FFDB00;
     box-shadow: 1px 2px 4px #FFDB00;
     background-color: #FF9247;
@@ -95,16 +90,39 @@ canvas {
     box-sizing: border-box;
     width: 100%;
     margin: 16px;
-    padding: 15px;   
+    padding: 15px;
     font-family: 'Zabars';
     font-size: 72px;
     letter-spacing: 2px;
     text-align: center;
-    color:#821B08;
+    color: #821B08;
     text-shadow: 1px 2px 4px #FFDB00;
     background-color: #FF9247;
     border: 5px, 0px, 5px, 0px solid #821B08;
-    
+
+}
+
+.instruc {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.instrucWrapper {
+    box-sizing: border-box;
+    padding: 16px;
+    text-align: center;
+    width: 100%;
+}
+
+.instrucWrapper span {
+    font-family: 'Zabars';
+    font-size: 24px;
+    letter-spacing: 2px;
+    color: black;
+    text-shadow: 1px 2px 4px #821B08;
+
 }
 
 .empty {

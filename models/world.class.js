@@ -165,7 +165,7 @@ class World {
         this.smashSoundImmediatly(bottle);
         bottle.hitsEndboss = true;
         bottle.justSplashed = true;
-        bottle.ground_y = bottle.y;
+        bottle.ground_y = bottle.y -720;
     }
 
 
@@ -183,22 +183,27 @@ class World {
 
 
     smashedByTheEndBoss(bottle) {
-        return bottle.isAboveGround(bottle.ground_y) &&
-            bottle.isColliding(this.level.enemies[0]);
+        return bottle.isColliding(this.level.enemies[0]) &&
+            bottle.isAboveGround(bottle.ground_y);
     }
 
 
     checkNrEndbossHits() {
+        console.log(this.character.nrEndbossHits);
         if (!this.justHitChecked) {
             this.justHitChecked = true;
-            if (this.character.nrEndbossHits == this.character.amountHits - 1) {
+            if (this.allHitsLanded()) {
                 this.character.nrEndbossHits = this.character.amountHits;
                 this.level.enemies[0].allHits = true;
             } else {
-                this.level.enemies[0].justHurt = true;
                 this.character.nrEndbossHits++;
+                this.level.enemies[0].justHurt = true;
             }
         }
+    }
+
+    allHitsLanded() {
+        return this.character.nrEndbossHits == this.character.amountHits - 1;
     }
 
 
@@ -329,9 +334,6 @@ class World {
             this.countCollectedCoins();
             obj.soundCollect();
         }
-        // if (obj instanceof Endboss) {
-        //     stopAnimation();
-        // }
         arr.splice(position, 1);
     }
 
