@@ -30,7 +30,7 @@
 
 <body onload="init()">
     <div id="stage" class="stage">
-        <h1 id="headline">El Pollo Loco</h1>
+        <h1 id="headline" class="visibility-none">El Pollo Loco</h1>
         <div class="game">
             <canvas id="canvas" width="720" height="480"></canvas>
             <div id="introStart" class="overlay">
@@ -56,12 +56,32 @@
                 <div class="empty"></div>
                 <div class="instrucWrapper">
                     <span> walk: &nbsp;[&larr; | &rarr;] &nbsp; jump: &nbsp;[space] &nbsp; throw: &nbsp;[D]
-                        &nbsp;</span>
-                    <span>&nbsp; sound: &nbsp; on: [Q] &nbsp; off: [W]</span>
+                        &nbsp; sound: &nbsp; on: [Q] &nbsp; off: [W] &nbsp; fullscreen [F | Esc]</span>
                 </div>
             </div>
-        </div>
-    </div>
+            <div id="hud" class="overlay hud display-none">
+                <div class="empty"></div>
+                <div class="panelBottom">
+                    <div class="panelWrapper">
+                        <button id="btn-left">&#x1F878;</button>
+                        <button id="btn-right">&#x1F87A;</button>
+                    </div>
+                    <div class="panelWrapper">
+                        <div class="toggleSwitch">
+                            <button id="btn-music-on" class="btn-on">
+                                <span>&#x266B;</span></button>
+                            </button>
+                            <button id="btn-music-off" class="btn-off display-none">
+                                <span>&#x23F8;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panelWrapper">
+                        <button id="btn-jump">&#x1F879;</button>
+                        <button id="btn-throw">&#x271C;</button>
+                    </div>
+                </div>
+            </div>
 </body>
 
 </html>

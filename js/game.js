@@ -19,6 +19,7 @@ let currentIntervalId;
 let keyboard = new Keyboard();
 
 
+
 function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
@@ -29,8 +30,10 @@ function start() {
     loadLevel1();
     setTimeout(() => {
         addClassToElement('introStart', 'display-none')
-        addClassToElement('headline', 'visibility-none')
+        removeClassFromElement('headline', 'visibility-none')
         removeClassFromElement('instruc', 'display-none')
+        removeClassFromElement('hud', 'display-none')
+        initTouchBtns();
     }, 1000);
     world = new World(canvas, keyboard);
 }
@@ -60,11 +63,86 @@ function stopAnimation() {
 function gameWon() {
     removeClassFromElement('outroWin', 'display-none');
     addClassToElement('instruc', 'display-none')
+    addClassToElement('hud', 'display-none')
 }
+
 
 function gameLost() {
     removeClassFromElement('outroLost', 'display-none');
     addClassToElement('instruc', 'display-none')
+    addClassToElement('hud', 'display-none')
+}
+
+
+function showOnBtn() {
+    removeClassFromElement('btn-music-on', 'display-none');
+    addClassToElement('btn-music-off', 'display-none');
+}
+
+
+function showOffBtn() {
+    removeClassFromElement('btn-music-off', 'display-none');
+    addClassToElement('btn-music-on', 'display-none');
+}
+
+
+function initTouchBtns() {
+    document.getElementById('btn-right').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.KEY_RIGHT = true;
+    });
+
+    document.getElementById('btn-right').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.KEY_RIGHT = false;
+    });
+
+    document.getElementById('btn-left').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.KEY_LEFT = true;
+    });
+
+    document.getElementById('btn-left').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.KEY_LEFT = false;
+    });
+
+    document.getElementById('btn-jump').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.KEY_SPACE = true;
+    });
+
+    document.getElementById('btn-jump').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.KEY_SPACE = false;
+    });
+
+    document.getElementById('btn-throw').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.KEY_D = true;
+    });
+
+    document.getElementById('btn-throw').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.KEY_D = false;
+    });
+
+    // document.getElementById('btn-start').addEventListener('touchend', (e) => {
+    //     e.preventDefault();
+    //     showLevel1();
+    // });
+
+    document.getElementById('btn-music-on').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        showOffBtn();
+        world.soundsOn();
+    });
+    
+    document.getElementById('btn-music-off').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        showOnBtn();
+        world.soundsOff();
+    });
 }
 
 

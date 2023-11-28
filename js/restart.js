@@ -7,6 +7,7 @@ function restart() {
     addClassToElement('outroWin', 'display-none');
     addClassToElement('outroLost', 'display-none');
     removeClassFromElement('instruc', 'display-none');
+    removeClassFromElement('hud', 'display-none');
     cancelAnimationFrame(world.requestId);
     stopAnimation();
     setPlayFigures();

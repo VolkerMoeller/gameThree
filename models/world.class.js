@@ -30,6 +30,12 @@ class World {
         this.run();
     }
 
+    openFullscreen() {
+        if (this.canvas.requestFullscreen) {
+          this.canvas.requestFullscreen();
+        } 
+      }
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -126,11 +132,23 @@ class World {
     run() {
         setInterval(() => {
             this.checkSound();
+            this.checkFullscreen();
             this.checkCollisions();
             this.checkOutOfStage();
             this.checkThrowObjects();
             this.checkThrownObjects();
         }, normalMs);
+    }
+
+
+    checkFullscreen(){
+        if (this.keyboard.KEY_F && !this.justFPressed) {
+            this.justFPressed = true;
+            this.openFullscreen();
+        }
+        if (!this.keyboard.KEY_F) {
+            this.justFPressed = false;
+        }
     }
 
     checkSound() {
@@ -457,6 +475,7 @@ class World {
 
 
     onOffSounds(boolean) {
+        this.character.level_sound.pause();
         this.character.soundOn = boolean;
         for (let i = 0; i < this.level.enemies.length; i++) {
             this.level.enemies[i].soundOn = boolean;
