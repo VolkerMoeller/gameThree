@@ -19,8 +19,7 @@ class World {
     justQPressed = false;
     justWPressed = false;
     justHitChecked = false;
-
-
+    
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -30,7 +29,7 @@ class World {
         this.run();
     }
 
-
+    
     openFullscreen() {
         if (this.canvas.requestFullscreen) {
             this.canvas.requestFullscreen();
@@ -84,7 +83,6 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.thrownObjects);
     }
-
 
 
     drawBar(bar, progrX, progrY, progrValue, progrColor, iconImg, iconX, iconY, iconWidth, iconHeight) {
