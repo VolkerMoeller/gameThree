@@ -1,8 +1,6 @@
 class MoveableObject extends DrawableObject {
     speed = 1;
-
     otherDirection = false;
-
     just_noises = false;
     speedY = 0;
     acceleration = 5;
@@ -13,8 +11,8 @@ class MoveableObject extends DrawableObject {
     offsetB = 0;
 
     energy = 100;
-
     shownImg;
+
 
     moveRight() {
         this.x += this.speed;
@@ -87,6 +85,7 @@ class MoveableObject extends DrawableObject {
         return this.speedY < 0 && this.isAboveGround(ground_y);
     }
 
+    
     isNearby() {
         return this.world.character.x > this.x && this.world.character.x - this.x < 300 ||
             this.world.character.x < this.x && this.x - this.world.character.x < 300;

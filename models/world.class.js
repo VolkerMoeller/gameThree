@@ -30,11 +30,12 @@ class World {
         this.run();
     }
 
+
     openFullscreen() {
         if (this.canvas.requestFullscreen) {
-          this.canvas.requestFullscreen();
-        } 
-      }
+            this.canvas.requestFullscreen();
+        }
+    }
 
 
     draw() {
@@ -53,10 +54,27 @@ class World {
 
 
     drawBars() {
-        this.drawHealthBar();
-        this.drawBottleBar();
-        this.drawCoinBar();
-        this.drawEndbossBar();
+        let lengthHealth = this.character.energy;
+        let lengthBottle = this.character.bottleBarLength;
+        let lengthCoin = this.character.nrCollectedCoins * 100 / this.level.amountCoins;
+        this.calcEndbossBarLength();
+        let progrXLeft = this.character.x + 10;
+        let progrXRight = this.character.x + 565;
+        let colorLeft = '#41B345';
+        let colorRight = '#FF4E00';
+        let iconImgHealth = this.barHealth.imgCache['img/7_statusbars/3_icons/icon_health.png'];
+        let iconImgBottle = this.barBottle.imgCache['img/7_statusbars/3_icons/icon_salsa_bottle.png'];
+        let iconImgCoin = this.barCoin.imgCache['img/7_statusbars/3_icons/icon_coin.png'];
+        let iconImgEndboss = this.barEndboss.imgCache['img/7_statusbars/3_icons/icon_health_endboss.png'];
+        let iconWidth = Math.floor(157 / 3);
+        let iconHeight = Math.floor(158 / 3);
+        let iconWidthCoin = Math.floor(157 / 3.5);
+        let iconHeightCoin = Math.floor(158 / 3.5);
+
+        this.drawBar(this.barHealth, progrXLeft, 60, lengthHealth, colorLeft, iconImgHealth, 5, 25, iconWidth, iconHeight);
+        this.drawBar(this.barBottle, progrXLeft, 110, lengthBottle, colorLeft, iconImgBottle, 5, 80, iconWidth, iconHeight);
+        this.drawBar(this.barCoin, progrXLeft, 160, lengthCoin, colorLeft, iconImgCoin, 8, 135, iconWidthCoin, iconHeightCoin);
+        this.drawBar(this.barEndboss, progrXRight, 60, this.endbossBarLength, colorRight, iconImgEndboss, 550, 35, iconWidth, iconHeight);
     }
 
 
@@ -68,48 +86,16 @@ class World {
     }
 
 
-    drawHealthBar() {
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.barHealth);
-        this.ctx.translate(this.camera_x, 0);
-        this.drawProgress(this.character.x + 10, 60, this.character.energy, '#41B345');
-        this.ctx.translate(-this.camera_x, 0);
-        this.ctx.drawImage(this.barHealth.imgCache['img/7_statusbars/3_icons/icon_health.png'], 5, 25, Math.floor(157 / 3), Math.floor(158 / 3));
-        this.ctx.translate(this.camera_x, 0);
-    }
 
+    drawBar(bar, progrX, progrY, progrValue, progrColor, iconImg, iconX, iconY, iconWidth, iconHeight) {
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(bar);
+        this.ctx.translate(this.camera_x, 0);
+        this.drawProgress(progrX, progrY, progrValue, progrColor);
+        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.drawImage(iconImg, iconX, iconY, iconWidth, iconHeight);
+        this.ctx.translate(this.camera_x, 0);
 
-    drawBottleBar() {
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.barBottle);
-        this.ctx.translate(this.camera_x, 0);
-        this.drawProgress(this.character.x + 10, 110, this.character.bottleBarLength, '#41B345');
-        this.ctx.translate(-this.camera_x, 0);
-        this.ctx.drawImage(this.barBottle.imgCache['img/7_statusbars/3_icons/icon_salsa_bottle.png'], 5, 80, Math.floor(157 / 3), Math.floor(158 / 3));
-        this.ctx.translate(this.camera_x, 0);
-    }
-
-
-    drawCoinBar() {
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.barCoin);
-        this.ctx.translate(this.camera_x, 0);
-        this.drawProgress(this.character.x + 10, 160, this.character.nrCollectedCoins * 100 / this.level.amountCoins, '#41B345');
-        this.ctx.translate(-this.camera_x, 0);
-        this.ctx.drawImage(this.barCoin.imgCache['img/7_statusbars/3_icons/icon_coin.png'], 8, 135, Math.floor(157 / 3.5), Math.floor(158 / 3.5));
-        this.ctx.translate(this.camera_x, 0);
-    }
-
-
-    drawEndbossBar() {
-        this.calcEndbossBarLength();
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.barEndboss);
-        this.ctx.translate(this.camera_x, 0);
-        this.drawProgress(this.character.x + 565, 60, this.endbossBarLength, '#FF4E00');
-        this.ctx.translate(-this.camera_x, 0);
-        this.ctx.drawImage(this.barEndboss.imgCache['img/7_statusbars/3_icons/icon_health_endboss.png'], 550, 35, Math.floor(157 / 3), Math.floor(158 / 3));
-        this.ctx.translate(this.camera_x, 0);
     }
 
 
@@ -141,7 +127,7 @@ class World {
     }
 
 
-    checkFullscreen(){
+    checkFullscreen() {
         if (this.keyboard.KEY_F && !this.justFPressed) {
             this.justFPressed = true;
             this.openFullscreen();
@@ -150,6 +136,7 @@ class World {
             this.justFPressed = false;
         }
     }
+
 
     checkSound() {
         if (this.keyboard.KEY_Q && !this.justQPressed) {
@@ -233,7 +220,6 @@ class World {
 
 
     checkNrEndbossHits() {
-        console.log(this.character.nrEndbossHits);
         if (!this.justHitChecked) {
             this.justHitChecked = true;
             if (this.allHitsLanded()) {
@@ -245,6 +231,7 @@ class World {
             }
         }
     }
+
 
     allHitsLanded() {
         return this.character.nrEndbossHits == this.character.amountHits - 1;
@@ -286,10 +273,7 @@ class World {
         if (mo.otherDirection) {
             this.flipImg(mo);
         }
-
         mo.drawThisImg(this.ctx);
-        // this.drawFrame(mo);
-
         if (mo.otherDirection) {
             this.reFlipImg(mo);
         }
@@ -436,41 +420,9 @@ class World {
     }
 
 
-
-    drawFrame(mo) {
-        if (
-            mo instanceof Character ||
-            mo instanceof Chicken ||
-            mo instanceof ChickenSmall ||
-            mo instanceof Endboss
-        ) {
-            this.rectangleRed(mo);
-            this.rectangleBlue(mo);
-        }
-    }
-
-
     reFlipImg(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
-    }
-
-
-    rectangleRed(mo) {
-        this.ctx.beginPath();
-        this.ctx.lineWidth = '1';
-        this.ctx.strokeStyle = 'red';
-        this.ctx.rect(mo.x + mo.offsetL, mo.y + mo.offsetT, mo.width - mo.offsetR, mo.height - mo.offsetB);
-        this.ctx.stroke();
-    }
-
-
-    rectangleBlue(mo) {
-        this.ctx.beginPath();
-        this.ctx.lineWidth = '1';
-        this.ctx.strokeStyle = 'blue';
-        this.ctx.rect(mo.x, mo.y, mo.width, mo.height);
-        this.ctx.stroke();
     }
 
 

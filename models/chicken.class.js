@@ -62,6 +62,11 @@ class Chicken extends MoveableObject {
     }
 
 
+    animateByChangingValue() {
+        this.moveLeft();
+    }
+
+
     animWalk() {
         this.changeImg(this.IMAGES_WALK);
         this.soundNoise();
@@ -86,11 +91,6 @@ class Chicken extends MoveableObject {
                 this.noise_sound.pause();
             }
         }
-    }
-
-
-    animateByChangingValue() {
-        this.moveLeft();
     }
 
 

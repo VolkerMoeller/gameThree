@@ -113,12 +113,6 @@ class Character extends MoveableObject {
     }
 
 
-    setAmountHits() {
-        if (this.world) {
-            this.amountHits = this.world.level.amountBottles;
-        }
-    }
-
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -131,47 +125,30 @@ class Character extends MoveableObject {
     }
 
 
-    calculateBottleBarLength() {
-        if (this.world) {
-            this.bottleBarLength = (this.nrCollectedBottles - this.nrThrownBottles) / this.world.level.amountBottles * 100;
-            if (this.bottleBarLength < 0) {
-                this.bottleBarLength = 0;
-            }
-        }
-    }
-
-
     animateByChangingImg() {
         this.soundsPause();
         if (this.isDead() && !this.justDead) {
             this.startDead = Date.now()
             this.animDead();
-            // console.log('idDead');
         } else {
             if (this.isHurt() && !this.isDead()) {
                 this.animHurt();
-                // console.log('isHurt');
             } else {
                 if (this.isAboveGround(this.ground_y)) {
                     this.animJump();
-                    // console.log('isJumping');
                 } else {
                     if (this.isWalking() && !this.isDead()) {
                         this.animWalk();
-                        // console.log('isWalking');
                     } else {
                         if (this.isIdle && !this.justIdle && !this.isDead()) {
                             this.animIdle();
-                            // console.log('isIdle');
                         } else {
                             if (this.isLongIdle && this.justIdle && !this.isDead() && !this.isAlert()) {
                                 this.animLongIdle();
-                                // console.log('isLongIdel');
                             }
                         }
                     }
                 }
-
             }
         }
     }
@@ -200,12 +177,28 @@ class Character extends MoveableObject {
     }
 
 
+    calculateBottleBarLength() {
+        if (this.world) {
+            this.bottleBarLength = (this.nrCollectedBottles - this.nrThrownBottles) / this.world.level.amountBottles * 100;
+            if (this.bottleBarLength < 0) {
+                this.bottleBarLength = 0;
+            }
+        }
+    }
+
+
     levelSound() {
         if (this.soundOn && !this.isAlert() && !this.isDead()) {
             this.sound(this.level_sound, veryQuietVolume);
         }
         if (this.isAlert() || this.isDead()) {
             this.level_sound.pause();
+        }
+    }
+
+    setAmountHits() {
+        if (this.world) {
+            this.amountHits = this.world.level.amountBottles;
         }
     }
 

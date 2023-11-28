@@ -11,7 +11,7 @@ class Statusbar extends DrawableObject {
         'img/7_statusbars/3_icons/icon_health_endboss.png',
         'img/7_statusbars/3_icons/icon_health.png',
         'img/7_statusbars/3_icons/icon_salsa_bottle.png'
-    ]
+    ];
 
     constructor(posX, posY) {
         super().loadImage(this.IMAGE_EMPTY);

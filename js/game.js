@@ -1,6 +1,6 @@
 let canvas;
 let ctx;
-let world
+let world;
 
 let fastMs = 20;
 let normalMs = 70;
@@ -19,7 +19,6 @@ let currentIntervalId;
 let keyboard = new Keyboard();
 
 
-
 function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
@@ -29,21 +28,19 @@ function init() {
 function start() {
     loadLevel1();
     setTimeout(() => {
-        addClassToElement('introStart', 'display-none')
-        removeClassFromElement('headline', 'visibility-none')
-        removeClassFromElement('instruc', 'display-none')
-        removeClassFromElement('hud', 'display-none')
+        setTheScene();
         initTouchBtns();
-    }, 1000);
+    }, 500);
     world = new World(canvas, keyboard);
 }
 
-// 
-function showInformation() {
-    console.log('My World is: ', world);
-    console.log('My Character is: ', world.character);
+
+function setTheScene() {
+    addClassToElement('introStart', 'display-none');
+    removeClassFromElement('headline', 'visibility-none');
+    removeClassFromElement('instruc', 'display-none');
+    removeClassFromElement('hud', 'display-none');
 }
-// 
 
 
 function setStopableInterval(fn, ms) {
@@ -56,21 +53,21 @@ function setStopableInterval(fn, ms) {
 function stopAnimation() {
     intervalIds.forEach((e) => {
         clearInterval(e);
-    })
+    });
 }
 
 
 function gameWon() {
     removeClassFromElement('outroWin', 'display-none');
-    addClassToElement('instruc', 'display-none')
-    addClassToElement('hud', 'display-none')
+    addClassToElement('instruc', 'display-none');
+    addClassToElement('hud', 'display-none');
 }
 
 
 function gameLost() {
     removeClassFromElement('outroLost', 'display-none');
-    addClassToElement('instruc', 'display-none')
-    addClassToElement('hud', 'display-none')
+    addClassToElement('instruc', 'display-none');
+    addClassToElement('hud', 'display-none');
 }
 
 
@@ -127,17 +124,17 @@ function initTouchBtns() {
         keyboard.KEY_D = false;
     });
 
-    // document.getElementById('btn-start').addEventListener('touchend', (e) => {
-    //     e.preventDefault();
-    //     showLevel1();
-    // });
+    document.getElementById('btn-start').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        showLevel1();
+    });
 
     document.getElementById('btn-music-on').addEventListener('touchend', (e) => {
         e.preventDefault();
         showOffBtn();
         world.soundsOn();
     });
-    
+
     document.getElementById('btn-music-off').addEventListener('touchend', (e) => {
         e.preventDefault();
         showOnBtn();
@@ -160,9 +157,6 @@ onkeydown = (e) => {
         case 'ArrowUp':
             keyboard.KEY_UP = true;
             break;
-        case 'ArrowDown':
-            keyboard.KEY_DOWN = true;
-            break;
         case 'KeyD':
             keyboard.KEY_D = true;
             break;
@@ -172,17 +166,8 @@ onkeydown = (e) => {
         case 'KeyW':
             keyboard.KEY_W = true;
             break;
-        case 'KeyS':
-            keyboard.KEY_S = true;
-            break;
-        case 'KeyA':
-            keyboard.KEY_A = true;
-            break;
         case 'KeyF':
             keyboard.KEY_F = true;
-            break;
-        case 'Enter':
-            keyboard.KEY_ENTER = true;
             break;
     }
 }
@@ -202,9 +187,6 @@ onkeyup = (event) => {
         case 'ArrowUp':
             keyboard.KEY_UP = false;
             break;
-        case 'ArrowDown':
-            keyboard.KEY_DOWN = false;
-            break;
         case 'KeyD':
             keyboard.KEY_D = false;
             break;
@@ -214,17 +196,8 @@ onkeyup = (event) => {
         case 'KeyW':
             keyboard.KEY_W = false;
             break;
-        case 'KeyS':
-            keyboard.KEY_S = false;
-            break;
-        case 'KeyA':
-            keyboard.KEY_A = false;
-            break;
         case 'KeyF':
             keyboard.KEY_F = false;
-            break;
-        case 'Enter':
-            keyboard.KEY_ENTER = false;
             break;
     }
 }
