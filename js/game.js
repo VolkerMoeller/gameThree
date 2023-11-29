@@ -34,8 +34,7 @@ function start() {
         initTouchBtns();
     }, 500);
     world = new World(canvas, keyboard);
-    checkOrientation();
-    screenOrientation();
+
 }
 
 
@@ -45,6 +44,7 @@ function checkOrientation() {
         removeClassFromElement('rotate', 'display-none');
     }
 }
+
 
 function screenOrientation() {
     let w = window.innerWidth;

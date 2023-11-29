@@ -176,7 +176,7 @@ class Endboss extends MoveableObject {
 
     animAlert() {
         this.changeImg(this.IMAGES_ALERT)
-        if (this.soundOn) {
+        if (this.soundOn && this.isNearby()) {
             this.noises(this.delay_noises, this.noise_volume);
         }
     }
@@ -184,7 +184,7 @@ class Endboss extends MoveableObject {
 
     animLongAlert() {
         this.changeImg(this.IMAGES_ATTACK);
-        if (this.soundOn) {
+        if (this.soundOn && this.isNearby()) {
             this.noises(this.delay_noises_short, this.noise_volume);
         }
     }

@@ -116,6 +116,8 @@ class World {
 
     run() {
         setInterval(() => {
+            checkOrientation();
+            screenOrientation();
             this.checkSound();
             this.checkFullscreen();
             this.checkCollisions();
