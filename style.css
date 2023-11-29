@@ -49,20 +49,25 @@ h1 {
 }
 
 canvas {
-    position: block;
+    position: relative;
     background-color: black;
+    display: block;
 }
 
 .overlay {
-    width: 720px;
-    height: 480px;
     position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 .panel {
-    position: relative;
-    width: 720px;
-    height: 480px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -70,14 +75,13 @@ canvas {
 }
 
 .panel button {
-    margin: 16px;
-    padding: 15px 32px;
+    margin: 8px;
+    padding: 8px 8px;
     font-family: 'Zabars';
-    font-size: 48px;
+    font-size: 36px;
     letter-spacing: 2px;
-    color: #821B08;
-    text-shadow: 1px 2px 4px #FFDB00;
-    box-shadow: 1px 2px 4px #FFDB00;
+    color: black;
+    box-shadow: 1px 2px 4px rgba(0,0,0,0.8);
     background-color: #FF9247;
     cursor: pointer;
     text-decoration: none;
@@ -97,8 +101,6 @@ canvas {
     color: #821B08;
     text-shadow: 1px 2px 4px #FFDB00;
     background-color: #FF9247;
-    /* border: 5px, 0px, 5px, 0px solid #821B08; */
-
 }
 
 .instruc {
@@ -131,7 +133,7 @@ canvas {
 
 #introStart {
     background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
-    background-size: 720px, 480px;
+    background-size: contain;
     background-repeat: no-repeat;
     background-color: #994409;
 }
@@ -139,7 +141,7 @@ canvas {
 
 #outroLost {
     background-image: url('img/9_intro_outro_screens/game_over/oh no you lost!.png');
-    background-size: 720px, 480px;
+    background-size: contain;
 }
 
 .hud {
@@ -158,7 +160,7 @@ canvas {
     cursor: pointer;
     text-decoration: none;
     border-radius: 50px;
-    border: 4px solid #821B08;
+    border: 2px solid #821B08;
 }
 
 .panelBottom {
@@ -169,15 +171,11 @@ canvas {
 
 .panelWrapper {
     display: flex;
-    
 }
 
 .panelWrapper button {
-    width: 44px;
-    height: 44px;
-    padding: 0px 0px;
-    font-size: 20px;
-
+    width: 36px;
+    height: 36px;
 }
 
 .toggleSwitch {
@@ -188,74 +186,77 @@ canvas {
     padding-bottom: 2px;
 }
 
+#rotate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-/* Smartphones */
-@media only screen and (max-width: 720px) {
+#rotate span {
+    font-size: 24px;
+}
+
+
+
+@media (max-width: 800px) {
     h1 {
         display: none;
     }
-    
-    canvas {
-        width: 100%;
-    }
-    
+
     .panel {
         width: 100%;
         height: 100%;
     }
-    
+
     .overlay {
         width: 100%;
         height: 100%;
     }
-    
+
     #introStart {
         width: 100%;
         height: 100%;
         background-size: contain;
     }
-    
+
     #outroWin {
         width: 100%;
         height: 100%;
         background-size: contain;
     }
-    
+
     #outroLost {
         width: 100%;
         height: 100%;
         background-size: contain;
     }
-    
+
     .instruc {
         display: none !important;
     }
-    
+
     .hud {
         display: flex;
-        /* flex-direction: column; */
-        /* justify-content: space-between; */
     }
-    
+
     .panelIntro {
         display: none;
     }
-    
+
     .panel span {
         font-size: 48px;
     }
-    
+
     .panel button {
         font-size: 36px
     }
 }
 
-@media only screen and (max-width: 500px) {
-    .panelWrapper button {
-        width: 36px;
-        height: 36px;
-        margin: 2px;
-        border: 2px solid #821B08;
+/* Smartphones */
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
     }
 }
 

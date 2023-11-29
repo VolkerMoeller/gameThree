@@ -27,6 +27,7 @@ class World {
         this.draw();
         this.setWorldTo();
         this.run();
+        this.soundsOn();
     }
 
     

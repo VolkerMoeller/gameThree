@@ -34,7 +34,7 @@ class Chicken extends MoveableObject {
 
 
     constructor() {
-        super().loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
+        super().loadImage(this.IMAGES_WALK[0]);
         this.loadImages(this.IMAGES_WALK);
         this.loadImages(this.IMAGES_DEAD);
         this.x = this.random_x;
@@ -47,7 +47,7 @@ class Chicken extends MoveableObject {
         setStopableInterval(() => {
             this.animateByChangingImg();
             this.animateByChangingValue();
-        }, slowMs)
+        }, slowMs);
         this.intervalId = currentIntervalId;
     }
 

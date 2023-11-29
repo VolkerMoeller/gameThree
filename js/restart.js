@@ -8,6 +8,7 @@ function restart() {
     cancelAnimationFrame(world.requestId);
     stopAnimation();
     setPlayFigures();
+    world.soundsOn();
     world.setWorldTo();
     world.draw();
 }

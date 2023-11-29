@@ -18,6 +18,8 @@ let currentIntervalId;
 
 let keyboard = new Keyboard();
 
+let screenOr = 'portrait-primary';
+
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -32,6 +34,29 @@ function start() {
         initTouchBtns();
     }, 500);
     world = new World(canvas, keyboard);
+    checkOrientation();
+    screenOrientation();
+}
+
+
+function checkOrientation() {
+    let w = window.innerWidth;
+    if (screen.orientation.type == 'portrait-primary' && w < 800) {
+        removeClassFromElement('rotate', 'display-none');
+    }
+}
+
+function screenOrientation() {
+    let w = window.innerWidth;
+    screen.orientation.addEventListener("change", (event) => {
+        screenOr = event.target.type;
+        if (screenOr == 'portrait-primary' && w < 800) {
+            removeClassFromElement('rotate', 'display-none');
+        }
+        if (screenOr == 'landscape-primary' && w < 800) {
+            addClassToElement('rotate', 'display-none');
+        }
+    });
 }
 
 

@@ -30,7 +30,7 @@
 
 <body onload="init()">
     <div id="stage" class="stage">
-        <h1 id="headline" class="visibility-none">El Pollo Loco</h1>
+        <h1 id="headline" class="display-none">El Pollo Loco</h1>
         <div class="game">
             <canvas id="canvas" width="720" height="480"></canvas>
             <div id="introStart" class="overlay">
@@ -68,10 +68,10 @@
                     </div>
                     <div class="panelWrapper">
                         <div class="toggleSwitch">
-                            <button id="btn-music-on" class="btn-on">
+                            <button id="btn-music-on" class="btn-on display-none">
                                 <span>&#x266B;</span></button>
                             </button>
-                            <button id="btn-music-off" class="btn-off display-none">
+                            <button id="btn-music-off" class="btn-off">
                                 <span>&#x23F8;</span>
                             </button>
                         </div>
@@ -82,6 +82,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="rotate" class="display-none">
+            <span>For a better gaming experience: </span>
+            <span>Please rotate Display</span>
+        </div>
 </body>
 
 </html>

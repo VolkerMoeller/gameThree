@@ -199,6 +199,7 @@ class Endboss extends MoveableObject {
         if (this.animFinished(225, 'img/4_enemie_boss_chicken/5_dead/G26.png')) {
             this.justDead = true;
             if (this.soundOn) {
+                this.world.character.level_sound.pause();
                 this.sound(this.win_sound, mediumVolume);
             }
             gameWon();

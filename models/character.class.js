@@ -191,8 +191,9 @@ class Character extends MoveableObject {
         if (this.soundOn && !this.isAlert() && !this.isDead()) {
             this.sound(this.level_sound, veryQuietVolume);
         }
-        if (this.isAlert() || this.isDead()) {
-            this.level_sound.pause();
+        // if (this.isAlert() || this.isDead()) {
+        if (this.isDead()) {
+        this.level_sound.pause();
         }
     }
 

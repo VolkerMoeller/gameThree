@@ -51,7 +51,7 @@ class ChickenSmall extends MoveableObject {
         this.intervalId = currentIntervalId;
     }
 
-
+    
     animateByChangingImg() {
         if (!this.isDead()) {
             this.animWalk();
@@ -59,6 +59,11 @@ class ChickenSmall extends MoveableObject {
         else {
             this.animDead();
         }
+    }
+
+    
+    animateByChangingValue() {
+        this.moveLeft();
     }
 
 
@@ -86,11 +91,6 @@ class ChickenSmall extends MoveableObject {
                 this.noise_sound.pause();
             }
         }
-    }
-
-
-    animateByChangingValue() {
-        this.moveLeft();
     }
 
 
