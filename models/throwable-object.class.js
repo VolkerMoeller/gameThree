@@ -61,18 +61,14 @@ class ThrowableObject extends MoveableObject {
     animateByChangingImg() {
         if (this.isAboveGround(this.ground_y)) {
             this.animFly();
-        } else {
-            if (!this.isAboveGround(this.ground_y) || this.hitsEndboss) {
-                this.animSplash();
-            }
-        }
+        } else if (!this.isAboveGround(this.ground_y) || this.hitsEndboss)
+            this.animSplash();
     }
 
 
     animateByChangingValue() {
-        if (!this.justSplashed) {
+        if (!this.justSplashed)
             this.moveRight();
-        }
     }
 
 
@@ -91,9 +87,9 @@ class ThrowableObject extends MoveableObject {
         this.height = this.imageSizes[sequenz + '_height'];
     }
 
+
     soundSmashed() {
-        if (this.soundOn) {
+        if (this.soundOn)
             this.sound(this.smashed_sound, mediumVolume);
-        }
     }
 }

@@ -130,26 +130,16 @@ class Character extends MoveableObject {
         if (this.isDead() && !this.justDead) {
             this.startDead = Date.now()
             this.animDead();
-        } else {
-            if (this.isHurt() && !this.isDead()) {
-                this.animHurt();
-            } else {
-                if (this.isAboveGround(this.ground_y)) {
-                    this.animJump();
-                } else {
-                    if (this.isWalking() && !this.isDead()) {
-                        this.animWalk();
-                    } else {
-                        if (this.isIdle && !this.justIdle && !this.isDead()) {
-                            this.animIdle();
-                        } else {
-                            if (this.isLongIdle && this.justIdle && !this.isDead() && !this.isAlert()) {
-                                this.animLongIdle();
-                            }
-                        }
-                    }
-                }
-            }
+        } else if (this.isHurt() && !this.isDead()) {
+            this.animHurt();
+        } else if (this.isAboveGround(this.ground_y)) {
+            this.animJump();
+        } else if (this.isWalking() && !this.isDead()) {
+            this.animWalk();
+        } else if (this.isIdle && !this.justIdle && !this.isDead()) {
+            this.animIdle();
+        } else if (this.isLongIdle && this.justIdle && !this.isDead() && !this.isAlert()) {
+            this.animLongIdle();
         }
     }
 
@@ -191,12 +181,12 @@ class Character extends MoveableObject {
         if (this.soundOn && !this.isAlert() && !this.isDead()) {
             this.sound(this.level_sound, veryQuietVolume);
         }
-        // if (this.isAlert() || this.isDead()) {
         if (this.isDead()) {
-        this.level_sound.pause();
+            this.level_sound.pause();
         }
     }
 
+    
     setAmountHits() {
         if (this.world) {
             this.amountHits = this.world.level.amountBottles;

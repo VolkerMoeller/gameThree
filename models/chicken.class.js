@@ -7,7 +7,7 @@ class Chicken extends MoveableObject {
 
     random_x = Math.floor(Math.floor(Math.random() * (4000 - 100)) + 200);
     random_speed = Math.floor((Math.random() * 4)) + 1;
-    random_noises = Math.floor(Math.random() * 1000);
+    random_noises = Math.floor(Math.random() * 1000 + 500);
 
     boing_sound = new Audio('audio/boing.mp3');
     noise_sound = new Audio('audio/cackle.mp3');
@@ -53,12 +53,10 @@ class Chicken extends MoveableObject {
 
 
     animateByChangingImg() {
-        if (!this.isDead()) {
+        if (!this.isDead())
             this.animWalk();
-        }
-        else {
+        else
             this.animDead();
-        }
     }
 
 
@@ -83,13 +81,11 @@ class Chicken extends MoveableObject {
 
 
     soundNoise() {
-        if (this.soundOn && this.isNearby()) {
+        if (this.soundOn && this.isNearby())
             this.noises(this.delay_noises, this.noise_volume);
-        }
         if (this.world) {
-            if (this.world.character.isDead()) {
+            if (this.world.character.isDead())
                 this.noise_sound.pause();
-            }
         }
     }
 

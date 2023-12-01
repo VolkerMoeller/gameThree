@@ -55,11 +55,8 @@ class MoveableObject extends DrawableObject {
             this.noise_sound.play();
             this.noise_sound.volume = vol;
             this.just_noises = true;
-        } else {
-            if (this.just_noises && this.wait(this.startTime, wait_ms)) {
-                this.just_noises = false;
-            }
-        }
+        } else if (this.just_noises && this.wait(this.startTime, wait_ms))
+            this.just_noises = false;
     }
 
 
@@ -69,9 +66,8 @@ class MoveableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-            if (this.y > ground_y) {
+            if (this.y > ground_y)
                 this.y = ground_y;
-            }
         }, normalMs);
     }
 
@@ -85,7 +81,7 @@ class MoveableObject extends DrawableObject {
         return this.speedY < 0 && this.isAboveGround(ground_y);
     }
 
-    
+
     isNearby() {
         return this.world.character.x > this.x && this.world.character.x - this.x < 300 ||
             this.world.character.x < this.x && this.x - this.world.character.x < 300;

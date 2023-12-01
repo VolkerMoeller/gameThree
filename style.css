@@ -81,7 +81,7 @@ canvas {
     font-size: 36px;
     letter-spacing: 2px;
     color: black;
-    box-shadow: 1px 2px 4px rgba(0,0,0,0.8);
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.8);
     background-color: #FF9247;
     cursor: pointer;
     text-decoration: none;
@@ -144,6 +144,12 @@ canvas {
     background-size: contain;
 }
 
+.stage:fullscreen {
+    background-image: url('img/desert.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 .hud {
     display: none;
     flex-direction: column;
@@ -195,6 +201,7 @@ canvas {
 
 #rotate span {
     font-size: 24px;
+    text-align: center;
 }
 
 

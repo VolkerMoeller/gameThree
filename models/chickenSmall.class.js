@@ -7,7 +7,7 @@ class ChickenSmall extends MoveableObject {
 
     random_x = Math.floor(Math.random() * (4000 - 100)) + 200;
     random_speed = Math.floor((Math.random() * 4)) + 1;
-    random_noises = Math.floor(Math.random() * 1000);
+    random_noises = Math.floor(Math.random() * 1000 + 225);
 
     boing_sound = new Audio('audio/boing.mp3');
     noise_sound = new Audio('audio/beep.mp3');
@@ -51,17 +51,15 @@ class ChickenSmall extends MoveableObject {
         this.intervalId = currentIntervalId;
     }
 
-    
+
     animateByChangingImg() {
-        if (!this.isDead()) {
+        if (!this.isDead())
             this.animWalk();
-        }
-        else {
+        else
             this.animDead();
-        }
     }
 
-    
+
     animateByChangingValue() {
         this.moveLeft();
     }
@@ -83,13 +81,11 @@ class ChickenSmall extends MoveableObject {
 
 
     soundNoise() {
-        if (this.soundOn && this.isNearby()) {
+        if (this.soundOn && this.isNearby())
             this.noises(this.delay_noises, this.noise_volume);
-        }
         if (this.world) {
-            if (this.world.character.isDead()) {
+            if (this.world.character.isDead())
                 this.noise_sound.pause();
-            }
         }
     }
 

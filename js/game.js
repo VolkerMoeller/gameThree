@@ -40,9 +40,8 @@ function start() {
 
 function checkOrientation() {
     let w = window.innerWidth;
-    if (screen.orientation.type == 'portrait-primary' && w < 800) {
+    if (screen.orientation.type == 'portrait-primary' && w < 800)
         removeClassFromElement('rotate', 'display-none');
-    }
 }
 
 
@@ -50,12 +49,10 @@ function screenOrientation() {
     let w = window.innerWidth;
     screen.orientation.addEventListener("change", (event) => {
         screenOr = event.target.type;
-        if (screenOr == 'portrait-primary' && w < 800) {
+        if (screenOr == 'portrait-primary' && w < 800)
             removeClassFromElement('rotate', 'display-none');
-        }
-        if (screenOr == 'landscape-primary' && w < 800) {
+        if (screenOr == 'landscape-primary' && w < 800)
             addClassToElement('rotate', 'display-none');
-        }
     });
 }
 

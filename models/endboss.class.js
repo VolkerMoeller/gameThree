@@ -98,18 +98,12 @@ class Endboss extends MoveableObject {
     animateByChangingImg() {
         if (this.allHits && !this.justDead) {
             this.animDead();
-        } else {
-            if (this.isHurt() && !this.justDead) {
-                this.animHurt();
-            } else {
-                if (!this.isAlert() && !this.justDead) {
-                    this.animWalk();
-                } else {
-                    if (this.isAlert() && !this.justDead) {
-                        this.animIsAlert();
-                    }
-                }
-            }
+        } if (this.isHurt() && !this.justDead) {
+            this.animHurt();
+        } if (!this.isAlert() && !this.justDead) {
+            this.animWalk();
+        } if (this.isAlert() && !this.justDead) {
+            this.animIsAlert();
         }
     }
 
@@ -137,12 +131,10 @@ class Endboss extends MoveableObject {
         }
         if (!this.isLongAlert()) {
             this.animAlert();
-        } else {
-            if (this.isLongAlert() && !this.justDead) {
-                this.setStartLongAlert();
-                this.animLongAlert();
-                this.leap();
-            }
+        } if (this.isLongAlert() && !this.justDead) {
+            this.setStartLongAlert();
+            this.animLongAlert();
+            this.leap();
         }
     }
 
@@ -176,7 +168,7 @@ class Endboss extends MoveableObject {
 
     animAlert() {
         this.changeImg(this.IMAGES_ALERT)
-        if (this.soundOn && this.isNearby()) {
+        if (this.soundOn) {
             this.noises(this.delay_noises, this.noise_volume);
         }
     }
@@ -184,12 +176,12 @@ class Endboss extends MoveableObject {
 
     animLongAlert() {
         this.changeImg(this.IMAGES_ATTACK);
-        if (this.soundOn && this.isNearby()) {
+        if (this.soundOn) {
             this.noises(this.delay_noises_short, this.noise_volume);
         }
     }
-    
-    
+
+
     animDead() {
         if (!this.justStartAnim) {
             this.setStartAnim();
@@ -217,12 +209,12 @@ class Endboss extends MoveableObject {
         if (this.y >= 450) {
             stopAnimation();
         }
-        }
+    }
 
 
     isAlert() {
         if (this.world) {
-            return this.x - this.world.character.x < 400;
+            return this.isNearby();
         }
     }
 

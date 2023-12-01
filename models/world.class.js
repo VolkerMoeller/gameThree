@@ -2,6 +2,9 @@ class World {
     character = new Character();
     level = level1;
     canvas;
+
+    stage;
+
     ctx;
     keyboard;
     camera_x = 0;
@@ -19,7 +22,7 @@ class World {
     justQPressed = false;
     justWPressed = false;
     justHitChecked = false;
-    
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -30,11 +33,11 @@ class World {
         this.soundsOn();
     }
 
-    
+
     openFullscreen() {
-        if (this.canvas.requestFullscreen) {
-            this.canvas.requestFullscreen();
-        }
+        this.stage = document.getElementById('stage');
+        if (this.stage.requestFullscreen)
+            this.stage.requestFullscreen();
     }
 
 
@@ -100,9 +103,8 @@ class World {
 
     calcEndbossBarLength() {
         this.endbossBarLength = 100 - (this.character.nrEndbossHits * 100 / this.character.amountHits);
-        if (this.endbossBarLength < 0) {
+        if (this.endbossBarLength < 0)
             this.endbossBarLength = 0;
-        }
     }
 
 
@@ -133,9 +135,8 @@ class World {
             this.justFPressed = true;
             this.openFullscreen();
         }
-        if (!this.keyboard.KEY_F) {
+        if (!this.keyboard.KEY_F)
             this.justFPressed = false;
-        }
     }
 
 
@@ -144,16 +145,14 @@ class World {
             this.justQPressed = true;
             this.soundsOn();
         }
-        if (!this.keyboard.KEY_Q) {
+        if (!this.keyboard.KEY_Q)
             this.justQPressed = false;
-        }
         if (this.keyboard.KEY_W && !this.justQPressed) {
             this.justWPressed = true;
             this.soundsOff();
         }
-        if (!this.keyboard.KEY_W) {
+        if (!this.keyboard.KEY_W)
             this.justWPressed = false;
-        }
     }
 
 
@@ -164,9 +163,8 @@ class World {
             this.character.nrThrownBottles++;
             this.justDPressed = true;
         }
-        if (!this.keyboard.KEY_D) {
+        if (!this.keyboard.KEY_D)
             this.justDPressed = false;
-        }
     }
 
 
@@ -181,12 +179,10 @@ class World {
 
     checkThrownObjects() {
         this.thrownObjects.forEach((bottle) => {
-            if (this.smashedOnTheFloor(bottle)) {
+            if (this.smashedOnTheFloor(bottle))
                 this.treatSmachedOnTheFloor(bottle);
-            }
-            if (this.smashedByTheEndBoss(bottle)) {
+            if (this.smashedByTheEndBoss(bottle))
                 this.treatSmashedByTheEndBoss(bottle);
-            }
         })
     }
 
@@ -271,13 +267,11 @@ class World {
 
 
     addToMap(mo) {
-        if (mo.otherDirection) {
+        if (mo.otherDirection)
             this.flipImg(mo);
-        }
         mo.drawThisImg(this.ctx);
-        if (mo.otherDirection) {
+        if (mo.otherDirection)
             this.reFlipImg(mo);
-        }
     }
 
 
@@ -304,9 +298,8 @@ class World {
                 this.character.jump();
                 this.chickenDead(enemy);
             }
-            if (!this.character.isFalling(this.character.ground_y)) {
+            if (!this.character.isFalling(this.character.ground_y))
                 this.characterLoseEnergy();
-            }
         }
     }
 
@@ -320,9 +313,8 @@ class World {
 
 
     collidingEndboss(enemy) {
-        if (enemy instanceof Endboss) {
+        if (enemy instanceof Endboss)
             this.characterLoseEnergy();
-        }
     }
 
 
@@ -346,9 +338,8 @@ class World {
 
     checkOutOfStage() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isOutOfStage(enemy)) {
+            if (enemy.isOutOfStage(enemy))
                 this.spliceObj(enemy, this.level.enemies);
-            };
         });
     }
 
@@ -385,9 +376,8 @@ class World {
         for (let i = 0; i < array.length; i++) {
             let searchedId = obj.intervalId;
             let arrayId = array[i].intervalId;
-            if (searchedId == arrayId) {
+            if (searchedId == arrayId)
                 return i;
-            }
         }
     }
 
