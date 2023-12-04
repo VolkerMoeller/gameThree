@@ -57,4 +57,11 @@ class DrawableObject {
         return this.timePast > time &&
             this.shownImg == img;
     }       
+
+
+    // Die Zeit in der eine Animation sicher durchläuft
+    animBreakpoint(time, imgNr) {
+        return this.timePast > time &&
+            this.shownImgNr == imgNr;
+    }       
 }

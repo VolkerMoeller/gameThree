@@ -12,6 +12,7 @@ class MoveableObject extends DrawableObject {
 
     energy = 100;
     shownImg;
+    shownImgNr;
 
 
     moveRight() {
@@ -34,10 +35,17 @@ class MoveableObject extends DrawableObject {
     }
 
 
+    changeImgByNr(arrImg, nr) {
+        let path = arrImg[nr];
+        this.img = this.imgCache[path];
+    }
+
+    
     changeImg(arrImg) {
         let i = this.currentImage % arrImg.length;
         let path = arrImg[i];
         this.shownImg = arrImg[i];
+        this.shownImgNr = i;
         this.img = this.imgCache[path];
         this.currentImage++;
     }
@@ -81,10 +89,22 @@ class MoveableObject extends DrawableObject {
         return this.speedY < 0 && this.isAboveGround(ground_y);
     }
 
+    isRising(ground_y) {
+        return this.speedY > 0 && this.isAboveGround(ground_y);
+    }
+
 
     isNearby() {
         return this.world.character.x > this.x && this.world.character.x - this.x < 300 ||
             this.world.character.x < this.x && this.x - this.world.character.x < 300;
+    }
+
+
+    isNearbyEndboss() {
+        if (this.world.level.enemies[0].x) {
+            return this.world.level.enemies[0].x > this.x && this.world.level.enemies[0].x - this.x < 300 ||
+                this.world.level.enemies[0].x < this.x && this.x - this.world.level.enemies[0].x < 300;
+        }
     }
 
 

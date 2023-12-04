@@ -3,6 +3,7 @@ let ctx;
 let world;
 
 let fastMs = 20;
+let mediumFastMs = 45;
 let normalMs = 70;
 let slowMs = 120;
 let slowerMs = 500;

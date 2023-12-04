@@ -12,6 +12,7 @@ class Character extends MoveableObject {
     startDead;
 
     justIdle = false;
+    justJumps = false;
     justHurt = false;
     justDead = false;
 
@@ -34,6 +35,8 @@ class Character extends MoveableObject {
     offsetB = 90;
     offsetL = 20;
     offsetR = 60;
+
+    imgCounter = 0;
 
     IMAGES_IDLE = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -81,6 +84,25 @@ class Character extends MoveableObject {
         'img/2_character_pepe/3_jump/J-37.png',
         'img/2_character_pepe/3_jump/J-38.png',
         'img/2_character_pepe/3_jump/J-39.png'
+    ]
+
+    IMAGES_JUMP_UP = [
+        'img/2_character_pepe/3_jump/J-31.png',
+        'img/2_character_pepe/3_jump/J-32.png',
+        'img/2_character_pepe/3_jump/J-33.png',
+        'img/2_character_pepe/3_jump/J-34.png'
+    ]
+
+    IMAGES_JUMP_DOWN = [
+        'img/2_character_pepe/3_jump/J-35.png',
+        'img/2_character_pepe/3_jump/J-36.png',
+        'img/2_character_pepe/3_jump/J-37.png',
+        'img/2_character_pepe/3_jump/J-38.png',
+        'img/2_character_pepe/3_jump/J-39.png'
+    ]
+
+    IMAGES_JUMP_ZERO = [
+        'img/2_character_pepe/3_jump/J-31.png',
     ]
 
     IMAGES_HURT = [
@@ -153,7 +175,7 @@ class Character extends MoveableObject {
             this.otherDirection = false;
             this.moveRight();
         }
-        if (this.isJumping()) {
+        if (this.jumps()) {
             this.jump();
         }
     }
@@ -186,7 +208,7 @@ class Character extends MoveableObject {
         }
     }
 
-    
+
     setAmountHits() {
         if (this.world) {
             this.amountHits = this.world.level.amountBottles;
@@ -200,12 +222,65 @@ class Character extends MoveableObject {
     }
 
 
+
     animJump() {
+        if (this.imgCounter > 3 && this.imgCounter < 9) {
+            if (this.isRising(this.ground_y)) {
+                this.imgCounter = 3;
+            }
+        }
+        if (this.imgCounter > 7) {
+            if (this.isFalling(this.ground_y)) {
+                this.imgCounter = 7;
+            } else {
+                this.imgCounter = 0;
+            }
+        }
+        //     if (this.y == 0) {
+        //         this.imgCounter = 0;
+        //     }
+
+        // if (this.imgCounter > 8) {
+        //     this.imgCounter = 0;
+        // }
         this.justIdle = false;
-        this.changeImg(this.IMAGES_JUMP);
+        console.log(this.imgCounter)
+        this.changeImgByNr(this.IMAGES_JUMP, this.imgCounter);
+        this.imgCounter++;
+
+
+
+        this.jumpSound();
+    }
+
+
+    jumpSound() {
         if (this.soundOn && !this.justJump) {
             this.sound(this.hop_sound, mediumVolume);
             this.justJump = true;
+        }
+    }
+
+
+    // animJump() {
+    //     this.justIdle = false;
+    //     this.changeImg(this.IMAGES_JUMP);
+    //     if (this.soundOn && !this.justJump) {
+    //         this.sound(this.hop_sound, mediumVolume);
+    //         this.justJump = true;
+    //     }
+    // }
+
+
+    animHurt() {
+        if (!this.justStartAnim) {
+            this.setStartAnim();
+        }
+        this.changeImg(this.IMAGES_HURT);
+        this.timePastMs(this.startAnim, Date.now());
+        if (this.animFinished(225, 'img/4_enemie_boss_chicken/4_hurt/G23.png')) {
+            this.justStartAnim = false;
+            this.justHurt = false;
         }
     }
 
@@ -223,6 +298,7 @@ class Character extends MoveableObject {
         this.startIdle = Date.now();
         this.justIdle = true;
         this.justJump = false;
+        this.justJumps = false;
         this.changeImg(this.IMAGES_IDLE);
     }
 
@@ -281,7 +357,7 @@ class Character extends MoveableObject {
 
 
     nothingElse() {
-        return !this.isJumping && !this.isAlert() && !this.isHurt && !this.isDead;
+        return !this.jumps() && !this.isAlert() && !this.isHurt() && !this.isDead();
     }
 
 
@@ -295,14 +371,21 @@ class Character extends MoveableObject {
     }
 
 
-    isJumping() {
+    jumps() {
         return this.world.keyboard.KEY_SPACE && !this.isAboveGround(this.ground_y);
     }
 
 
     isAlert() {
-        return this.world.level.enemies[0].isAlert();
+        if (this.world) {
+            return this.isNearbyEndboss();
+        }
     }
+
+    // isAlert() {
+    //     if (this.world.level.enemies[0])
+    //     return this.world.level.enemies[0].isAlert();
+    // }
 
 
     isHurt() {

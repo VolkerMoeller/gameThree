@@ -295,7 +295,9 @@ class World {
     collidingChickens(enemy) {
         if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
             if (this.character.isFalling(this.character.ground_y)) {
+                // this.character.imgCounter = 0;
                 this.character.jump();
+                this.character.justHurt = true;
                 this.chickenDead(enemy);
             }
             if (!this.character.isFalling(this.character.ground_y))
