@@ -94,16 +94,15 @@ function setTheScene() {
 
 
 /**
- * This function allows you to stop all animation intervals. 
- * The individual interval IDs are saved in a single array. 
+ * This function saves all individual animation interval IDs in a single array.
  * In addition, the current interval ID is transferred to a variable. 
  * This value is passed to the calling objects to uniquely address the object. 
- * This establishes the premise that each object only 
- * executes one main interval function.
+ * This establishes the premise that each object only executes one main interval function.
  * 
- * @param {*} fn 
- * @param {*} ms 
- */
+ * @param {function} fn – This is a function that should be repeated at intervals.
+ * @param {value} ms – This is the duration in milliseconds after which 
+ * the function is to be called up again continuously.
+*/
 function setStopableInterval(fn, ms) {
     let intervalId = setInterval(fn, ms);
     intervalIds.push(intervalId);
@@ -111,6 +110,10 @@ function setStopableInterval(fn, ms) {
 }
 
 
+/**
+ * This function allows you to stop all animation intervals. 
+ * 
+ */
 function stopAnimation() {
     intervalIds.forEach((e) => {
         clearInterval(e);
@@ -118,6 +121,10 @@ function stopAnimation() {
 }
 
 
+/**
+ * This function is used to display the winning scene.
+ * 
+ */
 function gameWon() {
     removeClassFromElement('outroWin', 'display-none');
     addClassToElement('instruc', 'display-none');
@@ -125,6 +132,10 @@ function gameWon() {
 }
 
 
+/**
+ * This function is used to display the lost scene.
+ * 
+ */
 function gameLost() {
     removeClassFromElement('outroLost', 'display-none');
     addClassToElement('instruc', 'display-none');
@@ -132,18 +143,30 @@ function gameLost() {
 }
 
 
+/**
+ * This function is used to display the sound-on button.
+ * 
+ */
 function showOnBtn() {
     removeClassFromElement('btn-music-on', 'display-none');
     addClassToElement('btn-music-off', 'display-none');
 }
 
 
+/**
+ * This function is used to display the sound-off button.
+ * 
+ */
 function showOffBtn() {
     removeClassFromElement('btn-music-off', 'display-none');
     addClassToElement('btn-music-on', 'display-none');
 }
 
 
+/**
+ * This function is used to initialise the play buttons when using mobile devices.
+ * 
+ */
 function initTouchBtns() {
     document.getElementById('btn-right').addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -204,6 +227,11 @@ function initTouchBtns() {
 }
 
 
+
+/**
+ * This function is used to recognise the player's keystrokes. 
+ * Here when the button is pressed.
+ */
 onkeydown = (e) => {
     switch (e.code) {
         case 'ArrowLeft':
@@ -234,8 +262,12 @@ onkeydown = (e) => {
 }
 
 
-onkeyup = (event) => {
-    switch (event.code) {
+/**
+ * This function is used to recognise the player's keystrokes. 
+ * Here when the button is released.
+ */
+onkeyup = (e) => {
+    switch (e.code) {
         case 'ArrowLeft':
             keyboard.KEY_LEFT = false;
             break;
