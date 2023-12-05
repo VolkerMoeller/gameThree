@@ -142,7 +142,7 @@ class Character extends MoveableObject {
             this.shiftBackground();
             this.calculateBottleBarLength();
             this.levelSound();
-        }, normalMs);
+        }, mediumFastMs);
         this.intervalId = currentIntervalId;
     }
 
@@ -230,26 +230,15 @@ class Character extends MoveableObject {
             }
         }
         if (this.imgCounter > 7) {
-            if (this.isFalling(this.ground_y)) {
+            if (this.isFalling(this.ground_y))
                 this.imgCounter = 7;
-            } else {
+            else
                 this.imgCounter = 0;
-            }
-        }
-        //     if (this.y == 0) {
-        //         this.imgCounter = 0;
-        //     }
 
-        // if (this.imgCounter > 8) {
-        //     this.imgCounter = 0;
-        // }
+        }
         this.justIdle = false;
-        console.log(this.imgCounter)
         this.changeImgByNr(this.IMAGES_JUMP, this.imgCounter);
         this.imgCounter++;
-
-
-
         this.jumpSound();
     }
 
@@ -260,16 +249,6 @@ class Character extends MoveableObject {
             this.justJump = true;
         }
     }
-
-
-    // animJump() {
-    //     this.justIdle = false;
-    //     this.changeImg(this.IMAGES_JUMP);
-    //     if (this.soundOn && !this.justJump) {
-    //         this.sound(this.hop_sound, mediumVolume);
-    //         this.justJump = true;
-    //     }
-    // }
 
 
     animHurt() {

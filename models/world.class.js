@@ -295,7 +295,6 @@ class World {
     collidingChickens(enemy) {
         if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
             if (this.character.isFalling(this.character.ground_y)) {
-                // this.character.imgCounter = 0;
                 this.character.jump();
                 this.character.justHurt = true;
                 this.chickenDead(enemy);
@@ -340,8 +339,11 @@ class World {
 
     checkOutOfStage() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isOutOfStage(enemy))
-                this.spliceObj(enemy, this.level.enemies);
+            if (enemy.isOutOfStage(enemy)) {
+                if (!enemy instanceof Endboss) {
+                    this.spliceObj(enemy, this.level.enemies);
+                }
+            }
         });
     }
 
