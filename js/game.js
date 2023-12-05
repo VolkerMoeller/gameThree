@@ -21,13 +21,23 @@ let keyboard = new Keyboard();
 
 let screenOr = 'portrait-primary';
 
-
+/**
+ * This is the initial file. The canvas object is defined and a 2D context is assigned.
+ * This function is called up when the game is loaded for the first time.
+ * 
+ */
 function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 }
 
 
+/**
+ * This is the start function. It is triggered by the start button.
+ * The level is preloaded, the stage is shown and the buttons for mobile play are loaded. 
+ * The superordinate game world object is then initialised.
+ * 
+ */
 function start() {
     loadLevel1();
     setTimeout(() => {
@@ -39,25 +49,42 @@ function start() {
 }
 
 
+/**
+ * This function checks that the display is in portrait format. 
+ * If this is the case, a recommendation to switch to landscape format is displayed 
+ * if the resolution is less than 1000 pixels.
+ * The check is performed continuously by an interval 
+ * that is triggered in the higher-level game world object when it is initialised.
+ * 
+*/
 function checkOrientation() {
     let w = window.innerWidth;
-    if (screen.orientation.type == 'portrait-primary' && w < 800)
+    if (screen.orientation.type == 'portrait-primary' && w < 1000)
         removeClassFromElement('rotate', 'display-none');
 }
 
 
+/**
+ * This function switches the display of the message for changing 
+ * the display setting on and off. Depending on requirements.
+ * 
+ */
 function screenOrientation() {
     let w = window.innerWidth;
     screen.orientation.addEventListener("change", (event) => {
         screenOr = event.target.type;
-        if (screenOr == 'portrait-primary' && w < 800)
+        if (screenOr == 'portrait-primary' && w < 1000)
             removeClassFromElement('rotate', 'display-none');
-        if (screenOr == 'landscape-primary' && w < 800)
+        if (screenOr == 'landscape-primary' && w < 1000)
             addClassToElement('rotate', 'display-none');
     });
 }
 
 
+/**
+ * This function sets the scene.
+ * 
+ */
 function setTheScene() {
     addClassToElement('introStart', 'display-none');
     removeClassFromElement('headline', 'visibility-none');
@@ -66,6 +93,17 @@ function setTheScene() {
 }
 
 
+/**
+ * This function allows you to stop all animation intervals. 
+ * The individual interval IDs are saved in a single array. 
+ * In addition, the current interval ID is transferred to a variable. 
+ * This value is passed to the calling objects to uniquely address the object. 
+ * This establishes the premise that each object only 
+ * executes one main interval function.
+ * 
+ * @param {*} fn 
+ * @param {*} ms 
+ */
 function setStopableInterval(fn, ms) {
     let intervalId = setInterval(fn, ms);
     intervalIds.push(intervalId);
