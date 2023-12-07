@@ -3,6 +3,10 @@ let nrChickenSmalls = 3;
 let nrSalsaBottles = 10;
 let nrCoins = 6;
 
+/**
+ * This function is used to restart the game.
+ * 
+ */
 function restart() {
     setTheStartScene();
     cancelAnimationFrame(world.requestId);
@@ -14,6 +18,10 @@ function restart() {
 }
 
 
+/**
+ * This function sets the start scene.
+ * 
+ */
 function setTheStartScene() {
     addClassToElement('outroWin', 'display-none');
     addClassToElement('outroLost', 'display-none');
@@ -22,6 +30,10 @@ function setTheStartScene() {
 }
 
 
+/**
+ * This function calls up new game objects.
+ * 
+ */
 function setPlayFigures() {
     world.character = new Character();
     world.level.enemies[0] = new Endboss();

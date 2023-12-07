@@ -95,16 +95,37 @@ class Endboss extends MoveableObject {
     }
 
 
+    // animateByChangingImg() {
+    //     if (this.allHits && !this.justDead) {
+    //         this.animDead();
+    //     } 
+    //     if (this.isAlert() && !this.justDead) {
+    //         this.animIsAlert();
+    //     }
+    //     if (this.isHurt() && this.justHurt && !this.justDead) {
+    //         this.animHurt();
+    //     }
+    //     if (!this.isAlert() && !this.justDead) {
+    //         this.animWalk();
+    //     } 
+    // }
+
     animateByChangingImg() {
         if (this.allHits && !this.justDead) {
             this.animDead();
-        } if (this.isHurt() && !this.justDead) {
-            this.animHurt();
-        } if (!this.isAlert() && !this.justDead) {
-            this.animWalk();
-        } if (this.isAlert() && !this.justDead) {
+        } 
+        if (this.isAlert() && !this.justDead) {
             this.animIsAlert();
+            if (this.isHurt() && this.justHurt && !this.justDead) {
+                this.animHurt();
+            }
         }
+        if (!this.isAlert() && !this.justDead) {
+            this.animWalk();
+            if (this.isHurt() && this.justHurt && !this.justDead) {
+                this.animHurt();
+            }
+        } 
     }
 
 
@@ -112,9 +133,11 @@ class Endboss extends MoveableObject {
         return this.justHurt;
     }
 
+
     animHurt() {
         if (!this.justStartAnim) {
             this.setStartAnim();
+            this.justAlert = true;
         }
         this.changeImg(this.IMAGES_HURT);
         this.timePastMs(this.startAnim, Date.now());
@@ -125,9 +148,12 @@ class Endboss extends MoveableObject {
     }
 
 
+
+
     animIsAlert() {
         if (!this.justStartAnim) {
             this.setStartAnim();
+            console.log('Alert', this.justStartAnim);
         }
         if (!this.isLongAlert()) {
             this.animAlert();

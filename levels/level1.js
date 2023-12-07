@@ -1,5 +1,10 @@
 let level1 = [];
 
+/**
+ * This function loads the game level.
+ * The required objects, such as enemies, items and the final boss, are created
+ * 
+ */
 function loadLevel1() {
     level1 = new Level(
         createEnemies(),

@@ -181,8 +181,9 @@ class World {
         this.thrownObjects.forEach((bottle) => {
             if (this.smashedOnTheFloor(bottle))
                 this.treatSmachedOnTheFloor(bottle);
-            if (this.smashedByTheEndBoss(bottle))
+            if (this.smashedByTheEndBoss(bottle)){
                 this.treatSmashedByTheEndBoss(bottle);
+            }
         })
     }
 

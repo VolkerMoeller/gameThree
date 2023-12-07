@@ -164,6 +164,29 @@ function showOffBtn() {
 
 
 /**
+ * This help function is used to add a named class to a named element.
+ * 
+ * @param {string} objectId  – This is the name of the element that is to receive the class.
+ * @param {string} className – This is the name of the class that is to receive the element.
+*/
+function addClassToElement(objectId, className) {
+    document.getElementById(objectId).classList.add(className);
+}
+
+
+/**
+ * This help function is used to remove a named class to a named element.
+ * 
+ * 
+ * @param {string} objectId – This is the name of the element from which the class is to be removed.
+ * @param {string} className – This is the name of the class that is to be removed.
+ */
+function removeClassFromElement(objectId, className) {
+    document.getElementById(objectId).classList.remove(className);
+}
+
+
+/**
  * This function is used to initialise the play buttons when using mobile devices.
  * 
  */
@@ -225,7 +248,6 @@ function initTouchBtns() {
         world.soundsOff();
     });
 }
-
 
 
 /**
