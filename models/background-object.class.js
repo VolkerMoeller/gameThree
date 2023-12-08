@@ -6,7 +6,7 @@ class BackgroundObject extends MoveableObject {
     /**
      * 
      * 
-     * @param {*} imagePath 
+     * @param {string} imagePath – 
      * @param {*} x 
      */
     constructor(imagePath, x) {

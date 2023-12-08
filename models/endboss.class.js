@@ -33,6 +33,12 @@ class Endboss extends MoveableObject {
     setBeginLeap = false;
     beginLeap;
 
+    imgCounter = 0;
+    animOpen = false;
+
+    timerCounter = 0;
+    countToNine = 0;
+
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -95,37 +101,25 @@ class Endboss extends MoveableObject {
     }
 
 
-    // animateByChangingImg() {
-    //     if (this.allHits && !this.justDead) {
-    //         this.animDead();
-    //     } 
-    //     if (this.isAlert() && !this.justDead) {
-    //         this.animIsAlert();
-    //     }
-    //     if (this.isHurt() && this.justHurt && !this.justDead) {
-    //         this.animHurt();
-    //     }
-    //     if (!this.isAlert() && !this.justDead) {
-    //         this.animWalk();
-    //     } 
-    // }
-
     animateByChangingImg() {
-        if (this.allHits && !this.justDead) {
+        if (this.allHits && !this.justDead || this.animOpen) {
             this.animDead();
-        } 
+        }
         if (this.isAlert() && !this.justDead) {
             this.animIsAlert();
-            if (this.isHurt() && this.justHurt && !this.justDead) {
-                this.animHurt();
-            }
+            this.showHurt();
         }
         if (!this.isAlert() && !this.justDead) {
             this.animWalk();
-            if (this.isHurt() && this.justHurt && !this.justDead) {
-                this.animHurt();
-            }
-        } 
+            this.showHurt();
+        }
+    }
+
+
+    showHurt() {
+        if (this.isHurt() && this.justHurt && !this.justDead) {
+            this.animHurt();
+        }
     }
 
 
@@ -148,12 +142,9 @@ class Endboss extends MoveableObject {
     }
 
 
-
-
     animIsAlert() {
         if (!this.justStartAnim) {
             this.setStartAnim();
-            console.log('Alert', this.justStartAnim);
         }
         if (!this.isLongAlert()) {
             this.animAlert();
@@ -209,19 +200,21 @@ class Endboss extends MoveableObject {
 
 
     animDead() {
-        if (!this.justStartAnim) {
-            this.setStartAnim();
+        this.justDead = true;
+        this.animOpen = true;
+        let imgNr = this.imgCounter % 3;
+        if (countToOne == 1) {
+            this.imgCounter++;
         }
-        this.changeImg(this.IMAGES_DEAD);
-        this.timePastMs(this.startAnim, Date.now());
-        if (this.animFinished(225, 'img/4_enemie_boss_chicken/5_dead/G26.png')) {
-            this.justDead = true;
-            if (this.soundOn) {
-                this.world.character.level_sound.pause();
-                this.sound(this.win_sound, mediumVolume);
-            }
-            gameWon();
+        if (this.imgCounter >= 2) {
+            this.imgCounter = 2;
         }
+        this.changeImgByNr(this.IMAGES_DEAD, imgNr);
+        if (this.soundOn) {
+            this.world.character.level_sound.pause();
+            this.sound(this.win_sound, mediumVolume);
+        }
+        gameWon();
     }
 
 

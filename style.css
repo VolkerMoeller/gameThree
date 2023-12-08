@@ -100,7 +100,7 @@ canvas {
     text-align: center;
     color: #821B08;
     text-shadow: 1px 2px 4px #FFDB00;
-    background-color: #FF9247;
+    /* background-color: #FF9247; */
 }
 
 .instruc {

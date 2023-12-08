@@ -268,7 +268,7 @@ class Character extends MoveableObject {
         this.justIdle = false;
         this.changeImg(this.IMAGES_WALK);
         if (this.soundOn) {
-            this.sound(this.walking_sound, mediumVolume);
+            this.sound(this.walking_sound, loudVolume);
         }
     }
 

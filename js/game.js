@@ -6,6 +6,7 @@ let fastMs = 20;
 let mediumFastMs = 45;
 let normalMs = 70;
 let slowMs = 120;
+let mediumSlowMs = 155;
 let slowerMs = 500;
 
 let veryQuietVolume = 0.02;
@@ -20,6 +21,23 @@ let currentIntervalId;
 let keyboard = new Keyboard();
 
 let screenOr = 'portrait-primary';
+
+let countToOne = 0;
+let timerCounter = 0;
+
+
+/**
+ * This function repeatedly sets the variable "countToOne" from 0 to 1.
+ * 
+ * 
+ */
+function startTimerCounter() {
+    setStopableInterval(() => {
+        countToOne = timerCounter % 2;
+        timerCounter++;
+    }, mediumSlowMs);
+}
+
 
 /**
  * This is the initial file. The canvas object is defined and a 2D context is assigned.

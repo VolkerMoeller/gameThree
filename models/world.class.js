@@ -196,8 +196,8 @@ class World {
         bottle.justSplashed = true;
         bottle.ground_y = bottle.y - 720;
     }
-
-
+    
+    
     treatSmachedOnTheFloor(bottle) {
         this.smashSoundImmediatly(bottle);
         this.spliceSlightlyLater(bottle);
@@ -207,22 +207,23 @@ class World {
 
     smashedOnTheFloor(bottle) {
         return !bottle.isAboveGround(bottle.ground_y) &&
-            bottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png'
+        bottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png'
     }
-
+    
 
     smashedByTheEndBoss(bottle) {
         return bottle.isColliding(this.level.enemies[0]) &&
-            bottle.isAboveGround(bottle.ground_y);
+        bottle.isAboveGround(bottle.ground_y);
     }
-
-
+    
+    
     checkNrEndbossHits() {
         if (!this.justHitChecked) {
             this.justHitChecked = true;
             if (this.allHitsLanded()) {
                 this.character.nrEndbossHits = this.character.amountHits;
                 this.level.enemies[0].allHits = true;
+                startTimerCounter();
             } else {
                 this.character.nrEndbossHits++;
                 this.level.enemies[0].justHurt = true;
@@ -230,7 +231,7 @@ class World {
         }
     }
 
-
+    
     allHitsLanded() {
         return this.character.nrEndbossHits == this.character.amountHits - 1;
     }
