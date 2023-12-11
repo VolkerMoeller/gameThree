@@ -19,6 +19,10 @@ function loadLevel1() {
 }
 
 
+/**
+ * 
+ * @returns – the enemie objects
+ */
 function createEnemies() {
     return [
         new Endboss(),
@@ -32,6 +36,10 @@ function createEnemies() {
 }
 
 
+/**
+ * 
+ * @returns – the cloud background
+ */
 function createClouds() {
     return [
         new Cloud('img/5_background/layers/4_clouds/1.png', 0),
@@ -44,6 +52,10 @@ function createClouds() {
 }
 
 
+/**
+ * 
+ * @returns – the air background
+ */
 function createAir() {
     return [
         new BackgroundObject('img/5_background/layers/air.png', -719),
@@ -57,6 +69,10 @@ function createAir() {
 }
 
 
+/**
+ * 
+ * @returns – the third layer background
+ */
 function createThirdLayer() {
     return [
         new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
@@ -70,6 +86,10 @@ function createThirdLayer() {
 }
 
 
+/**
+ * 
+ * @returns – the second layer background
+ */
 function createSecondLayer() {
     return [
         new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),
@@ -83,6 +103,10 @@ function createSecondLayer() {
 }
 
 
+/**
+ * 
+ * @returns – the first layer background
+ */
 function createFirstLayer() {
     return [
         new BackgroundObject('img/5_background/layers/1_first_layer/2.png', -719),
@@ -96,6 +120,10 @@ function createFirstLayer() {
 }
 
 
+/**
+ * 
+ * @returns – the bottle objects on the floor
+ */
 function createBottles() {
     return [
         new SalsaBottle(),
@@ -112,6 +140,10 @@ function createBottles() {
 }
 
 
+/**
+ * 
+ * @returns – the coin objects above the ground
+ */
 function createCoins() {
     return [
         new Coin(),

@@ -19,7 +19,7 @@ function restart() {
 
 
 /**
- * This function sets the start scene.
+ * This function sets the (re-)start scene.
  * 
  */
 function setTheStartScene() {

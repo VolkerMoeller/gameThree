@@ -27,19 +27,6 @@ let timerCounter = 0;
 
 
 /**
- * This function repeatedly sets the variable "countToOne" from 0 to 1.
- * 
- * 
- */
-function startTimerCounter() {
-    setStopableInterval(() => {
-        countToOne = timerCounter % 2;
-        timerCounter++;
-    }, mediumSlowMs);
-}
-
-
-/**
  * This is the initial file. The canvas object is defined and a 2D context is assigned.
  * This function is called up when the game is loaded for the first time.
  * 
@@ -201,6 +188,19 @@ function addClassToElement(objectId, className) {
  */
 function removeClassFromElement(objectId, className) {
     document.getElementById(objectId).classList.remove(className);
+}
+
+
+/**
+ * This function repeatedly sets the variable "countToOne" from 0 to 1.
+ * 
+ * 
+ */
+function startTimerCounter() {
+    setStopableInterval(() => {
+        countToOne = timerCounter % 2;
+        timerCounter++;
+    }, mediumSlowMs);
 }
 
 
