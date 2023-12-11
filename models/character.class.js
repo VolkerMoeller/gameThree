@@ -121,7 +121,12 @@ class Character extends MoveableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ]
 
-
+    /**
+     * When creating the main character object, 
+     * this function loads the required images and 
+     * implements the "gravity effect" as well as starting the animations.
+     * 
+     */
     constructor() {
         super().loadImage(this.IMAGES_IDLE[0]);
         this.loadImages(this.IMAGES_IDLE);
@@ -134,7 +139,10 @@ class Character extends MoveableObject {
         this.animate();
     }
 
-
+    /**
+     * This function essentially enables the animations and 
+     * the paralax effect of the background.
+     */
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -147,6 +155,10 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation change based on corresponding conditions. 
+     * These are animations that are created by changing screens.
+     */
     animateByChangingImg() {
         this.soundsPause();
         if (this.isDead() && !this.justDead) {
@@ -166,6 +178,11 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation change based on corresponding conditions. 
+     * These are animations that are created by changing parameters. 
+     * 
+     */
     animateByChangingValue() {
         if (this.isWalkingLeft()) {
             this.otherDirection = true;
@@ -181,6 +198,10 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the paralax effect.
+     * 
+     */
     shiftBackground() {
         this.world.camera_x = -this.x + 70;
         this.world.camera_bgLayer3 = (-this.x * 0.1) + 70;
@@ -189,9 +210,15 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function calculates the value for displaying 
+     * the length of the bottle bar.
+     * 
+     */
     calculateBottleBarLength() {
         if (this.world) {
-            this.bottleBarLength = (this.nrCollectedBottles - this.nrThrownBottles) / this.world.level.amountBottles * 100;
+            this.bottleBarLength =
+                (this.nrCollectedBottles - this.nrThrownBottles) / this.world.level.amountBottles * 100;
             if (this.bottleBarLength < 0) {
                 this.bottleBarLength = 0;
             }
@@ -199,6 +226,11 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function determines in which case the background music 
+     * of the level is played or not.
+     * 
+     */
     levelSound() {
         if (this.soundOn && !this.isAlert() && !this.isDead()) {
             this.sound(this.level_sound, veryQuietVolume);
@@ -209,6 +241,11 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function transfers the number of bottles initially created 
+     * in the level to the appropriate variable.
+     * 
+     */
     setAmountHits() {
         if (this.world) {
             this.amountHits = this.world.level.amountBottles;
@@ -216,31 +253,65 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function is used to stop the running sounds so that they do not
+     * overlap when they are constantly replayed.
+     * 
+     */
     soundsPause() {
         this.walking_sound.pause();
         this.snoring_sound.pause();
     }
 
 
-
+    /**
+     * This function is used for jump animation.
+     * 
+     */
     animJump() {
+        this.selectMatchingImg();
+        this.changeImgByNr(this.IMAGES_JUMP, this.imgCounter);
+        this.jumpSound();
+        this.justIdle = false;
+        this.imgCounter++;
+    }
+
+
+    /**
+     * This function is used to select the appropriate 
+     * images for the jump animation.
+     * 
+     */
+    selectMatchingImg() {
+        this.animJumpUp();
+        this.animFallDown();
+    }
+
+
+    /**
+     * This function selects the appropriate images when moving upwards.
+     */
+    animJumpUp() {
         if (this.imgCounter > 3 && this.imgCounter < 9) {
-            if (this.isRising(this.ground_y)) {
+            if (this.isRising(this.ground_y))
                 this.imgCounter = 3;
-            }
         }
+    }
+
+
+
+    /**
+     * This function selects the appropriate images when it falls.
+     */
+    animFallDown() {
         if (this.imgCounter > 7) {
             if (this.isFalling(this.ground_y))
                 this.imgCounter = 7;
             else
                 this.imgCounter = 0;
-
         }
-        this.justIdle = false;
-        this.changeImgByNr(this.IMAGES_JUMP, this.imgCounter);
-        this.imgCounter++;
-        this.jumpSound();
     }
+
 
 
     jumpSound() {
@@ -360,11 +431,6 @@ class Character extends MoveableObject {
             return this.isNearbyEndboss();
         }
     }
-
-    // isAlert() {
-    //     if (this.world.level.enemies[0])
-    //     return this.world.level.enemies[0].isAlert();
-    // }
 
 
     isHurt() {
