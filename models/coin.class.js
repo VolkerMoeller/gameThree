@@ -19,6 +19,12 @@ class Coin extends MoveableObject {
     ]
 
 
+    /**
+     * When creating the coin object, 
+     * this function loads the required images and 
+     * sets the position. The animation is initiated.
+     * 
+     */
     constructor() {
         super().loadImage(this.IMAGES_COINSSPARKLE[0]);
         this.loadImages(this.IMAGES_COINSSPARKLE);
@@ -27,7 +33,10 @@ class Coin extends MoveableObject {
         this.animate();
     }
 
-    
+
+    /**
+     * This function essentially enables the animation.
+     */
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -36,11 +45,19 @@ class Coin extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation. 
+     * These are animations that are created by changing screens.
+     */
     animateByChangingImg() {
         this.changeImg(this.IMAGES_COINSSPARKLE);
     }
 
 
+    /**
+     * This function plays the collect sound.
+     * 
+     */
     soundCollect() {
         if (this.soundOn && !this.justCollected) {
             this.sound(this.collect_sound, mediumVolume);
