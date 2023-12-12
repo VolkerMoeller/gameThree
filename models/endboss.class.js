@@ -81,6 +81,11 @@ class Endboss extends MoveableObject {
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ]
 
+    /**
+     * When creating the main endboss object, 
+     * this function loads the required images and starts the animations.
+     * 
+     */
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -92,6 +97,10 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function enables the animations.
+     * 
+     */
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -101,14 +110,51 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation change based on corresponding conditions. 
+     * These are animations that are created by changing images.
+     */
     animateByChangingImg() {
-        if (this.allHits && !this.justDead || this.animOpen) {
+        this.showAnimDead();
+        this.showAnimAlertOrHurt();
+        this.showAnimWalkOrHurt();
+    }
+
+
+    /**
+     * This function shows the "dead" animation when the boss is dead.
+     * 
+     */
+    showAnimDead() {
+        if (this.isDead()) {
             this.animDead();
         }
+    }
+
+
+    /**
+     * This function checks whether the boss has just died.
+     * 
+     * @returns – true if the end boss has been hit too often or
+     * the parameter "animOpen" is true.
+     * This is needed for the animation to run to the end.
+     *  
+     */
+    isDead() {
+        return this.allHits && !this.justDead || this.animOpen;
+    }
+
+
+    
+    showAnimAlertOrHurt() {
         if (this.isAlert() && !this.justDead) {
             this.animIsAlert();
             this.showHurt();
         }
+    }
+
+
+    showAnimWalkOrHurt() {
         if (!this.isAlert() && !this.justDead) {
             this.animWalk();
             this.showHurt();
@@ -134,7 +180,7 @@ class Endboss extends MoveableObject {
         this.endAnimHurt();
     }
 
-    
+
     startAnimHurt() {
         if (!this.justStartAnim) {
             this.setStartAnim();
@@ -142,8 +188,8 @@ class Endboss extends MoveableObject {
         }
     }
 
-    
-    endAnimHurt(){
+
+    endAnimHurt() {
         this.timePastMs(this.startAnim, Date.now());
         if (this.animFinished(225, 'img/4_enemie_boss_chicken/4_hurt/G23.png')) {
             this.justStartAnim = false;
@@ -151,7 +197,7 @@ class Endboss extends MoveableObject {
         }
     }
 
-    
+
     animIsAlert() {
         if (!this.justStartAnim) {
             this.setStartAnim();
@@ -228,6 +274,11 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation change based on corresponding conditions. 
+     * These are animations that are created by changing parameters. 
+     * 
+     */
     animateByChangingValue() {
         if (!this.isAlert() && !this.justDead) {
             this.moveLeft();
