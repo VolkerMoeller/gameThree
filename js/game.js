@@ -13,6 +13,7 @@ let veryQuietVolume = 0.02;
 let quietVolume = 0.04;
 let mediumVolume = 0.08;
 let loudVolume = 0.20;
+let louderVolume = 0.50;
 let veryLoudVolume = 1.0;
 
 let intervalIds = [];

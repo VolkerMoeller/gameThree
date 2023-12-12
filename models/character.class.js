@@ -290,6 +290,7 @@ class Character extends MoveableObject {
 
     /**
      * This function selects the appropriate images when moving upwards.
+     * 
      */
     animJumpUp() {
         if (this.imgCounter > 3 && this.imgCounter < 9) {
@@ -299,9 +300,9 @@ class Character extends MoveableObject {
     }
 
 
-
     /**
      * This function selects the appropriate images when it falls.
+     * 
      */
     animFallDown() {
         if (this.imgCounter > 7) {
@@ -313,7 +314,10 @@ class Character extends MoveableObject {
     }
 
 
-
+    /**
+     * This function plays the jump sound.
+     * 
+     */
     jumpSound() {
         if (this.soundOn && !this.justJump) {
             this.sound(this.hop_sound, mediumVolume);
@@ -322,28 +326,54 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function is used for hurt animation.
+     * 
+     */
     animHurt() {
-        if (!this.justStartAnim) {
-            this.setStartAnim();
-        }
         this.changeImg(this.IMAGES_HURT);
-        this.timePastMs(this.startAnim, Date.now());
-        if (this.animFinished(225, 'img/4_enemie_boss_chicken/4_hurt/G23.png')) {
-            this.justStartAnim = false;
-            this.justHurt = false;
-        }
+        this.justHurt = false;
+        this.justIdle = false;
+        this.hurtSound();
     }
 
 
+    /**
+     * This function plays the hurt sound.
+     * 
+     */
+    hurtSound() {
+        if (this.soundOn && !this.isTakingOff()) {
+            this.sound(this.hurt_sound, mediumVolume);
+        }
+    }
+
+    /**
+     * This function is used for walk animation.
+     * 
+     */
     animWalk() {
         this.justIdle = false;
         this.changeImg(this.IMAGES_WALK);
+        this.walkSound();
+    }
+
+
+    /**
+     * This function plays the walk sound.
+     * 
+     */
+    walkSound() {
         if (this.soundOn) {
-            this.sound(this.walking_sound, loudVolume);
+            this.sound(this.walking_sound, louderVolume);
         }
     }
 
 
+    /**
+     * This function is used for idle animation.
+     * 
+    */
     animIdle() {
         this.startIdle = Date.now();
         this.justIdle = true;
@@ -353,79 +383,145 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function is used for long idle animation.
+     * 
+     */
     animLongIdle() {
         if (this.isLongIdle()) {
             this.changeImg(this.IMAGES_LONG_IDLE);
-            if (this.soundOn) {
-                this.sound(this.snoring_sound, loudVolume);
-            }
+            this.snoringSound();
         }
     }
 
-
-    animHurt() {
-        this.changeImg(this.IMAGES_HURT);
-        this.justIdle = false;
-        this.justHurt = false;
-        if (this.soundOn && !this.isTakingOff()) {
-            this.sound(this.hurt_sound, mediumVolume);
+    
+    /**
+     * This function plays the snoring sound.
+     * 
+    */
+   snoringSound() {
+       if (this.soundOn) {
+            this.sound(this.snoring_sound, loudVolume);
         }
     }
-
-
-    animDead() {
-        this.changeImg(this.IMAGES_DEAD);
-        if (this.shownImg == 'img/2_character_pepe/5_dead/D-56.png') {
-            this.justDead = true;
+    
+    
+    /**
+     * This function is used for dead animation.
+     * 
+    */
+   animDead() {
+       this.changeImg(this.IMAGES_DEAD);
+       if (this.shownImg == 'img/2_character_pepe/5_dead/D-56.png') {
+           this.justDead = true;
             gameLost();
             stopAnimation();
         }
+        this.lostSound();
+    }
+
+
+    /**
+     * This function plays the lost sound.
+     * 
+    */
+    lostSound() {
         if (this.soundOn) {
             this.sound(this.lost_sound, quietVolume);
         }
     }
 
 
+    /**
+     * This function checks the condition for the character's walking animation.
+     * 
+     * @returns – true if the button for left or right was pressed 
+     */
     isWalking() {
         return this.world.keyboard.KEY_LEFT || this.world.keyboard.KEY_RIGHT;
     }
+    
 
-
+    /**
+     * This function checks the condition that the Charaker can run to the left.
+     * 
+     * @returns – true if the character should run to the left and 
+     * is still to the right of the level edge. 
+     */
     isWalkingLeft() {
         return this.world.keyboard.KEY_LEFT && this.x > 0;
     }
 
 
+    /**
+     * This function checks the condition that the Charaker can run to the right.
+     * 
+     * @returns – true if the character should run to the right and 
+     * is still to the left of the level edge. 
+     */
     isWalkingRight() {
         return this.world.keyboard.KEY_RIGHT && this.x < this.world.level.level_end_x;
     }
 
 
+    /**
+     * This function checks if the character is idle.
+     * 
+     * @returns – true if function nothingElse() is true
+     */
     isIdle() {
         return this.nothingElse();
     }
 
 
+    /**
+     * This function checks whether the main character does nothing.
+     * 
+     * @returns – true if the main character does not jump, is not alarmed, 
+     * is not injured and is not dead.
+     */
     nothingElse() {
         return !this.jumps() && !this.isAlert() && !this.isHurt() && !this.isDead();
     }
 
 
+    /**
+     * This function checks whether the main character does nothing for a certain period of time.
+     * 
+     * @returns – true if the main character is bored for more than five seconds.
+     */
     isLongIdle() {
         return Date.now() - this.startIdle > 5000;
     }
 
 
+    /**
+     * This function checks whether the main character is in the upward movement.
+     * 
+     * @returns – true if the main character has speed.
+     */
     isTakingOff() {
         return this.speedY > 0;
     }
 
 
+    /**
+     * This function checks whether the player wants to and can make 
+     * the main character jump.
+     * 
+     * @returns – True if the main character is supposed to jump and 
+     * the prerequisite for the jump animation is met.
+     */
     jumps() {
         return this.world.keyboard.KEY_SPACE && !this.isAboveGround(this.ground_y);
     }
 
 
+    /**
+     * This function checks whether the main character is alerted.
+     * 
+     * @returns – true if the main character is near by the Endboss.
+     */
     isAlert() {
         if (this.world) {
             return this.isNearbyEndboss();
@@ -433,11 +529,21 @@ class Character extends MoveableObject {
     }
 
 
+    /**
+     * This function checks whether the main character is hurt.
+     * 
+     * @returns – true if the main character has been hurt.
+     */
     isHurt() {
         return this.justHurt;
     }
 
 
+    /**
+     * This function checks whether the main character is dead.
+     * 
+     * @returns – true if the main character has no energy. 
+     */
     isDead() {
         return this.energy == 0;
     }
