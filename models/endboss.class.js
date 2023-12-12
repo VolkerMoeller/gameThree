@@ -145,7 +145,10 @@ class Endboss extends MoveableObject {
     }
 
 
-    
+    /**
+     * This function is used for alert animation
+     * 
+     */
     showAnimAlertOrHurt() {
         if (this.isAlert() && !this.justDead) {
             this.animIsAlert();
@@ -154,6 +157,10 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function is used for walk animation
+     * 
+     */
     showAnimWalkOrHurt() {
         if (!this.isAlert() && !this.justDead) {
             this.animWalk();
@@ -162,6 +169,10 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function is used for hurt animation
+     * 
+     */
     showHurt() {
         if (this.isHurt() && this.justHurt && !this.justDead) {
             this.animHurt();
@@ -169,11 +180,20 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function checks whether the end boss is hurt.
+     * 
+     * @returns – true if the end boss is just hurt.
+     */
     isHurt() {
         return this.justHurt;
     }
 
 
+    /**
+     * This function shows the hurt animation.
+     * 
+     */
     animHurt() {
         this.startAnimHurt();
         this.changeImg(this.IMAGES_HURT);
@@ -181,6 +201,10 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function sets the start time of the animation.
+     * 
+     */
     startAnimHurt() {
         if (!this.justStartAnim) {
             this.setStartAnim();
@@ -188,7 +212,10 @@ class Endboss extends MoveableObject {
         }
     }
 
-
+    /**
+     * This function ends the animation.
+     * 
+     */
     endAnimHurt() {
         this.timePastMs(this.startAnim, Date.now());
         if (this.animFinished(225, 'img/4_enemie_boss_chicken/4_hurt/G23.png')) {
