@@ -80,7 +80,8 @@ class Chicken extends MoveableObject {
      * 
      */
     animateByChangingValue() {
-        this.moveLeft();
+        if (!this.justDead)
+            this.moveLeft();
     }
 
 
@@ -116,7 +117,6 @@ class Chicken extends MoveableObject {
     }
 
 
-    
     /**
      * This function plays the sounds of the chickens:
      * – Only if the chicken is near the main character.
