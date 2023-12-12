@@ -33,6 +33,12 @@ class Chicken extends MoveableObject {
     ];
 
 
+    /**
+     * When creating the chicken object, 
+     * this function loads the required images and 
+     * sets the position and speed.
+     * 
+     */
     constructor() {
         super().loadImage(this.IMAGES_WALK[0]);
         this.loadImages(this.IMAGES_WALK);
@@ -43,6 +49,10 @@ class Chicken extends MoveableObject {
     }
 
 
+    /**
+     * This function essentially enables the animations.
+     * 
+     */
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -52,6 +62,10 @@ class Chicken extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation change based on corresponding conditions. 
+     * These are animations that are created by changing screens.
+     */
     animateByChangingImg() {
         if (!this.isDead())
             this.animWalk();
@@ -60,19 +74,41 @@ class Chicken extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation. 
+     * This animation is created by changing parameters. 
+     * 
+     */
     animateByChangingValue() {
         this.moveLeft();
     }
 
 
+    /**
+     * This function causes the walking animation.
+     * 
+     */
     animWalk() {
         this.changeImg(this.IMAGES_WALK);
         this.soundNoise();
     }
 
 
+    /**
+     * This function causes the dead animation.
+     */
     animDead() {
         this.changeImg(this.IMAGES_DEAD);
+        this.boingSound();
+    }
+
+
+    /**
+     * This function plays the boing sound.
+     * Since the main character is jumping again.
+     * 
+     */
+    boingSound() {
         if (this.soundOn && !this.justBoing) {
             this.sound(this.boing_sound, mediumVolume);
             this.justBoing = true;
@@ -80,6 +116,13 @@ class Chicken extends MoveableObject {
     }
 
 
+    
+    /**
+     * This function plays the sounds of the chickens:
+     * – Only if the chicken is near the main character.
+     * – Not if the chicken has died.
+     * 
+     */
     soundNoise() {
         if (this.soundOn && this.isNearby())
             this.noises(this.delay_noises, this.noise_volume);
@@ -90,6 +133,11 @@ class Chicken extends MoveableObject {
     }
 
 
+    /**
+     * This function checks if the chicken is dead.
+     * 
+     * @returns – true if the chicken is just dead.
+     */
     isDead() {
         return this.justDead == true;
     }
