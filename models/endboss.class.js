@@ -129,11 +129,21 @@ class Endboss extends MoveableObject {
 
 
     animHurt() {
+        this.startAnimHurt();
+        this.changeImg(this.IMAGES_HURT);
+        this.endAnimHurt();
+    }
+
+    
+    startAnimHurt() {
         if (!this.justStartAnim) {
             this.setStartAnim();
             this.justAlert = true;
         }
-        this.changeImg(this.IMAGES_HURT);
+    }
+
+    
+    endAnimHurt(){
         this.timePastMs(this.startAnim, Date.now());
         if (this.animFinished(225, 'img/4_enemie_boss_chicken/4_hurt/G23.png')) {
             this.justStartAnim = false;
@@ -141,7 +151,7 @@ class Endboss extends MoveableObject {
         }
     }
 
-
+    
     animIsAlert() {
         if (!this.justStartAnim) {
             this.setStartAnim();
