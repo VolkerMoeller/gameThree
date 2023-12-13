@@ -174,9 +174,8 @@ class Endboss extends MoveableObject {
      * 
      */
     showHurt() {
-        if (this.isHurt() && this.justHurt && !this.justDead) {
+        if (this.isHurt() && this.justHurt && !this.justDead)
             this.animHurt();
-        }
     }
 
 
@@ -212,6 +211,7 @@ class Endboss extends MoveableObject {
         }
     }
 
+
     /**
      * This function ends the animation.
      * 
@@ -225,10 +225,14 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function shows the alert animation.
+     * The end boss starts to jump forwards when it is alerted for longer. 
+     * 
+     */
     animIsAlert() {
-        if (!this.justStartAnim) {
+        if (!this.justStartAnim)
             this.setStartAnim();
-        }
         if (!this.isLongAlert()) {
             this.animAlert();
         } if (this.isLongAlert() && !this.justDead) {
@@ -239,20 +243,45 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function shows the leap animation
+     * The end boss only jumps when the appropriate image 
+     * of the attack animation is shown.
+     * 
+     */
     leap() {
         if (!this.setBeginLeap) {
-            if (this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G13.png') {
-                this.beginLeap = true;
-                this.setBeginLeap = true;
-            }
-            if (this.beginLeap) {
-                if (this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G16.png') {
-                    this.x -= 30;
-                }
-                this.setBeginLeap = false;
-            }
+            this.determBeginLeap();
+            this.runLeap();
         }
     }
+
+
+    /**
+     * This function ensures that the jump animation only 
+     * takes place when the attack animation is running.
+     * 
+     */
+    determBeginLeap() {
+        if (this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G13.png') {
+            this.beginLeap = true;
+            this.setBeginLeap = true;
+        }
+    }
+
+
+    /**
+     * This function makes the final boss jump forwards when 
+     * the appropriate image of the attack animation is shown.
+     */
+    runLeap() {
+        if (this.beginLeap) {
+            if (this.shownImg == 'img/4_enemie_boss_chicken/3_attack/G16.png')
+                this.x -= 30;
+            this.setBeginLeap = false;
+        }
+    }
+
 
 
     animWalk() {
@@ -307,22 +336,17 @@ class Endboss extends MoveableObject {
      * 
      */
     animateByChangingValue() {
-        if (!this.isAlert() && !this.justDead) {
+        if (!this.isAlert() && !this.justDead)
             this.moveLeft();
-        }
-        if (this.justDead) {
+        if (this.justDead)
             this.y += 20;
-        }
-        if (this.y >= 450) {
+        if (this.y >= 450)
             stopAnimation();
-        }
     }
 
 
     isAlert() {
-        if (this.world) {
-            return this.isNearby();
-        }
+        return this.world ? this.isNearby() : console.log('no world');
     }
 
 
