@@ -14,33 +14,67 @@ class MoveableObject extends DrawableObject {
     shownImg;
     shownImgNr;
 
-
+    /**
+     * This function moves the picture object to the right.
+     * 
+     */
     moveRight() {
         this.x += this.speed;
     }
 
 
+    /**
+     * This function moves the picture object to the left.
+     * 
+     */
     moveLeft() {
         this.x -= this.speed;
     }
 
 
+    /**
+     * This function checks whether a period of time has passed.
+     * 
+     * @param {number} start – This value represents the start time.
+     * @param {*} ms – This value represents the waiting time in milliseconds.
+     * @returns – true if the time between the start time and Now is greater than the specified duration.
+     */
     wait(start, ms) {
         return Date.now() - start > ms;
     }
 
 
+    /**
+     * This parameter sets the speed to a value greater than zero. 
+     * The image object is "pushed" upwards.
+     * 
+     */
     jump() {
         this.speedY = 40;
     }
 
 
+    /**
+     * This function allows you to assign a specific image to the image object. 
+     * The image paths are stored in an array.
+     * 
+     * @param {array} arrImg – This is the array in which the specific image path is located.
+     * @param {number} nr – This is the index of the specific image path within the array.
+     */
     changeImgByNr(arrImg, nr) {
         let path = arrImg[nr];
         this.img = this.imgCache[path];
     }
 
-    
+    /**
+     * This function allows you to assign an image to the image object. 
+     * The image paths are stored in an array.
+     * Within a continuous loop, the image is therefore replaced after a continuous counter. 
+     * The counter determines the number of the image path index. 
+     * The image with which the animation begins with a new call is therefore random.
+     * 
+     * @param {array} arrImg – This is the array with the image paths matching the desired animation.
+     */
     changeImg(arrImg) {
         let i = this.currentImage % arrImg.length;
         let path = arrImg[i];
@@ -50,24 +84,65 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
     }
 
-
+    /**
+     * This function is used to play a noise or sound.
+     * 
+     * @param {object} obj – This is the audio object which is to be played.
+     * @param {number} volume – This is the volume level.
+     */
     sound(obj, volume) {
         obj.volume = volume;
         obj.play();
     }
 
 
+    /**
+     * This function is used to play (only) the noise sounds.
+     * It is ensured that the sounds of the many objects are 
+     * not played at the same time.
+     *
+     * @param {number} wait_ms – This parameter determines the milliseconds that 
+     * are waited between repeated playback of the sound.
+     * @param {number} vol – This is the volume level.
+     */
     noises(wait_ms, vol) {
-        if (!this.just_noises) {
-            this.startTime = Date.now();
-            this.noise_sound.play();
-            this.noise_sound.volume = vol;
-            this.just_noises = true;
-        } else if (this.just_noises && this.wait(this.startTime, wait_ms))
+        if (!this.just_noises)
+            this.startNoises(vol);
+        else if (this.noisesStartedAWhileAgo(wait_ms))
             this.just_noises = false;
     }
 
+    /**
+     * This function starts the noises.
+     * 
+     * @param {number} vol – This is the volume level.
+     */
+    startNoises(vol) {
+        this.startTime = Date.now();
+        this.sound(this.noise_sound, vol);
+        this.just_noises = true;
+    };
 
+
+    /**
+     * This function checks whether the sound is currently running and 
+     * whether a certain time has elapsed in milliseconds.
+     * 
+     * @param {number} wait_ms – The time that should pass.
+     * @returns – true if the sound is currently running and 
+     * whether a certain time has elapsed in milliseconds.
+     */
+    noisesStartedAWhileAgo(wait_ms) {
+        return this.just_noises && this.wait(this.startTime, wait_ms);
+    };
+
+
+    /**
+     *This function implements a gravitational effect.
+     * 
+     * @param {number} ground_y – This parameter is the Y-position of the image object when 
+     * it looks as if the object is standing on the floor.
+     */
     applyGravity(ground_y) {
         setStopableInterval(() => {
             if (this.isAboveGround(ground_y) || this.speedY > 0) {
@@ -88,6 +163,7 @@ class MoveableObject extends DrawableObject {
     isFalling(ground_y) {
         return this.speedY < 0 && this.isAboveGround(ground_y);
     }
+
 
     isRising(ground_y) {
         return this.speedY > 0 && this.isAboveGround(ground_y);
