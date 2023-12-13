@@ -22,7 +22,6 @@ class Endboss extends MoveableObject {
 
     startAlert;
     startLongAlert;
-    justTimeSet = false;
     justWalk = true;
     justAlert = false;
     justLongAlert = false;
@@ -273,6 +272,7 @@ class Endboss extends MoveableObject {
     /**
      * This function makes the final boss jump forwards when 
      * the appropriate image of the attack animation is shown.
+     * 
      */
     runLeap() {
         if (this.beginLeap) {
@@ -283,50 +283,93 @@ class Endboss extends MoveableObject {
     }
 
 
-
+    /**
+     * This function shows the walk animation.
+     * 
+     */
     animWalk() {
-        this.justTimeSet = false;
         this.changeImg(this.IMAGES_WALKING);
     }
 
 
+    /**
+     * This function determines the start time of the alarm animation.
+     */
     setStartLongAlert() {
         this.startLongAlert = Date.now();
     }
 
 
+    /**
+     * This function shows the alert animaion and 
+     * switches on the corresponding sounds
+     * 
+     */
     animAlert() {
-        this.changeImg(this.IMAGES_ALERT)
-        if (this.soundOn) {
-            this.noises(this.delay_noises, this.noise_volume);
-        }
+        this.changeImg(this.IMAGES_ALERT);
+        this.noisesSound(this.delay_noises);
     }
 
 
+    /**
+     * This function shows the attack animation and 
+     * switches on the corresponding sounds.
+     * 
+    */
     animLongAlert() {
         this.changeImg(this.IMAGES_ATTACK);
-        if (this.soundOn) {
-            this.noises(this.delay_noises_short, this.noise_volume);
-        }
+        this.noisesSound(this.delay_noises_short);
     }
 
 
+    /**
+     * This function switches on the noises sound.
+     * 
+     * @param {number} delay – This parameter determines the milliseconds that 
+     * are waited between repeated playback of the sound.
+     * 
+     */
+    noisesSound(delay) {
+        if (this.soundOn)
+            this.noises(delay, this.noise_volume);
+    }
+
+
+    /**
+     * This function shwos the dead animation an ends the game.
+     * The end animation only runs once in a controlled manner.
+     * 
+     */
     animDead() {
         this.justDead = true;
         this.animOpen = true;
         let imgNr = this.imgCounter % 3;
-        if (countToOne == 1) {
-            this.imgCounter++;
-        }
-        if (this.imgCounter >= 2) {
-            this.imgCounter = 2;
-        }
+        this.settingTheImageCounter();
         this.changeImgByNr(this.IMAGES_DEAD, imgNr);
+        this.winSound();
+        gameWon();
+    }
+
+
+    /**
+     * This function sets the image counter.
+     */
+    settingTheImageCounter() {
+        if (countToOne == 1)
+            this.imgCounter++;
+        if (this.imgCounter >= 2)
+            this.imgCounter = 2;
+    }
+
+
+    /**
+     * This function plays the win sound.
+     */
+    winSound() {
         if (this.soundOn) {
             this.world.character.level_sound.pause();
             this.sound(this.win_sound, mediumVolume);
         }
-        gameWon();
     }
 
 
@@ -345,11 +388,21 @@ class Endboss extends MoveableObject {
     }
 
 
+    /**
+     * This function checks if the end boss should be alert. 
+     * 
+     * @returns - true if the main character is nearby the endboss.
+     */
     isAlert() {
         return this.world ? this.isNearby() : console.log('no world');
     }
 
 
+    /**
+     *This function checks if the end boss should be long alert.
+     * 
+     * @returns – true if the alert animation lasts for two seconds.
+     */
     isLongAlert() {
         return this.wait(this.startAnim, 2000);
     }

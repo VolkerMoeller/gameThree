@@ -348,6 +348,7 @@ class Character extends MoveableObject {
         }
     }
 
+    
     /**
      * This function is used for walk animation.
      * 
