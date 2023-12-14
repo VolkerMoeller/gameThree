@@ -129,7 +129,11 @@ class World {
 
     }
 
-    
+    /**
+     * This function calculates the value for the current 
+     * length of the energy bar for the end boss.
+     * 
+     */
     calcEndbossBarLength() {
         this.endbossBarLength = 100 - (this.character.nrEndbossHits * 100 / this.character.amountHits);
         if (this.endbossBarLength < 0)
@@ -137,6 +141,10 @@ class World {
     }
 
 
+    /**
+     * This function makes the world object data available 
+     * to the main character object and the enemy objects.
+     */
     setWorldTo() {
         this.character.world = this;
         for (let i = 0; i < this.level.enemies.length; i++) {
@@ -145,6 +153,10 @@ class World {
     }
 
 
+    /**
+     * This function causes the permanent checking of the important states 
+     * during the course of the game.
+     */
     run() {
         setInterval(() => {
             checkOrientation();
@@ -158,7 +170,10 @@ class World {
         }, normalMs);
     }
 
-
+    /**
+     * This function checks whether the player switches to full screen mode.
+     * 
+     */
     checkFullscreen() {
         if (this.keyboard.KEY_F && !this.justFPressed) {
             this.justFPressed = true;
@@ -169,13 +184,49 @@ class World {
     }
 
 
+    /**
+     * This function switches to full screen mode.
+     * 
+     */
+    openFullscreen() {
+        this.stage = document.getElementById('stage');
+        if (this.stage.requestFullscreen)
+            this.stage.requestFullscreen();
+    }
+
+
+    /**
+     * This function checks whether the player switches 
+     * the game sounds on or off.
+     * 
+     */
     checkSound() {
+        this.checkTheQKey();
+        this.checkTheWKey();
+    }
+
+
+    /**
+     * This function checks whether the player has pressed Q 
+     * to switch on the game sounds and switches them on.
+     * 
+     */
+    checkTheQKey() {
         if (this.keyboard.KEY_Q && !this.justQPressed) {
             this.justQPressed = true;
             this.soundsOn();
         }
         if (!this.keyboard.KEY_Q)
             this.justQPressed = false;
+    }
+
+
+    /**
+     * This function checks whether the player has pressed W
+     * to switch off the game sounds and switches them off.
+     * 
+     */
+    checkTheWKey() {
         if (this.keyboard.KEY_W && !this.justQPressed) {
             this.justWPressed = true;
             this.soundsOff();
@@ -185,6 +236,12 @@ class World {
     }
 
 
+    /**
+     * This function checks whether the player has pressed the D button to 
+     * throw a bottle and creates a corresponding bottle object at 
+     * the desired position.
+     * 
+     */
     checkThrowObjects() {
         if (this.isThrowing()) {
             let thrownBottle = new ThrowableObject(this.character.x + 70, this.character.y + 100);
@@ -197,6 +254,15 @@ class World {
     }
 
 
+    /**
+     * This function only allows a bottle to be thrown if 
+     * the player has pressed the D button, 
+     * there are still bottles to throw, 
+     * the main character is facing to the right and 
+     * is not injured.
+     * 
+     * @returns – true if if the above conditions are met. 
+     */
     isThrowing() {
         return this.keyboard.KEY_D &&
             this.character.nrCollectedBottles > this.character.nrThrownBottles &&
@@ -206,6 +272,7 @@ class World {
     }
 
 
+    
     checkThrownObjects() {
         this.thrownObjects.forEach((bottle) => {
             if (this.smashedOnTheFloor(bottle))
@@ -488,12 +555,5 @@ class World {
         this.ctx.lineCap = "round";
         this.ctx.lineTo((posX - 49) + diff, posY);
         this.ctx.stroke();
-    }
-
-
-    openFullscreen() {
-        this.stage = document.getElementById('stage');
-        if (this.stage.requestFullscreen)
-            this.stage.requestFullscreen();
     }
 }
