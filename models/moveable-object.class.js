@@ -203,7 +203,7 @@ class MoveableObject extends DrawableObject {
 
 
     /**
-     * This function checks whether the objekt is falling. 
+     * This function checks whether the object is falling. 
      * 
      * @param {number} ground_y  – This parameter is the Y-position of the image object when 
      * it looks as if the object is standing on the floor.
@@ -213,12 +213,24 @@ class MoveableObject extends DrawableObject {
         return this.isAboveGround(ground_y) && this.speedY < 0;
     }
 
-
+    /**
+     * This function checks whether the object is rising.
+     * 
+     * @param {number} ground_y  – This parameter is the Y-position of the image object when 
+     * it looks as if the object is standing on the floor.
+     * @returns – true if the object appears above ground and if there is a positiv speed.
+     */
     isRising(ground_y) {
-        return this.speedY > 0 && this.isAboveGround(ground_y);
+        return this.isAboveGround(ground_y) && this.speedY > 0;
     }
 
 
+    /**
+     * This function checks whether the main character is nearby the current object.
+     * 
+     * @returns – if the X-position of the image object is located within a certain distance
+     * in each case.
+     */
     isNearby() {
         return this.world.character.x > this.x &&
             this.world.character.x - this.x < 300 ||
@@ -227,6 +239,12 @@ class MoveableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function checks whether the end boss is nearby the current object.
+     * 
+     * @returns – if the X-position of the image object is located within a certain distance
+     * in each case.
+     */
     isNearbyEndboss() {
         if (this.world.level.enemies[0].x) {
             return this.world.level.enemies[0].x > this.x &&
@@ -236,7 +254,12 @@ class MoveableObject extends DrawableObject {
         }
     }
 
-
+    /**
+     * This function checks if some object is colliding with the current object.
+     * 
+     * @param {object} obj – This is the object that collides.
+     * @returns – true if the position coordinates of the objects involved overlap.
+     */
     isColliding(obj) {
         return ((this.x + this.offsetL) + (this.width - this.offsetR)) >= (obj.x + obj.offsetL) &&
             (this.x + this.offsetL) <= ((obj.x + obj.offsetL) + (obj.width - obj.offsetR)) &&
@@ -245,6 +268,12 @@ class MoveableObject extends DrawableObject {
     }
 
 
+    /**
+     * This function checks if some object is out of stage.
+     * 
+     * @param {object} obj – This is the object that may leave the stage.
+     * @returns - true if the position coordinates of the object is out of a specific area. 
+     */
     isOutOfStage(obj) {
         return obj.x < -100 ||
             obj.x > 5000 ||

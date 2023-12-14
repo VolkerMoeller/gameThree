@@ -36,6 +36,7 @@ class Coin extends MoveableObject {
 
     /**
      * This function essentially enables the animation.
+     * 
      */
     animate() {
         setStopableInterval(() => {
@@ -48,6 +49,7 @@ class Coin extends MoveableObject {
     /**
      * This function causes the animation. 
      * These are animations that are created by changing screens.
+     * 
      */
     animateByChangingImg() {
         this.changeImg(this.IMAGES_COINSSPARKLE);

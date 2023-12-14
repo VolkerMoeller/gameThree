@@ -7,7 +7,7 @@ class SalsaBottle extends MoveableObject {
     offsetB = 17;
     offsetL = 33;
     offsetR = 57;
-    
+
     collect_sound = new Audio('audio/collected.mp3');
     random_x = Math.floor(Math.random() * 3000) + 200;
     intervalId;
@@ -22,7 +22,12 @@ class SalsaBottle extends MoveableObject {
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ];
 
-
+    /**
+     * When creating the bottle object, 
+     * this function loads the required images and 
+     * sets the position. The animation is initiated.
+     * 
+     */
     constructor() {
         super().loadImage(this.IMAGE_BOTTLE[0]);
         this.loadImages(this.IMAGES_ONGROUND);
@@ -31,6 +36,10 @@ class SalsaBottle extends MoveableObject {
     }
 
 
+    /**
+    * This function essentially enables the animation.
+    * 
+    */
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -39,11 +48,20 @@ class SalsaBottle extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation. 
+     * These are animations that are created by changing screens.
+     * 
+     */
     animateByChangingImg() {
         this.changeImg(this.IMAGES_ONGROUND);
     }
 
-
+    
+    /**
+     * This function plays the collect sound.
+     * 
+     */
     soundCollect() {
         if (this.soundOn && !this.justCollected) {
             this.sound(this.collect_sound, mediumVolume);
