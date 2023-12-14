@@ -138,30 +138,79 @@ class MoveableObject extends DrawableObject {
 
 
     /**
-     *This function implements a gravitational effect.
+     *This function implements a gravitational effect and
+     *does not allow the object to fall too far.
      * 
      * @param {number} ground_y – This parameter is the Y-position of the image object when 
      * it looks as if the object is standing on the floor.
      */
     applyGravity(ground_y) {
         setStopableInterval(() => {
-            if (this.isAboveGround(ground_y) || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-            }
-            if (this.y > ground_y)
-                this.y = ground_y;
+            this.theGravity(ground_y);
+            this.doNotFallTooLow(ground_y);
         }, normalMs);
     }
 
 
+    /**
+     * This function implements a gravitational effect
+     * 
+     * @param {number} ground_y – This parameter is the Y-position of the image object when 
+     * it looks as if the object is standing on the floor.
+     */
+    theGravity(ground_y) {
+        if (this.gravityIsRequired(ground_y)) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        }
+    }
+
+    /**
+     * This function does not allow the object to fall too far.
+     * 
+     * @param {number} ground_y – This parameter is the Y-position of the image object when 
+     * it looks as if the object is standing on the floor.
+     */
+    doNotFallTooLow(ground_y) {
+        if (this.y > ground_y)
+            this.y = ground_y;
+    }
+
+
+    /**
+     * This function checks whether an object is above the ground.
+     * 
+     * @param {number} ground_y – This parameter is the Y-position of the image object when 
+     * it looks as if the object is standing on the floor.
+     * @returns – true if the current y-value of the position coordinate is 
+     * below the value that makes the object appear on the floor.
+     */
     isAboveGround(ground_y) {
         return this.y < ground_y;
     }
 
 
+    /**
+     * This function checks whether the gravity effect is required.
+     * 
+     * @param {number} ground_y – This parameter is the Y-position of the image object when 
+     * it looks as if the object is standing on the floor.
+     * @returns – true if the object appears above the ground or if there is a positiv speed.
+     */
+    gravityIsRequired(ground_y) {
+        return this.isAboveGround(ground_y) || this.speedY > 0;
+    }
+
+
+    /**
+     * This function checks whether the objekt is falling. 
+     * 
+     * @param {number} ground_y  – This parameter is the Y-position of the image object when 
+     * it looks as if the object is standing on the floor.
+     * @returns – true if the object appears above ground and if there is a negativ speed.
+     */
     isFalling(ground_y) {
-        return this.speedY < 0 && this.isAboveGround(ground_y);
+        return this.isAboveGround(ground_y) && this.speedY < 0;
     }
 
 
@@ -171,15 +220,19 @@ class MoveableObject extends DrawableObject {
 
 
     isNearby() {
-        return this.world.character.x > this.x && this.world.character.x - this.x < 300 ||
-            this.world.character.x < this.x && this.x - this.world.character.x < 300;
+        return this.world.character.x > this.x &&
+            this.world.character.x - this.x < 300 ||
+            this.world.character.x < this.x &&
+            this.x - this.world.character.x < 300;
     }
 
 
     isNearbyEndboss() {
         if (this.world.level.enemies[0].x) {
-            return this.world.level.enemies[0].x > this.x && this.world.level.enemies[0].x - this.x < 300 ||
-                this.world.level.enemies[0].x < this.x && this.x - this.world.level.enemies[0].x < 300;
+            return this.world.level.enemies[0].x > this.x &&
+                this.world.level.enemies[0].x - this.x < 300 ||
+                this.world.level.enemies[0].x < this.x &&
+                this.x - this.world.level.enemies[0].x < 300;
         }
     }
 
@@ -193,6 +246,9 @@ class MoveableObject extends DrawableObject {
 
 
     isOutOfStage(obj) {
-        return obj.x < -100 || obj.x > 5000 || obj.y > 1000 || obj.y < -1000;
+        return obj.x < -100 ||
+            obj.x > 5000 ||
+            obj.y > 1000 ||
+            obj.y < -1000;
     }
 }
