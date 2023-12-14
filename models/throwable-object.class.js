@@ -38,6 +38,12 @@ class ThrowableObject extends MoveableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+    /**
+     * When creating the throwable object, 
+     * this function loads the required images and 
+     * sets the position. The animation is initiated.
+     * 
+     */
     constructor(x, y) {
         super().loadImage(this.IMAGES_ROTATION[0]);
         this.loadImages(this.IMAGES_ROTATION);
@@ -49,6 +55,10 @@ class ThrowableObject extends MoveableObject {
     }
 
 
+    /**
+     * This function enables the animations .
+     * 
+     */
     animate() {
         setStopableInterval(() => {
             this.animateByChangingImg();
@@ -58,6 +68,10 @@ class ThrowableObject extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation change based on corresponding conditions. 
+     * These are animations that are created by changing screens.
+     */
     animateByChangingImg() {
         if (this.isAboveGround(this.ground_y)) {
             this.animFly();
@@ -66,28 +80,52 @@ class ThrowableObject extends MoveableObject {
     }
 
 
+    /**
+     * This function causes the animation change based on corresponding conditions. 
+     * These are animations that are created by changing parameters. 
+     * 
+     */
     animateByChangingValue() {
         if (!this.justSplashed)
             this.moveRight();
     }
 
 
+    /**
+     * This function is used for fly animation.
+     * 
+     */
     animFly() {
         this.changeImg(this.IMAGES_ROTATION);
     }
 
 
+    /**
+     * This function is used for splash animation.
+     * 
+     */
     animSplash() {
         this.changeImg(this.IMAGES_SPLASH);
     }
 
 
+    /**
+     * This function assigns the appropriate image size to the image sequences.
+     * This function is required because the animation images provided are 
+     * of different sizes.
+     * 
+     * @param {string} sequenz – This String is the name of an image sequence.
+     */
     rightSize(sequenz) {
         this.width = this.imageSizes[sequenz + '_width'];
         this.height = this.imageSizes[sequenz + '_height'];
     }
 
 
+    /**
+     * This function plays the smashed sound.
+     * 
+     */
     soundSmashed() {
         if (this.soundOn)
             this.sound(this.smashed_sound, mediumVolume);

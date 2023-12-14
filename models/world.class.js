@@ -2,9 +2,7 @@ class World {
     character = new Character();
     level = level1;
     canvas;
-
     stage;
-
     ctx;
     keyboard;
     camera_x = 0;

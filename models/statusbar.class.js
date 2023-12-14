@@ -13,6 +13,13 @@ class Statusbar extends DrawableObject {
         'img/7_statusbars/3_icons/icon_salsa_bottle.png'
     ];
 
+    /**
+     * When creating the bottle object, 
+     * this function loads the required images and 
+     * sets the position.
+     * This object is not animated.
+     * 
+     */
     constructor(posX, posY) {
         super().loadImage(this.IMAGE_EMPTY);
         this.loadImages(this.IMAGES_ICONS); 
