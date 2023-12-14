@@ -21,6 +21,18 @@ class World {
     justWPressed = false;
     justHitChecked = false;
 
+    /**
+     * When creating the world object, this function:
+     * – takes over the canvas and the key lisener,
+     * – draws all the required game objects on the canvas,
+     * – implemented the necessary links,
+     * – initialises the permanent checking of the important states 
+     * during the course of the game and
+     * – switches on the sounds.
+     * 
+     * @param {object} canvas – this object is the canvas on which is drawn.
+     * @param {object} keyboard – this is the necesary key lisener.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -32,13 +44,10 @@ class World {
     }
 
 
-    openFullscreen() {
-        this.stage = document.getElementById('stage');
-        if (this.stage.requestFullscreen)
-            this.stage.requestFullscreen();
-    }
-
-
+    /**
+     * This function draws all the required game objects on the canvas.
+     * 
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -53,7 +62,11 @@ class World {
         });
     }
 
-
+    /**
+     * This function enables the process bars to be displayed 
+     * on the canvas using the CanvasRenderingContext2D interface.
+     * 
+     */
     drawBars() {
         let lengthHealth = this.character.energy;
         let lengthBottle = this.character.bottleBarLength;
@@ -79,6 +92,9 @@ class World {
     }
 
 
+    /**
+     * This function draws the status bars on the canvas.
+     */
     drawObjects() {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
@@ -87,6 +103,21 @@ class World {
     }
 
 
+    /**
+     * This function draws the respective bar on the canvas
+     * using the CanvasRenderingContext2D interface.
+     * 
+     * @param {object} bar – This object is the specific screen object of the status bar.
+     * @param {number} progrX – This parameter is the X value of the position coordinate of the process bar.
+     * @param {number} progrY – This parameter is the Y value of the position coordinate of the process bar.
+     * @param {number} progrValue - This paramter ist the lenth of the process bar.
+     * @param {number} progrColor - This parameter is the color of the process bar.
+     * @param {object} iconImg – This image object is the icon of the bar.
+     * @param {number} iconX – This parameter is the X value of the position coordinate of the icon image.
+     * @param {number} iconY – This parameter is the Y value of the position coordinate of the icon image.
+     * @param {number} iconWidth – This parameter is the width of the icon image.
+     * @param {number} iconHeight – This parameter is the height of the icon image.
+     */
     drawBar(bar, progrX, progrY, progrValue, progrColor, iconImg, iconX, iconY, iconWidth, iconHeight) {
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(bar);
@@ -98,7 +129,7 @@ class World {
 
     }
 
-
+    
     calcEndbossBarLength() {
         this.endbossBarLength = 100 - (this.character.nrEndbossHits * 100 / this.character.amountHits);
         if (this.endbossBarLength < 0)
@@ -179,7 +210,7 @@ class World {
         this.thrownObjects.forEach((bottle) => {
             if (this.smashedOnTheFloor(bottle))
                 this.treatSmachedOnTheFloor(bottle);
-            if (this.smashedByTheEndBoss(bottle)){
+            if (this.smashedByTheEndBoss(bottle)) {
                 this.treatSmashedByTheEndBoss(bottle);
             }
         })
@@ -194,8 +225,8 @@ class World {
         bottle.justSplashed = true;
         bottle.ground_y = bottle.y - 720;
     }
-    
-    
+
+
     treatSmachedOnTheFloor(bottle) {
         this.smashSoundImmediatly(bottle);
         this.spliceSlightlyLater(bottle);
@@ -205,16 +236,16 @@ class World {
 
     smashedOnTheFloor(bottle) {
         return !bottle.isAboveGround(bottle.ground_y) &&
-        bottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png'
+            bottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png'
     }
-    
+
 
     smashedByTheEndBoss(bottle) {
         return bottle.isColliding(this.level.enemies[0]) &&
-        bottle.isAboveGround(bottle.ground_y);
+            bottle.isAboveGround(bottle.ground_y);
     }
-    
-    
+
+
     checkNrEndbossHits() {
         if (!this.justHitChecked) {
             this.justHitChecked = true;
@@ -229,7 +260,7 @@ class World {
         }
     }
 
-    
+
     allHitsLanded() {
         return this.character.nrEndbossHits == this.character.amountHits - 1;
     }
@@ -457,5 +488,12 @@ class World {
         this.ctx.lineCap = "round";
         this.ctx.lineTo((posX - 49) + diff, posY);
         this.ctx.stroke();
+    }
+
+
+    openFullscreen() {
+        this.stage = document.getElementById('stage');
+        if (this.stage.requestFullscreen)
+            this.stage.requestFullscreen();
     }
 }
