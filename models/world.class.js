@@ -466,6 +466,7 @@ class World {
         });
     }
 
+    
     /**
      * This function is used to monitor collisions between
      * the main character and the chicken objects.
