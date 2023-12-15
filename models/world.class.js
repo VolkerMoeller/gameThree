@@ -272,7 +272,11 @@ class World {
     }
 
 
-    
+    /**
+     * This function checks whether the thrown bottle has 
+     * fallen to the ground or hit the end boss.
+     * 
+     */
     checkThrownObjects() {
         this.thrownObjects.forEach((bottle) => {
             if (this.smashedOnTheFloor(bottle))
@@ -284,6 +288,11 @@ class World {
     }
 
 
+    /**
+     * This function deals with the case where the bottle has hit the final boss.
+     * 
+     * @param {object} bottle – This object is the thown bottle.
+     */
     treatSmashedByTheEndBoss(bottle) {
         this.justHitChecked = false;
         this.checkNrEndbossHits();
@@ -294,6 +303,11 @@ class World {
     }
 
 
+    /**
+     * This function handles the case where the bottle has fallen to the floor. 
+     * 
+     * @param {object} bottle  – This object is the thown bottle.
+     */
     treatSmachedOnTheFloor(bottle) {
         this.smashSoundImmediatly(bottle);
         this.spliceSlightlyLater(bottle);
@@ -301,18 +315,36 @@ class World {
     }
 
 
+    /**
+     * This funciton checks if the bottle is smashed on the floor.
+     * 
+     * @param {object} bottle – This object is the thrown bottle. 
+     * @returns – true if the bottle is no longer above the ground.
+     * 
+     */
     smashedOnTheFloor(bottle) {
-        return !bottle.isAboveGround(bottle.ground_y) &&
-            bottle.shownImg == 'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png'
+        return !bottle.isAboveGround(bottle.ground_y);
     }
 
 
+    /**
+     * This function checks if the bottle collides with the final boss.
+     * 
+     * @param {object} bottle – This object is the thrown bottle.
+     * @returns – true if the bottle is colliding with the endboss and if 
+     * the bottle is above the ground.
+     * 
+     */
     smashedByTheEndBoss(bottle) {
         return bottle.isColliding(this.level.enemies[0]) &&
             bottle.isAboveGround(bottle.ground_y);
     }
 
 
+    /**
+     * This function checks the number of hits.
+     * 
+     */
     checkNrEndbossHits() {
         if (!this.justHitChecked) {
             this.justHitChecked = true;
@@ -328,11 +360,23 @@ class World {
     }
 
 
+    /**
+     * This function determines whether the required number of 
+     * hits to win has been achieved.
+     * 
+     * @returns – true if the number of hits is equal to the required number of hits.
+     */
     allHitsLanded() {
         return this.character.nrEndbossHits == this.character.amountHits - 1;
     }
 
 
+    /**
+     * This function is used to delete a bottle object.
+     * The object is only deleted after a short period of time.
+     * 
+     * @param {object} bottle – This object is the bottle object that is to be deleted.
+     */
     spliceSlightlyLater(bottle) {
         setTimeout(() => {
             this.spliceObj(bottle, this.thrownObjects);
@@ -340,6 +384,11 @@ class World {
     }
 
 
+    /**
+     * This function is used to delete a bottle object immediately.
+     * 
+     * @param {object} thrownBottle – This object is the bottle object that is to be deleted. 
+     */
     smashSoundImmediatly(thrownBottle) {
         if (this.character.soundOn) {
             thrownBottle.soundOn = true;
@@ -348,6 +397,10 @@ class World {
     }
 
 
+    /**
+     * This function is used to draw the background of the canvas.
+     * 
+     */
     drawBackground() {
         this.addObjectsToMap(this.level.air);
         this.ctx.translate(-this.camera_x, 0);
@@ -357,6 +410,11 @@ class World {
     }
 
 
+    /**
+     * This function is used to draw several image objects on the canvas.
+     * 
+     * @param {array} obj – This is the array with the image objects which are to be drawn.
+     */
     addObjectsToMap(obj) {
         obj.forEach((o) => {
             this.addToMap(o);
@@ -364,6 +422,14 @@ class World {
     }
 
 
+    /**
+     * This function is used to draw one image object on the canvas.
+     * It additionally checks whether the image object should be displayed 
+     * mirrored on the vertical axis.
+     * For example, when the main character runs in the other direction.
+     * 
+     * @param {object} mo - this is the image object which is to be drawn.
+     */
     addToMap(mo) {
         if (mo.otherDirection)
             this.flipImg(mo);
@@ -373,6 +439,12 @@ class World {
     }
 
 
+    /**
+     * This function implements the functions that monitor the 
+     * collisions of the main character with the enemy objects, 
+     * the bottle objects and the coin objects.
+     * 
+     */
     checkCollisions() {
         this.collisionEnemies();
         this.collisionBottles();
@@ -380,6 +452,11 @@ class World {
     }
 
 
+    /**
+     * This function is used to monitor collisions between 
+     * the main character and the enemy objects.
+     * 
+     */
     collisionEnemies() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
@@ -389,7 +466,12 @@ class World {
         });
     }
 
-
+    /**
+     * This function is used to monitor collisions between
+     * the main character and the chicken objects.
+     * 
+     * @param {array} enemy – This array is the collection of enemy objects.
+     */
     collidingChickens(enemy) {
         if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
             if (this.character.isFalling(this.character.ground_y)) {
@@ -403,6 +485,11 @@ class World {
     }
 
 
+    /**
+     * This function deletes an enemy object if it has died.
+     * 
+     * @param {object} enemy – This object is the enemy object to be deleted.
+     */
     chickenDead(enemy) {
         enemy.justDead = true;
         setTimeout(() => {
@@ -411,12 +498,24 @@ class World {
     }
 
 
+    /**
+     * This function causes the main character to lose energy if 
+     * it comes into contact with the end boss.
+     * 
+     * @param {object} enemy – THis object is the enemy object that collides 
+     * with the main character.
+     */
     collidingEndboss(enemy) {
         if (enemy instanceof Endboss)
             this.characterLoseEnergy();
     }
 
 
+    /**
+     * This function deletes the bottles encountered by 
+     * the main character.
+     * 
+     */
     collisionBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
@@ -426,6 +525,10 @@ class World {
     }
 
 
+    /**
+     * This function deletes the coins encountered by 
+     * the main character.
+     */
     collisionCoins() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -435,6 +538,11 @@ class World {
     }
 
 
+    /**
+     * This function deletes the enemy objects (except the 
+     * final boss) when they leave the stage.
+     * 
+     */
     checkOutOfStage() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.isOutOfStage(enemy)) {
@@ -446,6 +554,15 @@ class World {
     }
 
 
+    /**
+     * This function is used when coins or bottles are collected.
+     * The collected objects are counted,
+     * the corresponding sound is emitted and
+     * the object is deleted.
+     * 
+     * @param {object} obj – This is the collected object.
+     * @param {array} arr – This is the collection of objects to be collected.
+     */
     spliceObj(obj, arr) {
         let position = this.findIndex(obj, arr);
         if (obj instanceof SalsaBottle) {
@@ -460,11 +577,18 @@ class World {
     }
 
 
+    /**
+     * This function is used to count the number of bottles collected.
+     */
     countCollectedBottles() {
         this.character.nrCollectedBottles++;
     }
 
 
+    /**
+     * This function is used to count the coins collected.
+     * Once all the coins have been collected, the main character receives 100% energy.
+     */
     countCollectedCoins() {
         this.character.nrCollectedCoins++;
         if (this.character.nrCollectedCoins == this.level.amountCoins) {
@@ -474,6 +598,13 @@ class World {
     }
 
 
+    /**
+     * This function searches for the index of the object to be deleted.
+     * 
+     * @param {object} obj – This is the object whose index is to be found.
+     * @param {array} array – This is the array in which the object is located.
+     * @returns 
+     */
     findIndex(obj, array) {
         for (let i = 0; i < array.length; i++) {
             let searchedId = obj.intervalId;
