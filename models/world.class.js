@@ -615,6 +615,10 @@ class World {
     }
 
 
+    /**
+     * This function reduces the life energy of the main character.
+     * 
+     */
     characterLoseEnergy() {
         if (this.character.energy > 0) {
             this.character.energy -= 1;
@@ -623,6 +627,10 @@ class World {
     }
 
 
+    /**
+     * This function is used to draw the background images on the canvas.
+     * 
+     */
     moveBackground() {
         this.ctx.translate(this.camera_bgLayer3, 0);
         this.addObjectsToMap(this.level.layer3rd);
@@ -636,6 +644,12 @@ class World {
     }
 
 
+    /**
+     * This function changes the direction of the image object 
+     * to be displayed on the canvas.
+     * 
+     * @param {object} mo – The image object whose direction is to be changed.
+     */
     flipImg(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -644,12 +658,27 @@ class World {
     }
 
 
+    /**
+     * This function is required when changing the direction of 
+     * an image object on the screen. 
+     * Without this function, all other screen objects would also 
+     * be affected by the change of direction.
+     * 
+     * @param {object} mo – The image object whose direction is to be changed.
+     */
     reFlipImg(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
 
+    /**
+     * This function is used to switch the sounds on and off.
+     * 
+     * @param {boolean} boolean – This parameter is true if the sounds are to be 
+     * switched off and false if the sounds are to be switched on.  
+     * 
+     */
     onOffSounds(boolean) {
         this.character.level_sound.pause();
         this.character.soundOn = boolean;
@@ -665,16 +694,34 @@ class World {
     }
 
 
+    /**
+     * This function is used to switch on the sounds.
+     * 
+     */
     soundsOn() {
         this.onOffSounds(true);
     }
 
 
+    /**
+     * This funciton is used to switch off the sounds.
+     * 
+     */
     soundsOff() {
         this.onOffSounds(false);
     }
 
 
+    /**
+     * This function draws the respective process bar on the canvas
+     * using the CanvasRenderingContext2D interface.
+     * 
+     * @param {number} posX – This parameter is the X value of the position coordinate of the process bar.
+     * @param {number} posY – This parameter is the Y value of the position coordinate of the process bar.
+     * @param {number} diff – This is the length by which the process display changes.
+     * @param {string} col – This is the color of the process bar.
+     * 
+     */
     drawProgress(posX, posY, diff, col) {
         this.ctx.beginPath();
         let grd = ctx.createLinearGradient(posX, (posY - 5), posX, (posY + 15));
